@@ -1,5 +1,5 @@
 #!/bin/bash
-# RDS PostgreSQL : schéma depuis les entités + seed packs/FAQ + versions migrations enregistrées.
+# RDS : schéma depuis les entités + seed packs/FAQ + versions migrations enregistrées (MySQL ou PostgreSQL).
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck disable=SC1091
 [ -f "${SCRIPT_DIR}/_load_eb_env.sh" ] && . "${SCRIPT_DIR}/_load_eb_env.sh"
@@ -20,6 +20,13 @@ PHP_CLI=(sudo -E -u webapp env HOME=/home/webapp php)
 
 echo "02_database_provision: DATABASE_URL (aperçu)"
 (DATABASE_URL_SAFE="${DATABASE_URL%%@*}@***"; echo "${DATABASE_URL_SAFE}")
+
+# Nom de base extrait de l’URL (erreur fréquente : …/mysql → table mysql.pack_offer inexistante).
+export DATABASE_URL 2>/dev/null || true
+DB_FROM_URL="$(php -r '$u=getenv("DATABASE_URL"); if(!$u){exit(0);} $p=parse_url($u); echo isset($p["path"])?ltrim($p["path"],"/"):"";' 2>/dev/null)"
+if [ "$DB_FROM_URL" = "mysql" ] || [ "$DB_FROM_URL" = "sys" ] || [ "$DB_FROM_URL" = "performance_schema" ]; then
+  echo "02_database_provision: ERREUR CONFIG — DATABASE_URL utilise la base système « ${DB_FROM_URL} ». Créez une base applicative (ex. cleanavis) dans RDS et corrigez DATABASE_URL dans la console EB."
+fi
 
 echo "02_database_provision: doctrine:migrations:sync-metadata-storage"
 "${PHP_CLI[@]}" "${CONSOLE}" doctrine:migrations:sync-metadata-storage --env=prod --no-ansi --no-interaction 2>&1
