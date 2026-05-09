@@ -55,9 +55,13 @@ jobs:
         run: composer install --no-dev --no-interaction --optimize-autoloader
 
       # Ne pas livrer .env : la prod doit utiliser les variables définies dans la console EB.
-      - name: Strip local env before packaging
-        run: rm -f .env
+      - name: Strip local env and vendor before packaging
+        run: |
+          rm -f .env
+          rm -rf vendor
 
+      # Sans vendor : EB / hook .platform exécute composer install sur l’instance.
+      # Avec vendor dans le zip, EB ignore composer.json → déploiements instables (cf. eb-engine).
       - name: Build deployment archive
         run: |
           zip -r deploy.zip . \
@@ -68,6 +72,7 @@ jobs:
             -x "**/var/log/**" \
             -x "**/.env" \
             -x "**/.env.*" \
+            -x "**/vendor/**" \
             -x "**/phpunit.xml.dist" \
             -x "**/.phpunit.cache/**"
 
