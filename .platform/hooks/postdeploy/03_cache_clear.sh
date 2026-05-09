@@ -5,8 +5,8 @@ set +e
 chown -R webapp:webapp "${APP}/var" 2>/dev/null || true
 if [ -x "${APP}/bin/console" ]; then
   sudo -u webapp php "${APP}/bin/console" cache:clear --env=prod --no-ansi 2>&1
-  echo "02_cache_clear: cache:clear terminé (code=$?)"
+  echo "03_cache_clear: cache:clear terminé (code=$?)"
 else
-  echo "02_cache_clear: bin/console absent, ignoré"
+  echo "03_cache_clear: bin/console absent, ignoré"
 fi
 exit 0
