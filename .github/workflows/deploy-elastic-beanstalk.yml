@@ -46,7 +46,12 @@ jobs:
           cp .env.example .env
           mkdir -p var/cache var/log
 
+      # APP_ENV=prod : sinon .env.example est en « dev » et charge DebugBundle / WebProfiler
+      # absents avec --no-dev → « Class DebugBundle not found ».
       - name: Install Composer dependencies (production)
+        env:
+          APP_ENV: prod
+          APP_DEBUG: '0'
         run: composer install --no-dev --no-interaction --optimize-autoloader
 
       # Ne pas livrer .env : la prod doit utiliser les variables définies dans la console EB.
