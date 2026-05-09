@@ -8,22 +8,37 @@ use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Données initiales pack FAQ / offres (équivalent postUp des migrations SQLite).
- * Idempotent : ne réinsère pas si les tables contiennent déjà des lignes.
+ * Données initiales packs / FAQ.
+ * Complète les lignes manquantes (ex. 1/3 packs après échec partiel) au lieu d'abandonner dès que COUNT(*) > 0.
  */
 #[AsCommand(
     name: 'app:seed-reference-data',
-    description: 'Insère les packs tarifaires et la FAQ initiale si les tables sont vides (PostgreSQL ou SQLite).',
+    description: 'Assure les packs tarifaires et la FAQ de référence (insert uniquement les lignes manquantes).',
 )]
 final class SeedReferenceDataCommand extends Command
 {
+    private const EXPECTED_PACK_KEYS = ['standard', 'pro', 'avocats'];
+
+    private const EXPECTED_FAQ_SORT_ORDERS = [10, 20, 30, 40, 50];
+
     public function __construct(private readonly Connection $connection)
     {
         parent::__construct();
+    }
+
+    protected function configure(): void
+    {
+        $this->addOption(
+            'force-reset-packs',
+            null,
+            InputOption::VALUE_NONE,
+            'Supprime toutes les lignes de pack_offer puis réinsère les 3 packs (à utiliser avec précaution en prod).'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -31,24 +46,63 @@ final class SeedReferenceDataCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $conn = $this->connection;
 
-        $packCount = (int) $conn->fetchOne('SELECT COUNT(*) FROM pack_offer');
-        if ($packCount === 0) {
-            foreach ($this->packOffersRows() as $row) {
-                $conn->insert('pack_offer', $row);
-            }
-            $io->success(sprintf('%d ligne(s) insérées dans pack_offer.', count($this->packOffersRows())));
-        } else {
-            $io->note('pack_offer déjà peuplée — ignoré.');
+        if ($input->getOption('force-reset-packs')) {
+            $conn->executeStatement('DELETE FROM pack_offer');
+            $io->warning('pack_offer vidée (--force-reset-packs).');
         }
 
-        $faqCount = (int) $conn->fetchOne('SELECT COUNT(*) FROM faq_item');
-        if ($faqCount === 0) {
-            foreach ($this->faqRows() as $row) {
-                $conn->insert('faq_item', $row);
+        $insertedPacks = 0;
+        foreach ($this->packOffersRows() as $row) {
+            $key = $row['internal_key'];
+            $exists = (int) $conn->fetchOne(
+                'SELECT COUNT(*) FROM pack_offer WHERE internal_key = ?',
+                [$key]
+            );
+            if ($exists === 0) {
+                $conn->insert('pack_offer', $row);
+                ++$insertedPacks;
+                $io->writeln(sprintf('<info>pack_offer</info> inséré : %s', $key));
             }
-            $io->success(sprintf('%d ligne(s) insérées dans faq_item.', count($this->faqRows())));
+        }
+
+        $totalPacks = (int) $conn->fetchOne('SELECT COUNT(*) FROM pack_offer');
+        if ($totalPacks < count(self::EXPECTED_PACK_KEYS)) {
+            $io->warning(sprintf(
+                'pack_offer : %d ligne(s) sur %d attendues — vérifiez les erreurs SQL précédentes ou lancez avec --force-reset-packs après sauvegarde.',
+                $totalPacks,
+                count(self::EXPECTED_PACK_KEYS)
+            ));
+        } elseif ($insertedPacks === 0) {
+            $io->note('pack_offer : les 3 packs sont déjà présents.');
         } else {
-            $io->note('faq_item déjà peuplée — ignoré.');
+            $io->success(sprintf('%d pack(s) ajouté(s) dans pack_offer.', $insertedPacks));
+        }
+
+        $insertedFaq = 0;
+        foreach ($this->faqRows() as $row) {
+            $sort = (int) $row['sort_order'];
+            $exists = (int) $conn->fetchOne(
+                'SELECT COUNT(*) FROM faq_item WHERE sort_order = ?',
+                [$sort]
+            );
+            if ($exists === 0) {
+                $conn->insert('faq_item', $row);
+                ++$insertedFaq;
+                $io->writeln(sprintf('<info>faq_item</info> inséré (sort_order=%d)', $sort));
+            }
+        }
+
+        $totalFaq = (int) $conn->fetchOne('SELECT COUNT(*) FROM faq_item');
+        if ($totalFaq < count(self::EXPECTED_FAQ_SORT_ORDERS)) {
+            $io->warning(sprintf(
+                'faq_item : %d entrée(s) sur %d attendues.',
+                $totalFaq,
+                count(self::EXPECTED_FAQ_SORT_ORDERS)
+            ));
+        } elseif ($insertedFaq === 0) {
+            $io->note('faq_item : les entrées de référence sont déjà présentes.');
+        } else {
+            $io->success(sprintf('%d entrée(s) FAQ ajoutée(s).', $insertedFaq));
         }
 
         return Command::SUCCESS;
