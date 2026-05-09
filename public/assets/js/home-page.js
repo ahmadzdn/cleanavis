@@ -203,6 +203,9 @@ function selectPackAndScroll(pack) {
   if (sel) sel.value = pack;
   const section = document.getElementById('contact');
   if (section) window.scrollTo({top: section.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth'});
+  if (document.getElementById('contact-wizard')) {
+    wizardSetStep(5);
+  }
 }
 
 function extractUrl(input) {
@@ -279,6 +282,122 @@ function fetchReviewPreview(url) {
 
 function showFiles(input) { const list=document.getElementById('files-list'); if(!list)return; list.innerHTML=Array.from(input.files).map(f=>`<div style="font-size:12px;color:var(--g-green);margin-top:4px">✅ ${f.name} (${(f.size/1024).toFixed(0)} Ko)</div>`).join(''); }
 
+const WIZARD_TOTAL_STEPS = 6;
+const WIZARD_FIELD_STEP = { 'f-nom': 1, 'f-prenom': 1, 'f-email': 2, 'f-tel': 2, 'f-entreprise': 3, 'f-url': 4, 'f-justif': 5 };
+
+function wizardRoot() {
+  return document.getElementById('contact-wizard');
+}
+
+function wizardSetStep(n) {
+  const root = wizardRoot();
+  if (!root) return;
+  const step = Math.max(1, Math.min(WIZARD_TOTAL_STEPS, n));
+  root.dataset.currentStep = String(step);
+  root.querySelectorAll('.contact-wizard-panel').forEach((panel) => {
+    const ps = parseInt(panel.getAttribute('data-wizard-step'), 10);
+    const active = ps === step;
+    panel.classList.toggle('is-active', active);
+    panel.setAttribute('aria-hidden', active ? 'false' : 'true');
+  });
+  root.querySelectorAll('.contact-wizard__prog-item').forEach((item, i) => {
+    const idx = i + 1;
+    item.classList.toggle('is-active', idx === step);
+    item.classList.toggle('is-done', idx < step);
+  });
+  const activePanel = root.querySelector('.contact-wizard-panel.is-active');
+  const focusEl = activePanel && activePanel.querySelector('input:not([readonly]),select,textarea');
+  if (focusEl) setTimeout(() => focusEl.focus(), 100);
+  if (step === 6) {
+    setTimeout(() => window.dispatchEvent(new Event('resize')), 250);
+  }
+}
+
+function wizardValidateStep(step) {
+  const markErr = (id) => { const el = document.getElementById(id); if (el) el.classList.add('err'); };
+  const clearErr = (ids) => { ids.forEach((id) => document.getElementById(id)?.classList.remove('err')); };
+  if (step === 1) {
+    clearErr(['f-nom', 'f-prenom']);
+    if (!document.getElementById('f-nom')?.value.trim()) { markErr('f-nom'); return false; }
+    if (!document.getElementById('f-prenom')?.value.trim()) { markErr('f-prenom'); return false; }
+    return true;
+  }
+  if (step === 2) {
+    clearErr(['f-email', 'f-tel']);
+    const em = document.getElementById('f-email')?.value.trim() || '';
+    const tel = document.getElementById('f-tel')?.value.trim() || '';
+    if (!em) { markErr('f-email'); return false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+      markErr('f-email');
+      caShowModal({ variant: 'warning', title: 'Email invalide', message: 'Indiquez une adresse e-mail valide.' });
+      return false;
+    }
+    if (!tel) { markErr('f-tel'); return false; }
+    return true;
+  }
+  if (step === 3) {
+    clearErr(['f-entreprise']);
+    if (!document.getElementById('f-entreprise')?.value.trim()) { markErr('f-entreprise'); return false; }
+    return true;
+  }
+  if (step === 4) {
+    const input = document.getElementById('f-url');
+    clearErr(['f-url']);
+    extractUrl(input);
+    const val = input.value.trim();
+    if (!val) { markErr('f-url'); return false; }
+    try {
+      const u = new URL(val);
+      if (u.protocol !== 'https:') throw new Error();
+    } catch {
+      markErr('f-url');
+      validateUrl(input);
+      caShowModal({
+        variant: 'warning',
+        title: 'Lien Google invalide',
+        message: 'Collez une adresse complète commençant par https://.',
+      });
+      return false;
+    }
+    validateUrl(input);
+    return true;
+  }
+  if (step === 5) {
+    clearErr(['f-justif']);
+    if (!document.getElementById('f-justif')?.value.trim()) { markErr('f-justif'); return false; }
+    return true;
+  }
+  return true;
+}
+
+function wizardGoNext() {
+  const root = wizardRoot();
+  if (!root) return;
+  const cur = parseInt(root.dataset.currentStep || '1', 10);
+  if (!wizardValidateStep(cur)) return;
+  wizardSetStep(cur + 1);
+}
+
+function wizardGoPrev() {
+  const root = wizardRoot();
+  if (!root) return;
+  const cur = parseInt(root.dataset.currentStep || '1', 10);
+  wizardSetStep(cur - 1);
+}
+
+document.addEventListener('click', (e) => {
+  const t = e.target;
+  if (!(t instanceof Element)) return;
+  if (t.closest('.js-wizard-next')) {
+    e.preventDefault();
+    wizardGoNext();
+  }
+  if (t.closest('.js-wizard-prev')) {
+    e.preventDefault();
+    wizardGoPrev();
+  }
+});
+
 async function submitForm() {
   const required = [{id:'f-nom',label:'Nom'},{id:'f-prenom',label:'Prénom'},{id:'f-email',label:'Email'},{id:'f-tel',label:'Téléphone'},{id:'f-entreprise',label:"Nom de l'entreprise"},{id:'f-url',label:"Lien de l'avis Google"},{id:'f-justif',label:'Justification'}];
   const missing = [];
@@ -291,7 +410,11 @@ async function submitForm() {
       listItems: missing,
       hint: 'Les champs concernés sont surlignés en rouge.'
     });
-    document.getElementById(required.find(r=>!document.getElementById(r.id).value.trim()).id).focus();
+    const miss = required.find(r=>!document.getElementById(r.id).value.trim());
+    if (miss && WIZARD_FIELD_STEP[miss.id]) {
+      wizardSetStep(WIZARD_FIELD_STEP[miss.id]);
+    }
+    document.getElementById(miss.id).focus();
     return;
   }
   const urlInput = document.getElementById('f-url');
@@ -303,6 +426,7 @@ async function submitForm() {
       title: 'Lien Google invalide',
       message: 'Collez une adresse complète commençant par https:// (lien vers votre fiche ou avis Google).',
     });
+    wizardSetStep(4);
     return;
   }
   const turnstileInput = document.querySelector('[name="cf-turnstile-response"]');
@@ -312,10 +436,11 @@ async function submitForm() {
       title: 'Vérification anti-robot',
       message: 'Complétez la case Cloudflare Turnstile ci-dessous avant de lancer le paiement sécurisé.',
     });
+    wizardSetStep(6);
     return;
   }
   const apiUrl = window.CLEANAVIS_API_ORDER_INIT || '/api/order/init';
-  const btn = document.querySelector('[onclick="submitForm()"]');
+  const btn = document.getElementById('contact-submit-btn') || document.querySelector('[onclick="submitForm()"]');
   btn.disabled = true; btn.innerHTML = '⏳ Envoi en cours…';
   const packVal = document.getElementById('f-package').value || 'standard';
   const payload = {
@@ -341,7 +466,7 @@ async function submitForm() {
     if (!data.checkoutUrl) throw new Error('Réponse serveur invalide.');
     window.location.href = data.checkoutUrl;
   } catch(err) {
-    btn.disabled=false; btn.innerHTML='🔒 Valider ma demande et procéder au paiement';
+    btn.disabled=false; btn.innerHTML='Valider ma demande et procéder au paiement';
     const msg = err && err.message ? String(err.message) : 'Une erreur est survenue.';
     caShowModal({
       variant: 'error',

@@ -597,123 +597,170 @@
       <p class="sec-desc contact-hero__desc">Remplissez le formulaire. Nos experts analysent votre dossier et vous contactent sous 2h.</p>
     </header>
 
-    <div class="contact-card contact-card--stacked">
+    <div class="contact-card contact-card--stacked contact-card--wizard">
       <div class="contact-card__accent" aria-hidden="true"></div>
-      <div class="contact-card__inner">
+      <div class="contact-card__inner contact-card__inner--wizard">
 
-      <div class="contact-step" role="group" aria-labelledby="contact-step-coords">
-        <div class="contact-step__header" id="contact-step-coords">
-          <span class="contact-step__num" aria-hidden="true">1</span>
-          <div class="contact-step__titles">
-            <span class="contact-step__kicker">Étape 1</span>
-            <span class="contact-step__name">Vos coordonnées</span>
-          </div>
-        </div>
-        <div class="contact-step__body">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="f-nom">Nom <span class="req" aria-hidden="true">*</span></label>
-          <input type="text" id="f-nom" name="nom" placeholder="Dupont" required autocomplete="family-name">
-        </div>
-        <div class="form-group">
-          <label for="f-prenom">Prénom <span class="req" aria-hidden="true">*</span></label>
-          <input type="text" id="f-prenom" name="prenom" placeholder="Jean" required autocomplete="given-name">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
-          <input type="email" id="f-email" name="email" placeholder="jean@exemple.fr" required autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label for="f-tel">Téléphone <span class="req" aria-hidden="true">*</span></label>
-          <input type="tel" id="f-tel" name="telephone" placeholder="+33 6 00 00 00 00" required autocomplete="tel">
-        </div>
-      </div>
-        </div>
-      </div>
+      <div id="contact-wizard" class="contact-wizard" data-current-step="1">
+        <nav class="contact-wizard__progress-wrap" aria-label="Progression du dossier">
+          <ol class="contact-wizard__progress">
+            <li class="contact-wizard__prog-item is-active" data-prog-step="1"><span class="contact-wizard__prog-num">1</span><span class="contact-wizard__prog-label">Identité</span></li>
+            <li class="contact-wizard__prog-item" data-prog-step="2"><span class="contact-wizard__prog-num">2</span><span class="contact-wizard__prog-label">Contact</span></li>
+            <li class="contact-wizard__prog-item" data-prog-step="3"><span class="contact-wizard__prog-num">3</span><span class="contact-wizard__prog-label">Établissement</span></li>
+            <li class="contact-wizard__prog-item" data-prog-step="4"><span class="contact-wizard__prog-num">4</span><span class="contact-wizard__prog-label">Lien avis</span></li>
+            <li class="contact-wizard__prog-item" data-prog-step="5"><span class="contact-wizard__prog-num">5</span><span class="contact-wizard__prog-label">Dossier</span></li>
+            <li class="contact-wizard__prog-item" data-prog-step="6"><span class="contact-wizard__prog-num">6</span><span class="contact-wizard__prog-label">Paiement</span></li>
+          </ol>
+        </nav>
 
-      <div class="contact-step" role="group" aria-labelledby="contact-step-place">
-        <div class="contact-step__header" id="contact-step-place">
-          <span class="contact-step__num" aria-hidden="true">2</span>
-          <div class="contact-step__titles">
-            <span class="contact-step__kicker">Étape 2</span>
-            <span class="contact-step__name">Établissement &amp; avis ciblé</span>
+        {# Étape 1 — Nom / prénom #}
+        <div class="contact-wizard-panel is-active" data-wizard-step="1" role="tabpanel" aria-labelledby="wiz-h1" aria-hidden="false">
+          <div class="contact-wizard-panel__intro">
+            <h3 class="contact-wizard-panel__title" id="wiz-h1">Votre identité</h3>
+            <p class="contact-wizard-panel__hint">Indiquez votre nom tel qu’il figurera sur le dossier.</p>
           </div>
-        </div>
-        <div class="contact-step__body">
-      <div class="form-group">
-        <label for="f-entreprise">🔍 Trouvez votre établissement Google <span class="req" aria-hidden="true">*</span></label>
-        <div class="form-biz-wrap">
-          <span class="form-biz-icon" aria-hidden="true">🏢</span>
-          <input type="text" id="f-entreprise" name="entreprise"
-            placeholder="Ex : Restaurant Le Soleil, Boulangerie Martin, Lyon…"
-            required autocomplete="off" aria-label="Rechercher votre établissement Google">
-        </div>
-        <div style="font-size:11px;color:var(--text4);margin-top:6px">→ Tapez le nom de votre établissement et sélectionnez-le dans la liste Google</div>
-      </div>
-      <div class="form-group" id="f-adresse-wrap" style="display:none">
-        <label>📍 Adresse détectée</label>
-        <input type="text" id="f-adresse" name="adresse" readonly class="fi-addr-filled" aria-label="Adresse de l'établissement">
-      </div>
-      <div id="form-insight-panel" style="display:none" aria-live="polite"></div>
-      <div class="form-group">
-        <label for="f-url">🔗 Lien de l'avis Google <span class="req" aria-hidden="true">*</span>
-          <span class="tt-wrap">
-            <button type="button" class="tt-btn" onclick="toggleTt(this)" aria-label="Comment trouver le lien de l'avis Google ?" aria-expanded="false">?</button>
-            <div class="tt-box" role="tooltip" aria-hidden="true">
-              <div class="tt-title">📍 Comment trouver le lien de l'avis ?</div>
-              <div class="tt-step"><span class="tt-num">1</span><div class="tt-text">Ouvrez <strong>Google Maps</strong> et recherchez le nom de votre établissement</div></div>
-              <div class="tt-step"><span class="tt-num">2</span><div class="tt-text">Cliquez sur l'onglet <strong>« Avis »</strong></div></div>
-              <div class="tt-step"><span class="tt-num">3</span><div class="tt-text">Cliquez sur <strong>⋮</strong> (3 points) à droite de l'avis</div></div>
-              <div class="tt-step"><span class="tt-num">4</span><div class="tt-text">Cliquez sur <strong>« Partager l'avis »</strong> et copiez le lien</div></div>
-              <div class="tt-alt">💡 <strong>Astuce :</strong> Clic droit sur la date de l'avis → <strong>« Copier le lien »</strong></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-nom">Nom <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="f-nom" name="nom" placeholder="Dupont" autocomplete="family-name">
             </div>
-          </span>
-        </label>
-        <div class="url-wrap">
-          <input type="url" id="f-url" name="url_avis"
-            placeholder="https://www.google.com/maps/place/..."
-            required oninput="validateUrl(this)" onpaste="setTimeout(()=>{extractUrl(this);validateUrl(this);},0)"
-            aria-describedby="url-hint url-err">
-          <span class="url-ok" id="url-ok" aria-hidden="true"></span>
-        </div>
-        <div id="url-err" class="url-err-msg" role="alert">⚠️ Veuillez coller un lien URL valide commençant par https://</div>
-        <div id="url-hint" style="font-size:11px;color:var(--text4);margin-top:5px">→ Sur Google Maps : clic droit sur l'avis → "Copier le lien"</div>
-        <div id="review-preview" aria-live="polite"></div>
-      </div>
-        </div>
-      </div>
-
-      <div class="contact-step" role="group" aria-labelledby="contact-step-offer">
-        <div class="contact-step__header" id="contact-step-offer">
-          <span class="contact-step__num" aria-hidden="true">3</span>
-          <div class="contact-step__titles">
-            <span class="contact-step__kicker">Étape 3</span>
-            <span class="contact-step__name">Offre &amp; dossier</span>
+            <div class="form-group">
+              <label for="f-prenom">Prénom <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="f-prenom" name="prenom" placeholder="Jean" autocomplete="given-name">
+            </div>
+          </div>
+          <div class="contact-wizard__nav contact-wizard__nav--end">
+            <button type="button" class="btn-blue btn-wizard-next js-wizard-next">Suivant →</button>
           </div>
         </div>
-        <div class="contact-step__body">
-      <div class="form-group">
-        <label for="f-package">Package souhaité</label>
-        <select id="f-package" name="package" aria-label="Sélectionnez votre package">
-          {% for pack in packOffers %}
-          <option value="{{ pack.formSlug }}">{{ pack.cardTitle }} ({{ (pack.priceAmountCents / 100)|round(0, 'common') }} €)</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="f-justif">Justification de la demande <span class="req" aria-hidden="true">*</span></label>
-        <textarea id="f-justif" name="justification" placeholder="Exposez les motifs de votre demande : pourquoi cet avis est-il diffamatoire, faux ou illicite ? Précisez tout élément utile (identité supposée de l'auteur, contexte, historique...)." required aria-label="Exposé des motifs juridiques"></textarea>
-      </div>
-      <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}" data-theme="light" style="margin-bottom:16px;display:flex;justify-content:center"></div>
-      <button class="btn-blue btn-wide" onclick="submitForm()" type="button" aria-label="Envoyer la demande de suppression">
-        🔒 Valider ma demande et procéder au paiement
-      </button>
-      <div class="secure-note" aria-label="Sécurité et confidentialité">
-        <div class="secure-icon" aria-hidden="true">🔒</div>
-        Données chiffrées · 100% confidentiel · Conforme RGPD · Horodatage automatique
-      </div>
+
+        {# Étape 2 — Email / téléphone #}
+        <div class="contact-wizard-panel" data-wizard-step="2" role="tabpanel" aria-labelledby="wiz-h2" aria-hidden="true">
+          <div class="contact-wizard-panel__intro">
+            <h3 class="contact-wizard-panel__title" id="wiz-h2">Comment vous joindre</h3>
+            <p class="contact-wizard-panel__hint">Nous utilisons ces informations uniquement pour votre dossier et la suite du parcours.</p>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input type="email" id="f-email" name="email" placeholder="jean@exemple.fr" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="f-tel">Téléphone <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="f-tel" name="telephone" placeholder="+33 6 00 00 00 00" autocomplete="tel">
+            </div>
+          </div>
+          <div class="contact-wizard__nav">
+            <button type="button" class="btn-outline js-wizard-prev">← Retour</button>
+            <button type="button" class="btn-blue btn-wizard-next js-wizard-next">Suivant →</button>
+          </div>
+        </div>
+
+        {# Étape 3 — Établissement #}
+        <div class="contact-wizard-panel" data-wizard-step="3" role="tabpanel" aria-labelledby="wiz-h3" aria-hidden="true">
+          <div class="contact-wizard-panel__intro">
+            <h3 class="contact-wizard-panel__title" id="wiz-h3">Votre établissement Google</h3>
+            <p class="contact-wizard-panel__hint">Recherchez la fiche Maps concernée ; nous pourrons analyser le contexte.</p>
+          </div>
+          <div class="form-group">
+            <label for="f-entreprise">Établissement <span class="req" aria-hidden="true">*</span></label>
+            <div class="form-biz-wrap">
+              <span class="form-biz-icon" aria-hidden="true">🏢</span>
+              <input type="text" id="f-entreprise" name="entreprise"
+                placeholder="Ex : Restaurant Le Soleil, Boulangerie Martin, Lyon…"
+                autocomplete="off" aria-label="Rechercher votre établissement Google">
+            </div>
+            <div class="contact-wizard-panel__micro">Tapez le nom et sélectionnez l’établissement dans la liste Google.</div>
+          </div>
+          <div class="form-group" id="f-adresse-wrap" style="display:none">
+            <label>Adresse détectée</label>
+            <input type="text" id="f-adresse" name="adresse" readonly class="fi-addr-filled" aria-label="Adresse de l'établissement">
+          </div>
+          <div id="form-insight-panel" style="display:none" aria-live="polite"></div>
+          <div class="contact-wizard__nav">
+            <button type="button" class="btn-outline js-wizard-prev">← Retour</button>
+            <button type="button" class="btn-blue btn-wizard-next js-wizard-next">Suivant →</button>
+          </div>
+        </div>
+
+        {# Étape 4 — URL avis #}
+        <div class="contact-wizard-panel" data-wizard-step="4" role="tabpanel" aria-labelledby="wiz-h4" aria-hidden="true">
+          <div class="contact-wizard-panel__intro">
+            <h3 class="contact-wizard-panel__title" id="wiz-h4">L’avis à traiter</h3>
+            <p class="contact-wizard-panel__hint">Collez le lien direct vers l’avis Google concerné (https://).</p>
+          </div>
+          <div class="form-group">
+            <label for="f-url">Lien de l’avis Google <span class="req" aria-hidden="true">*</span>
+              <span class="tt-wrap">
+                <button type="button" class="tt-btn" onclick="toggleTt(this)" aria-label="Comment trouver le lien de l'avis Google ?" aria-expanded="false">?</button>
+                <div class="tt-box" role="tooltip" aria-hidden="true">
+                  <div class="tt-title">Comment trouver le lien de l’avis ?</div>
+                  <div class="tt-step"><span class="tt-num">1</span><div class="tt-text">Ouvrez <strong>Google Maps</strong> et recherchez le nom de votre établissement</div></div>
+                  <div class="tt-step"><span class="tt-num">2</span><div class="tt-text">Cliquez sur l’onglet <strong>« Avis »</strong></div></div>
+                  <div class="tt-step"><span class="tt-num">3</span><div class="tt-text">Cliquez sur <strong>⋮</strong> (3 points) à droite de l’avis</div></div>
+                  <div class="tt-step"><span class="tt-num">4</span><div class="tt-text">Cliquez sur <strong>« Partager l’avis »</strong> et copiez le lien</div></div>
+                  <div class="tt-alt"><strong>Astuce :</strong> Clic droit sur la date de l’avis → <strong>« Copier le lien »</strong></div>
+                </div>
+              </span>
+            </label>
+            <div class="url-wrap">
+              <input type="url" id="f-url" name="url_avis"
+                placeholder="https://www.google.com/maps/place/..."
+                oninput="validateUrl(this)" onpaste="setTimeout(()=>{extractUrl(this);validateUrl(this);},0)"
+                aria-describedby="url-hint url-err">
+              <span class="url-ok" id="url-ok" aria-hidden="true"></span>
+            </div>
+            <div id="url-err" class="url-err-msg" role="alert">Veuillez coller un lien valide commençant par https://</div>
+            <div id="url-hint" class="contact-wizard-panel__micro">Sur Google Maps : clic droit sur l’avis → « Copier le lien »</div>
+            <div id="review-preview" aria-live="polite"></div>
+          </div>
+          <div class="contact-wizard__nav">
+            <button type="button" class="btn-outline js-wizard-prev">← Retour</button>
+            <button type="button" class="btn-blue btn-wizard-next js-wizard-next">Suivant →</button>
+          </div>
+        </div>
+
+        {# Étape 5 — Package + justification #}
+        <div class="contact-wizard-panel" data-wizard-step="5" role="tabpanel" aria-labelledby="wiz-h5" aria-hidden="true">
+          <div class="contact-wizard-panel__intro">
+            <h3 class="contact-wizard-panel__title" id="wiz-h5">Votre demande</h3>
+            <p class="contact-wizard-panel__hint">Choisissez une formule et décrivez les motifs juridiques ou factuels.</p>
+          </div>
+          <div class="form-group">
+            <label for="f-package">Package souhaité</label>
+            <select id="f-package" name="package" aria-label="Sélectionnez votre package">
+              {% for pack in packOffers %}
+              <option value="{{ pack.formSlug }}">{{ pack.cardTitle }} ({{ (pack.priceAmountCents / 100)|round(0, 'common') }} €)</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-justif">Justification <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="f-justif" name="justification" placeholder="Motifs de votre demande : diffamation, faux avis, contexte, éléments à charge…" aria-label="Exposé des motifs juridiques"></textarea>
+          </div>
+          <div class="contact-wizard__nav">
+            <button type="button" class="btn-outline js-wizard-prev">← Retour</button>
+            <button type="button" class="btn-blue btn-wizard-next js-wizard-next">Suivant →</button>
+          </div>
+        </div>
+
+        {# Étape 6 — Turnstile + paiement #}
+        <div class="contact-wizard-panel" data-wizard-step="6" role="tabpanel" aria-labelledby="wiz-h6" aria-hidden="true">
+          <div class="contact-wizard-panel__intro">
+            <h3 class="contact-wizard-panel__title" id="wiz-h6">Dernière étape</h3>
+            <p class="contact-wizard-panel__hint">Confirmez que vous n’êtes pas un robot, puis lancez le paiement sécurisé Stripe.</p>
+          </div>
+          <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}" data-theme="light" style="margin-bottom:16px;display:flex;justify-content:center"></div>
+          <button class="btn-blue btn-wide" id="contact-submit-btn" onclick="submitForm()" type="button" aria-label="Envoyer la demande de suppression">
+            Valider ma demande et procéder au paiement
+          </button>
+          <div class="secure-note" aria-label="Sécurité et confidentialité">
+            <div class="secure-icon" aria-hidden="true">🔒</div>
+            Données chiffrées · 100% confidentiel · Conforme RGPD · Horodatage automatique
+          </div>
+          <div class="contact-wizard__nav contact-wizard__nav--single-prev">
+            <button type="button" class="btn-outline js-wizard-prev">← Modifier les informations</button>
+          </div>
         </div>
       </div>
 
