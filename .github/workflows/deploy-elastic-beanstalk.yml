@@ -61,6 +61,9 @@ jobs:
           rm -rf vendor
           sed -i 's/^APP_ENV=.*/APP_ENV=prod/' .env
           if grep -q '^APP_DEBUG=' .env; then sed -i 's/^APP_DEBUG=.*/APP_DEBUG=0/' .env; else printf '\nAPP_DEBUG=0\n' >> .env; fi
+          # Oblige le CLI sur EB à prendre DATABASE_URL depuis la console (RDS), pas le sqlite du .env local.
+          sed -i '/^DATABASE_URL=/d' .env
+          printf '\n# DATABASE_URL : défini dans la console Elastic Beanstalk (RDS PostgreSQL).\n' >> .env
 
       # Sans vendor : EB exécute composer install (options dans .ebextensions phpini).
       - name: Build deployment archive
@@ -89,4 +92,4 @@ jobs:
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
           # Laisser le temps au nouvel environnement / au passage au vert après les 5xx initiaux
-          wait_for_environment_recovery: '120'
+          wait_for_environment_recovery: '420'
