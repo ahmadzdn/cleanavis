@@ -1,0 +1,3 @@
+# Exclusions locales uniquement — ne jamais ajouter composer.json, composer.lock, ni public/
+var/cache/
+var/log/
