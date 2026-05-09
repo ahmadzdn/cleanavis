@@ -85,3 +85,5 @@ jobs:
           region: ${{ vars.AWS_REGION }}
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
+          # Laisser le temps au nouvel environnement / au passage au vert après les 5xx initiaux
+          wait_for_environment_recovery: '120'

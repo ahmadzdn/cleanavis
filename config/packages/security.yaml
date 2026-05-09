@@ -12,6 +12,9 @@ security:
         dev:
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
+        health:
+            pattern: ^/health
+            security: false
         webhook:
             pattern: ^/webhooks
             security: false
