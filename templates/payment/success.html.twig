@@ -1,0 +1,67 @@
+{% extends 'layout/base_site.html.twig' %}
+
+{% block title %}Paiement confirmé — CleanAvis.fr{% endblock %}
+
+{% block meta %}
+<meta name="robots" content="noindex,nofollow">
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ asset('assets/css/payment_pages.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="card">
+  <div class="icon icon--success">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  </div>
+
+  <h1>Votre demande a bien été envoyée !</h1>
+  <p class="subtitle">Merci pour votre confiance. Votre paiement est confirmé et notre équipe prend en charge votre dossier.</p>
+  <div id="ref-box" class="ref-box">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    Référence dossier&nbsp;: <strong id="ref-value">—</strong>
+  </div>
+  {% if sessionId %}
+  <script>
+    (function(){
+      var sid = {{ sessionId|json_encode|raw }};
+      var metaUrl = "{{ path('payment_session_meta')|e('js') }}";
+      if (sid && window.fetch && metaUrl) {
+        fetch(metaUrl + '?session_id=' + encodeURIComponent(sid))
+          .then(function(r){ return r.json(); })
+          .then(function(d){ if (d.reference) document.getElementById('ref-value').textContent = d.reference; })
+          .catch(function(){});
+      }
+    })();
+  </script>
+  {% endif %}
+
+  <div class="steps">
+    <div class="steps-title">Prochaines étapes</div>
+    <div class="step">
+      <div class="step-dot">1</div>
+      <div class="step-text"><strong>Email de confirmation</strong> envoyé dans les prochaines minutes avec le récapitulatif de votre commande.</div>
+    </div>
+    <div class="step">
+      <div class="step-dot">2</div>
+      <div class="step-text"><strong>Analyse de l'avis</strong> par notre équipe dans les 24 heures suivant votre paiement.</div>
+    </div>
+    <div class="step">
+      <div class="step-dot">3</div>
+      <div class="step-text"><strong>Suivi de votre dossier</strong> — vous serez tenu informé de l'avancement de la procédure.</div>
+    </div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge">🔒 Paiement sécurisé</span>
+    <span class="badge">100% confidentiel</span>
+    <span class="badge">Conforme RGPD</span>
+  </div>
+
+  <a href="{{ path('app_home') }}" class="btn">← Retour à l'accueil</a>
+  <p class="footer">Un problème ? Contactez-nous à contact@cleanavis.fr</p>
+</div>
+{% endblock %}

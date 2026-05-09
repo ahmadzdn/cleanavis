@@ -1,0 +1,770 @@
+<!-- NAVBAR -->
+<nav aria-label="Navigation principale">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo" aria-label="CleanAvis.fr - Accueil">
+      <!-- Logo SVG : bouclier + coche + wordmark -->
+      <svg class="nav-logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M18 3 L32 8 L32 20 Q32 29 18 34 Q4 29 4 20 L4 8 Z" fill="#1A73E8"/>
+        <path d="M18 3 L32 8 L32 20 Q32 29 18 34 Q4 29 4 20 L4 8 Z" fill="url(#shield-grad)"/>
+        <defs>
+          <linearGradient id="shield-grad" x1="4" y1="3" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#1A73E8"/>
+            <stop offset="100%" stop-color="#1557B0"/>
+          </linearGradient>
+        </defs>
+        <polyline points="11,18 16,24 26,13" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <!-- 4 Google dots -->
+        <circle cx="10" cy="6.5" r="2" fill="#4285F4"/>
+        <circle cx="16" cy="5"   r="2" fill="#EA4335"/>
+        <circle cx="22" cy="5"   r="2" fill="#FBBC04"/>
+        <circle cx="28" cy="6.5" r="2" fill="#34A853"/>
+      </svg>
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">CleanAvis</span>
+        <div class="nav-logo-bar"></div>
+        <span class="nav-logo-sub">Suppression d'avis Google</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#probleme">L'Enjeu</a></li>
+      <li><a href="#tarifs">Nos Offres</a></li>
+      <li><a href="#methode">Fonctionnement</a></li>
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="{{ path('page_contact') }}">Contact</a></li>
+      <li><a href="{{ path('page_cgs') }}">CGS & légal</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta" aria-label="Supprimer un avis Google">⚡ Supprimer un avis</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Menu mobile -->
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Menu mobile">
+  <a href="#probleme" onclick="closeMenu()">L'Enjeu</a>
+  <a href="#tarifs" onclick="closeMenu()">Nos Offres</a>
+  <a href="#methode" onclick="closeMenu()">Fonctionnement</a>
+  <a href="#expertise" onclick="closeMenu()">Expertise</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="{{ path('page_contact') }}" onclick="closeMenu()">Contact</a>
+  <a href="{{ path('page_cgs') }}" onclick="closeMenu()">CGS & légal</a>
+  <a href="#contact" class="mob-cta" onclick="closeMenu()">⚡ Supprimer un avis maintenant</a>
+</div>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="hero" aria-label="Accueil">
+  <div class="hero-dots" aria-hidden="true"></div>
+  <div class="hero-grid">
+
+    <!-- Droite : illustration mockup avis Google -->
+    <div class="hero-visual" aria-hidden="true">
+      <div class="review-mockup">
+        <div class="rm-map-bar"></div>
+        <div class="rm-header">
+          <div class="rm-header-row">
+            <div class="rm-pin"><span>P</span></div>
+            <div>
+              <div class="rm-biz-name">Pharmacie du Centre</div>
+              <div class="rm-stars-row">
+                <span style="color:#FBBC04;font-size:11px">★★★★☆</span>
+                <span style="font-size:11px;color:#5F6368">3.8 · 38 avis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rm-body">
+          <div class="rm-review danger">
+            <div class="rm-review-top">
+              <div class="rm-avatar" style="background:#EA4335">K</div>
+              <span class="rm-author">Kevin D.</span>
+              <span class="rm-rev-date">il y a 3 sem.</span>
+            </div>
+            <div style="display:flex;gap:2px;margin-bottom:4px"><span style="color:#EA4335;font-size:11px">★</span><span style="color:#E8EAED;font-size:11px">★★★★</span></div>
+            <div class="rm-text">Accueil déplorable, pharmacienne agressive. À éviter absolument.</div>
+          </div>
+          <div class="rm-deleted">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Avis retiré par CleanAvis · Procédure DSA
+          </div>
+          <div class="rm-review ok">
+            <div class="rm-review-top">
+              <div class="rm-avatar" style="background:#34A853">S</div>
+              <span class="rm-author">Sophie M.</span>
+              <span class="rm-rev-date">il y a 1 mois</span>
+            </div>
+            <div style="display:flex;gap:2px;margin-bottom:4px"><span style="color:#FBBC04;font-size:11px">★★★★★</span></div>
+            <div class="rm-text">Équipe attentionnée, conseils personnalisés. Je recommande.</div>
+          </div>
+        </div>
+        <div class="rm-footer">
+          <div class="rm-rep-badge">✓ Réputation restaurée</div>
+          <div style="text-align:right">
+            <div class="rm-score">4.1★</div>
+            <div class="rm-score-lbl">après CleanAvis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gauche : texte -->
+    <div class="hero-left">
+      <div class="hero-badge" role="note">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Avocats en Droit du Numérique — Experts en Gestion et Suppression d'Avis Google
+      </div>
+      <h1>Un mauvais avis,<br>c'est <em>votre clientèle</em><br>qui disparaît.</h1>
+      <p class="hero-sub"><strong style="color:var(--text);font-weight:700">74% des consommateurs lisent vos avis Google avant de vous contacter.</strong> Un commentaire diffamatoire ou mensonger peut diviser votre chiffre d'affaires du jour au lendemain.<span class="hero-sub-break" aria-hidden="true"></span>Nos avocats experts en e-réputation et nos juristes mobilisent l'arsenal juridique et technologique pour faire disparaître vos avis Google diffamatoires, frauduleux ou illicites.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-blue">⚡ Supprimer un avis maintenant</a>
+        <a href="#methode" class="btn-outline">Voir notre méthode →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats pleine largeur -->
+  <div class="hero-stats" aria-label="Statistiques clés">
+    <div class="stat-item">
+      <div class="stat-num">82<span class="u">%</span></div>
+      <div class="stat-label">Taux de suppression</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">48<span class="u">h</span></div>
+      <div class="stat-label">Délai moyen de traitement</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">12<span class="u">k+</span></div>
+      <div class="stat-label">Avis Google supprimés</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">+5<span class="u"></span></div>
+      <div class="stat-label">Avocats partenaires</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip" aria-label="Garanties">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <span class="trust-dot" style="background:var(--g-green)"></span>
+      Paiement sécurisé Stripe
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-item">
+      <span class="trust-dot" style="background:var(--g-blue)"></span>
+      Conforme RGPD
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-item">
+      <span class="trust-dot" style="background:var(--g-red)"></span>
+      Cabinets avocats partenaires
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-item">
+      <span class="trust-dot" style="background:var(--g-yellow)"></span>
+      100% confidentiel
+    </div>
+  </div>
+</div>
+
+<!-- AUDIT GOOGLE PLACES + CALCULATEUR -->
+<section class="audit-section" id="audit" aria-labelledby="audit-title">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:var(--g-blue)">
+      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
+      Audit Gratuit et Calculateur de Pertes
+    </div>
+    <h2 class="sec-title" id="audit-title">Analysez votre réputation Google<br>et calculez votre <em>manque à gagner</em></h2>
+    <p class="sec-desc">Recherchez votre établissement pour récupérer automatiquement votre note Google, puis entrez votre chiffre d'affaires pour calculer vos pertes réelles.</p>
+
+    <div class="audit-card">
+      <h3>🔍 Recherchez votre établissement</h3>
+      <p>Entrez le nom de votre établissement et obtenez votre diagnostic de réputation instantané.</p>
+      <div class="search-wrap" id="search-wrap">
+        <div class="search-box">
+          <span class="search-google-icon" aria-hidden="true">📍</span>
+          <input type="search" id="biz-search" class="search-input"
+            placeholder="Ex : Boulangerie Martin, Restaurant Le Soleil, Lyon..."
+            autocomplete="off" aria-label="Rechercher votre entreprise sur Google">
+        </div>
+      </div>
+      <div class="manual-mode" id="manual-mode">
+        <span style="font-size:20px">ℹ️</span>
+        <div class="manual-mode-txt">
+          <strong>Mode démo activé</strong> — Pour activer la recherche Google en temps réel, remplacez <code>YOUR_API_KEY</code> dans le code par votre clé Google Places API.
+        </div>
+      </div>
+      <div class="result-panel" id="result-panel" role="region" aria-label="Résultats de l'analyse" aria-live="polite">
+        <div class="result-head">
+          <div class="result-biz-icon" id="res-icon" aria-hidden="true">📍</div>
+          <div>
+            <div class="result-biz-name" id="res-name"></div>
+            <div class="result-biz-addr" id="res-addr"></div>
+          </div>
+        </div>
+        <div class="metrics-grid" aria-label="Métriques Google">
+          <div class="metric-card">
+            <div class="metric-val mv-yellow" id="res-note" aria-label="Note Google">—</div>
+            <div class="metric-lbl">Note Google ★</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val mv-blue" id="res-total" aria-label="Total avis">—</div>
+            <div class="metric-lbl">Avis au total</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val mv-red" id="res-neg" aria-label="Avis négatifs estimés">—</div>
+            <div class="metric-lbl">Avis négatifs estimés*</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val mv-red" id="res-pct" aria-label="Pourcentage négatifs">—</div>
+            <div class="metric-lbl">% négatifs</div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text4);margin-bottom:18px">*Estimation basée sur la distribution statistique de la note moyenne.</p>
+        <div id="res-alert"></div>
+        <div class="calc-zone">
+          <h4>🧮 Calculateur de manque à gagner</h4>
+          <div class="calc-row">
+            <div class="calc-field">
+              <label for="ca-input">Chiffre d'affaires annuel (€)</label>
+              <input type="number" id="ca-input" placeholder="Ex : 250 000" min="0" step="1000" oninput="calcLoss()" aria-label="Chiffre d'affaires annuel en euros">
+            </div>
+            <div class="calc-field" id="note-manual-wrap" style="display:none">
+              <label>Note Google actuelle</label>
+              <div style="display:flex;gap:8px" role="group" aria-label="Note Google">
+                <button class="star-btn active" onclick="setManualNote(1,this)" aria-pressed="true">1★</button>
+                <button class="star-btn" onclick="setManualNote(2,this)" aria-pressed="false">2★</button>
+                <button class="star-btn" onclick="setManualNote(3,this)" aria-pressed="false">3★</button>
+                <button class="star-btn" onclick="setManualNote(4,this)" aria-pressed="false">4★</button>
+              </div>
+            </div>
+          </div>
+          <div id="calc-result-display" class="calc-result-display" style="display:none" aria-live="polite"></div>
+        </div>
+        <div class="result-cta">
+          <a href="#contact" class="btn-blue">⚡ Supprimer mes avis négatifs</a>
+          <a href="#tarifs" class="btn-outline">Voir les offres</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LE PROBLÈME -->
+<section class="probleme" id="probleme" aria-labelledby="pb-title">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:var(--g-red)">
+      <span class="edot" style="background:var(--g-red)" aria-hidden="true"></span>
+      L'Enjeu
+    </div>
+    <h2 class="sec-title" id="pb-title">Vous n'êtes pas démuni face à un avis mensonger.<br><em>Vous êtes mal équipé.</em></h2>
+    <p class="pb-intro">Contester un avis Google sans expertise relève de l'inefficacité quasi certaine. Google applique des algorithmes de modération opaques, et son service de signalement grand public est conçu pour décourager les recours.</p>
+    <p class="pb-intro">En moyenne, Google ne répond favorablement qu'à <strong>5 % des demandes</strong> de suppression grand public. La différence se résume à une seule chose : <strong>la qualité juridique et technique de l'argumentation</strong> présentée à Google.</p>
+    <div class="warn-banner reveal" role="note">
+      <span style="font-size:22px" aria-hidden="true">⚠️</span>
+      <div>
+        <strong>Important :</strong> En droit français, l'action en diffamation se prescrit en <strong>3 mois</strong> à compter de la publication (Loi du 29 juillet 1881). Chaque jour compte. Une consultation tardive peut vous priver de votre droit à agir en justice.
+      </div>
+    </div>
+    <div class="pb-grid">
+      <article class="pb-card reveal">
+        <div class="pb-num n1" aria-hidden="true">1</div>
+        <div class="pb-card-body">
+          <h3 class="pb-card-title">Des mois d'attente sans résultat</h3>
+          <p class="pb-card-text">Google rejette la majorité des signalements manuels, sans explication, parfois sans même accuser réception. L'avis reste en ligne pendant que votre clientèle s'effrite.</p>
+        </div>
+      </article>
+      <article class="pb-card reveal">
+        <div class="pb-num n2" aria-hidden="true">2</div>
+        <div class="pb-card-body">
+          <h3 class="pb-card-title">Un coût économique documenté</h3>
+          <p class="pb-card-text">Une baisse d'une étoile sur Google correspond à une perte de chiffre d'affaires estimée entre <strong>5 et 9 %</strong> selon les études de la Harvard Business School. Chaque semaine d'inaction aggrave le préjudice.</p>
+        </div>
+      </article>
+      <article class="pb-card reveal">
+        <div class="pb-num n3" aria-hidden="true">3</div>
+        <div class="pb-card-body">
+          <h3 class="pb-card-title">Des avis souvent frauduleux ou orchestrés</h3>
+          <p class="pb-card-text">Faux profils créés en masse, avis de concurrents, campagnes de dénigrement organisées : Google peine à les détecter automatiquement, mais nos juristes savent les qualifier.</p>
+        </div>
+      </article>
+      <article class="pb-card reveal">
+        <div class="pb-num n4" aria-hidden="true">4</div>
+        <div class="pb-card-body">
+          <h3 class="pb-card-title">Un vide ressenti, un droit bien présent</h3>
+          <p class="pb-card-text">La diffamation, le dénigrement commercial et les pratiques déloyales sont sanctionnés par le droit français. Encore faut-il actionner les bons leviers, au bon moment, avec les bons arguments.</p>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<!-- MÉTHODE -->
+<section class="methode" id="methode" aria-labelledby="meth-title">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:var(--g-blue)">
+      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
+      Notre Méthode
+    </div>
+    <h2 class="sec-title" id="meth-title">Identifiez. Choisissez. <em>Respirez.</em></h2>
+    <p class="sec-desc">Un processus structuré en quatre étapes conçues pour maximiser vos chances de suppression de vos avis Google négatifs.</p>
+    <div class="steps-row">
+      <article class="step reveal">
+        <div class="step-c" aria-label="Étape 1">🔗</div>
+        <h3 class="step-title">Soumission de l'URL</h3>
+        <p class="step-desc">Collez le lien direct de l'avis litigieux. Notre équipe procède à une analyse juridique complète sous 24h.</p>
+      </article>
+      <article class="step reveal">
+        <div class="step-c" aria-label="Étape 2">📦</div>
+        <h3 class="step-title">Choix du Package</h3>
+        <p class="step-desc">Standard ou Avocats selon la gravité. Notre analyse préliminaire vous guide si vous hésitez.</p>
+      </article>
+      <article class="step reveal">
+        <div class="step-c" aria-label="Étape 3">📋</div>
+        <h3 class="step-title">Transmission des preuves</h3>
+        <p class="step-desc">Captures d'écran, identité de l'auteur si connue — chaque élément renforce le dossier juridique.</p>
+      </article>
+      <article class="step reveal">
+        <div class="step-c" aria-label="Étape 4">✅</div>
+        <h3 class="step-title">Paiement et Activation</h3>
+        <p class="step-desc">Paiement sécurisé Stripe. Votre courrier est rédigé dans les 24h, votre avocat assigné dans l'heure pour le pack avocat.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section class="tarifs" id="tarifs" aria-labelledby="tarifs-title">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:var(--g-green)">
+      <span class="edot" style="background:var(--g-green)" aria-hidden="true"></span>
+      Nos Offres
+    </div>
+    <h2 class="sec-title" id="tarifs-title">Supprimer un avis ou une fiche Google —<br><em>choisissez votre niveau d'action</em></h2>
+    <div class="tarifs-grid">
+      {% for pack in packOffers %}
+      <article class="tarif-card {% if pack.featuredLayout %}featured{% endif %} reveal">
+        {% if pack.featuredLayout and pack.featuredBadgeLabel %}
+        <div class="feat-badge">{{ pack.featuredBadgeLabel }}</div>
+        {% endif %}
+        <div class="tarif-type {% if pack.cardCategory == 'fiche' %}tarif-type-fiche{% else %}tarif-type-avis{% endif %}">{{ pack.typeRibbon }}</div>
+        <div class="tarif-label">{{ pack.cardTitle }}</div>
+        <div class="tarif-price"><sup>€</sup>{{ (pack.priceAmountCents / 100)|round(0, 'common') }}</div>
+        <div class="tarif-note">{{ pack.tarifNote }}</div>
+        <div class="tarif-div"></div>
+        <ul class="tarif-features">
+          {% set fck = pack.buttonStyle == 'solid' ? 'fck-g' : 'fck-b' %}
+          {% for line in pack.featureLines %}
+          <li><span class="fck {{ fck }}" aria-hidden="true">✓</span>{{ line }}</li>
+          {% endfor %}
+        </ul>
+        <button type="button" class="btn-tarif {% if pack.buttonStyle == 'solid' %}btn-tarif-f{% else %}btn-tarif-o{% endif %}" onclick="selectPackAndScroll('{{ pack.formSlug }}')">{{ pack.ctaLabel }}</button>
+      </article>
+      {% endfor %}
+    </div>
+
+    <!-- PROTECTION JURIDIQUE -->
+    <div class="pj-wrap reveal" style="margin-top:56px">
+      <div style="text-align:center;margin-bottom:28px;">
+        <div class="g4bar" style="margin:0 auto 16px" aria-hidden="true"></div>
+        <p style="font-size:12px;font-weight:700;color:var(--text4);letter-spacing:2px;text-transform:uppercase;">Vos honoraires d'avocat peuvent être pris en charge par votre assurance</p>
+      </div>
+
+      <div style="background:linear-gradient(135deg,rgba(26,115,232,.06) 0%,rgba(26,115,232,.02) 100%);border:1.5px solid rgba(26,115,232,.2);border-radius:16px;padding:clamp(20px,3vw,32px);max-width:700px;margin:0 auto 32px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g-blue),var(--g-green))"></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <span style="font-size:22px">🛡️</span>
+          <strong style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g-blue);">Le saviez-vous ?</strong>
+        </div>
+        <p style="font-family:'Sora',sans-serif;font-weight:800;color:var(--text);font-size:16px;margin-bottom:12px;line-height:1.3;">Votre assurance Protection Juridique prend peut-être en charge les honoraires d'avocat de votre procédure</p>
+        <p style="font-size:14px;color:var(--text3);margin-bottom:10px;">Si vous souscrivez un Package Avocats, les honoraires de l'avocat partenaire dans le cadre de la procédure de suppression d'avis ou d'identification de l'auteur peuvent être couverts, en tout ou en partie, par votre contrat d'assurance Protection Juridique (PJ), souvent inclus dans votre assurance habitation, auto, ou professionnelle.</p>
+        <p style="font-size:13px;color:var(--text4);font-style:italic;">Avant d'engager les frais, vérifiez votre contrat : la garantie PJ couvre fréquemment les litiges liés à la diffamation, au dénigrement et aux atteintes à la réputation en ligne.</p>
+      </div>
+
+      <div style="max-width:700px;margin:0 auto;">
+        <h3 style="font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px;">Qu'est-ce que la garantie Protection Juridique ?</h3>
+        <p style="font-size:14px;color:var(--text3);margin-bottom:20px;">La Protection Juridique (PJ) est une garantie d'assurance, souvent incluse sans surcoût dans votre assurance multirisque habitation, auto, ou professionnelle qui prend en charge les frais de défense juridique en cas de litige.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+          <div style="background:var(--white);border:1px solid rgba(26,115,232,.2);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow-sm);">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g-blue);margin-bottom:12px;">Ce qu'elle couvre généralement</div>
+            <ul style="list-style:none;font-size:13px;color:var(--text3);">
+              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-blue);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Honoraires d'avocat (dans la limite du plafond contractuel)</li>
+              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-blue);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Frais de procédure (huissier, expertises, etc.)</li>
+              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-blue);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Frais de justice en première instance et en appel</li>
+              <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-blue);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Assistance juridique téléphonique préalable</li>
+            </ul>
+          </div>
+          <div style="background:var(--white);border:1px solid rgba(52,168,83,.25);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow-sm);">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g-green);margin-bottom:12px;">Litiges typiquement couverts</div>
+            <ul style="list-style:none;font-size:13px;color:var(--text3);">
+              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Diffamation et atteinte à la réputation</li>
+              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Dénigrement commercial</li>
+              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Contentieux liés à l'activité professionnelle</li>
+              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Litiges avec des plateformes numériques</li>
+              <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Actions contre des tiers pour préjudice en ligne</li>
+            </ul>
+          </div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:13px;color:var(--text3);display:flex;gap:10px;align-items:flex-start;">
+          <span style="font-size:16px;flex-shrink:0;">📋</span>
+          <div><strong style="color:var(--text);">Contrats incluant généralement une PJ : </strong>Assurance habitation MRH (AXA, Maif, Macif, Allianz, GMF, Matmut…) · Assurance auto · Assurance professionnelle multirisque · RC professionnelle · Carte bancaire Visa Premier / MasterCard Gold. <span style="color:#92600A;font-weight:600;"> ⚠️ Plafonds : 3 000 € à 30 000 € selon les contrats.</span> Vérifiez avant toute démarche. Vous conservez le libre choix de votre avocat (art. L127-3 C. assur.).</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="expertise" id="expertise" aria-labelledby="exp-title">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:var(--g-blue)">
+      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
+      Notre Expertise
+    </div>
+    <h2 class="sec-title" id="exp-title">Un arsenal juridique complet<br><em>à votre service</em></h2>
+    <p class="sec-desc">Notre équipe associe maîtrise du droit du numérique, expertise RGPD et connaissance approfondie des mécanismes algorithmiques de Google.</p>
+    <div class="exp-grid">
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">⚖️</span><div><h3 class="exp-title">Diffamation et Dénigrement</h3><p class="exp-text">Application rigoureuse de la Loi du 29 juillet 1881 et du Code civil. Distinction précise entre critique légitime, opinion protégée et affirmation diffamatoire constitutive d'infraction.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🏛️</span><div><h3 class="exp-title">Concurrence déloyale et Parasitisme</h3><p class="exp-text">Identification et qualification des campagnes d'avis négatifs orchestrées par des concurrents. Dossier d'assignation en référé ou au fond selon l'urgence et le préjudice documenté.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🔏</span><div><h3 class="exp-title">RGPD et Protection des données</h3><p class="exp-text">Qualification RGPD des données personnelles présentes dans l'avis. Exercice des droits d'accès, rectification et à l'oubli. Saisine de la CNIL si nécessaire.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">💻</span><div><h3 class="exp-title">Droit du numérique (LCEN et DSA)</h3><p class="exp-text">Notification formelle aux hébergeurs sur le fondement de la LCEN et du Digital Services Act européen. Engagement de la responsabilité de Google en cas de maintien d'un contenu illicite notifié.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🤖</span><div><h3 class="exp-title">Analyse algorithmique des signalements Google</h3><p class="exp-text">Maîtrise des API de signalement et des heuristiques de modération de Google My Business. Nos requêtes sont rédigées pour déclencher une révision humaine, pas un rejet automatique.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🧠</span><div><h3 class="exp-title">Intelligence artificielle et AI Act</h3><p class="exp-text">Anticipation des enjeux liés aux avis générés ou amplifiés par IA. Qualification des pratiques commerciales trompeuses. Conseil en prévention et gestion de crise réputationnelle.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPRESSION FICHE GMB -->
+<section class="expertise" id="fiche-gmb" aria-labelledby="fiche-title" style="background:var(--white);border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:var(--g-blue)">
+      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
+      Service complémentaire
+    </div>
+    <h2 class="sec-title" id="fiche-title">Supprimer votre fiche<br><em>Google My Business</em></h2>
+    <p class="sec-desc">Quand supprimer les avis un par un ne suffit plus, supprimer la fiche elle-même élimine le problème à la racine.</p>
+
+    <div style="height:24px"></div>
+
+    <div class="a-box a-danger reveal" style="max-width:680px;margin:0 auto 36px;border-radius:14px;text-align:left;">
+      <span style="font-size:22px;flex-shrink:0;">💡</span>
+      <div style="flex:1;min-width:0;">
+        <strong style="color:var(--g-red);display:block;margin-bottom:6px;">Pourquoi opter pour ce service&nbsp;?</strong>
+        <p style="font-size:14px;color:var(--text3);margin:0;">La suppression d'avis est parfois insuffisante : de nouveaux avis peuvent réapparaître demain. Supprimer la fiche Google My Business elle-même (fondée sur le RGPD art. 17) élimine le problème à la racine.</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Sora',sans-serif;font-size:17px;font-weight:800;color:var(--text);text-align:center;margin-bottom:20px;">Pourquoi une fiche Google peut devenir un problème</h3>
+    <div style="max-width:680px;margin:0 auto 36px;">
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>Google crée automatiquement des fiches à partir de données publiques, sans votre consentement. L'arrêt de la Cour d'appel de Chambéry de mai 2025 reconnaît cette création automatique comme une faute.</li>
+        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>Le système de notation à 5 étoiles n'est pas adapté aux professions réglementées : un médecin, un avocat, un dentiste ne peuvent pas répondre publiquement sans risquer de violer le secret professionnel.</li>
+        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>N'importe qui peut déposer un avis sans vérification : patients jamais reçus, concurrents, tiers mal intentionnés.</li>
+        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>Répondre aux avis négatifs peut leur donner plus de visibilité algorithmique et aggraver la situation.</li>
+        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>Une fiche créée sans consentement, exposant des données personnelles sans base légale, constitue un traitement illicite au sens du RGPD.</li>
+      </ul>
+    </div>
+
+    <h3 style="font-family:'Sora',sans-serif;font-size:17px;font-weight:800;color:var(--text);text-align:center;margin-bottom:20px;">Notre méthode de suppression</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:680px;margin:0 auto;">
+      <div style="background:var(--white);border:1.5px solid rgba(26,115,232,.2);border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;gap:14px;align-items:flex-start;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--g-blue);"></div>
+        <div style="width:40px;height:40px;background:rgba(26,115,232,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;margin-top:6px;">⚖️</div>
+        <div style="padding-top:10px;">
+          <strong style="display:block;margin-bottom:6px;color:var(--text);font-size:14px;">Mise en demeure RGPD</strong>
+          <p style="font-size:13.5px;color:var(--text3);margin:0;">Mise en demeure formelle adressée aux services juridiques de Google, fondée sur l'article 17 du RGPD. Depuis l'arrêt de Chambéry de mai 2025, il est établi qu'une fiche Google constitue un traitement de données personnelles.</p>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1.5px solid rgba(52,168,83,.25);border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;gap:14px;align-items:flex-start;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--g-green);"></div>
+        <div style="width:40px;height:40px;background:rgba(52,168,83,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;margin-top:6px;">🛠️</div>
+        <div style="padding-top:10px;">
+          <strong style="display:block;margin-bottom:6px;color:var(--text);font-size:14px;">Action technique éprouvée</strong>
+          <p style="font-size:13.5px;color:var(--text3);margin:0;">En parallèle de la démarche juridique, déploiement de procédures techniques éprouvées sur des milliers de fiches. La combinaison juridique + technique garantit un taux de réussite supérieur à 95 %.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CADRE LÉGAL -->
+<section class="legal" id="legal" aria-labelledby="legal-title">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:var(--g-blue)">
+      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
+      Cadre Légal
+    </div>
+    <h2 class="sec-title" id="legal-title">Des fondements juridiques solides<br><em>pour chaque intervention</em></h2>
+    <p class="sec-desc">La suppression d'un avis Google ne relève pas de la bonne volonté de Google. Elle repose sur des obligations légales précises que nous savons actionner.</p>
+    <div class="legal-table-wrap reveal" aria-label="Fondements juridiques">
+      <table class="legal-table">
+        <thead>
+          <tr>
+            <th scope="col" style="width:28%;text-align:center;">Texte juridique</th>
+            <th scope="col" style="text-align:center;">Fondement et Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="legal-law">Loi 29 juillet 1881<br>Art. 29 et 32</div><span class="legal-tag">Diffamation</span></td>
+            <td>Toute allégation d'un fait portant atteinte à l'honneur ou à la considération. Prescription de 3 mois. Engage la responsabilité civile et pénale de l'auteur.</td>
+          </tr>
+          <tr>
+            <td><div class="legal-law">Code civil<br>Art. 1240 et 1241</div><span class="legal-tag">Resp. délictuelle</span></td>
+            <td>Fondement de l'action en dénigrement commercial. Tout fait quelconque causant un dommage oblige son auteur à réparation. S'applique aux avis portant préjudice à l'activité économique.</td>
+          </tr>
+          <tr>
+            <td><div class="legal-law">Code de commerce<br>Art. L420-1 et L442-1</div><span class="legal-tag">Concurrence déloyale</span></td>
+            <td>Qualification des campagnes d'avis coordonnées comme pratique restrictive de concurrence. Applicable dans les cas de dénigrement systématique organisé par un opérateur concurrent.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="temoignages" id="temoignages" aria-labelledby="temo-title">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:#F9AB00">
+      <span class="edot" style="background:#F9AB00" aria-hidden="true"></span>
+      Témoignages
+    </div>
+    <h2 class="sec-title" id="temo-title">Ils ont <em>récupéré leur réputation</em></h2>
+    <div class="temo-grid">
+      <article class="temo-card reveal">
+        <div class="temo-stars" aria-label="5 étoiles">★★★★★</div>
+        <blockquote class="temo-quote">« Grâce au package Standard, un avis malveillant déposé par un concurrent a été supprimé en seulement 4 jours. Mon restaurant est remonté en première position Google. »</blockquote>
+        <div class="temo-sep" aria-hidden="true"></div>
+        <div class="temo-author">
+          <div class="temo-avatar" style="background:var(--g-grn-lt);color:var(--g-green)" aria-hidden="true">M</div>
+          <div><div class="temo-name">Marc D.</div><div class="temo-role">Restaurateur, Lyon</div></div>
+          <span class="temo-pkg pkg-s" aria-label="Package Standard">Standard</span>
+        </div>
+      </article>
+      <article class="temo-card reveal">
+        <div class="temo-stars" aria-label="5 étoiles">★★★★★</div>
+        <blockquote class="temo-quote">« J'ai pris le package Avocat pour une diffamation grave. Résultat net et sans appel. L'avis a été retiré et l'auteur formellement identifié et mis en demeure. »</blockquote>
+        <div class="temo-sep" aria-hidden="true"></div>
+        <div class="temo-author">
+          <div class="temo-avatar" style="background:var(--g-blue-lt);color:var(--g-blue)" aria-hidden="true">T</div>
+          <div><div class="temo-name">Thomas R.</div><div class="temo-role">Artisan plombier, Bordeaux</div></div>
+          <span class="temo-pkg pkg-a" aria-label="Package Avocats">Avocat</span>
+        </div>
+      </article>
+      <article class="temo-card reveal">
+        <div class="temo-stars" aria-label="5 étoiles">★★★★★</div>
+        <blockquote class="temo-quote">« Un accompagnement sérieux qui protège enfin notre e-réputation médicale. Service irréprochable, délai respecté, résultat totalement professionnel. »</blockquote>
+        <div class="temo-sep" aria-hidden="true"></div>
+        <div class="temo-author">
+          <div class="temo-avatar" style="background:var(--g-yel-lt);color:#F9AB00" aria-hidden="true">S</div>
+          <div><div class="temo-name">Dr. Sophie M.</div><div class="temo-role">Cabinet de santé, Paris</div></div>
+          <span class="temo-pkg pkg-a" aria-label="Package Avocats">Avocat</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULAIRE DE CONTACT -->
+<section class="contact-section" id="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="g4bar" style="margin:0 auto 22px" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="justify-content:center;color:var(--g-blue)">
+      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
+      Démarrer maintenant
+    </div>
+    <h2 class="sec-title" id="contact-title">Reprenez le contrôle<br>de <em>votre image</em></h2>
+    <p class="sec-desc">Remplissez le formulaire. Nos experts analysent votre dossier et vous contactent sous 2h.</p>
+    <div class="contact-card">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-nom">Nom <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="f-nom" name="nom" placeholder="Dupont" required autocomplete="family-name">
+        </div>
+        <div class="form-group">
+          <label for="f-prenom">Prénom <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="f-prenom" name="prenom" placeholder="Jean" required autocomplete="given-name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+          <input type="email" id="f-email" name="email" placeholder="jean@exemple.fr" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="f-tel">Téléphone <span class="req" aria-hidden="true">*</span></label>
+          <input type="tel" id="f-tel" name="telephone" placeholder="+33 6 00 00 00 00" required autocomplete="tel">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="f-entreprise">🔍 Trouvez votre établissement Google <span class="req" aria-hidden="true">*</span></label>
+        <div class="form-biz-wrap">
+          <span class="form-biz-icon" aria-hidden="true">🏢</span>
+          <input type="text" id="f-entreprise" name="entreprise"
+            placeholder="Ex : Restaurant Le Soleil, Boulangerie Martin, Lyon…"
+            required autocomplete="off" aria-label="Rechercher votre établissement Google">
+        </div>
+        <div style="font-size:11px;color:var(--text4);margin-top:6px">→ Tapez le nom de votre établissement et sélectionnez-le dans la liste Google</div>
+      </div>
+      <div class="form-group" id="f-adresse-wrap" style="display:none">
+        <label>📍 Adresse détectée</label>
+        <input type="text" id="f-adresse" name="adresse" readonly class="fi-addr-filled" aria-label="Adresse de l'établissement">
+      </div>
+      <div id="form-insight-panel" style="display:none" aria-live="polite"></div>
+      <div class="form-group">
+        <label for="f-url">🔗 Lien de l'avis Google <span class="req" aria-hidden="true">*</span>
+          <span class="tt-wrap">
+            <button type="button" class="tt-btn" onclick="toggleTt(this)" aria-label="Comment trouver le lien de l'avis Google ?" aria-expanded="false">?</button>
+            <div class="tt-box" role="tooltip" aria-hidden="true">
+              <div class="tt-title">📍 Comment trouver le lien de l'avis ?</div>
+              <div class="tt-step"><span class="tt-num">1</span><div class="tt-text">Ouvrez <strong>Google Maps</strong> et recherchez le nom de votre établissement</div></div>
+              <div class="tt-step"><span class="tt-num">2</span><div class="tt-text">Cliquez sur l'onglet <strong>« Avis »</strong></div></div>
+              <div class="tt-step"><span class="tt-num">3</span><div class="tt-text">Cliquez sur <strong>⋮</strong> (3 points) à droite de l'avis</div></div>
+              <div class="tt-step"><span class="tt-num">4</span><div class="tt-text">Cliquez sur <strong>« Partager l'avis »</strong> et copiez le lien</div></div>
+              <div class="tt-alt">💡 <strong>Astuce :</strong> Clic droit sur la date de l'avis → <strong>« Copier le lien »</strong></div>
+            </div>
+          </span>
+        </label>
+        <div class="url-wrap">
+          <input type="url" id="f-url" name="url_avis"
+            placeholder="https://www.google.com/maps/place/..."
+            required oninput="validateUrl(this)" onpaste="setTimeout(()=>{extractUrl(this);validateUrl(this);},0)"
+            aria-describedby="url-hint url-err">
+          <span class="url-ok" id="url-ok" aria-hidden="true"></span>
+        </div>
+        <div id="url-err" class="url-err-msg" role="alert">⚠️ Veuillez coller un lien URL valide commençant par https://</div>
+        <div id="url-hint" style="font-size:11px;color:var(--text4);margin-top:5px">→ Sur Google Maps : clic droit sur l'avis → "Copier le lien"</div>
+        <div id="review-preview" aria-live="polite"></div>
+      </div>
+      <div class="form-group">
+        <label for="f-package">Package souhaité</label>
+        <select id="f-package" name="package" aria-label="Sélectionnez votre package">
+          {% for pack in packOffers %}
+          <option value="{{ pack.formSlug }}">{{ pack.cardTitle }} ({{ (pack.priceAmountCents / 100)|round(0, 'common') }} €)</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="f-justif">Justification de la demande <span class="req" aria-hidden="true">*</span></label>
+        <textarea id="f-justif" name="justification" placeholder="Exposez les motifs de votre demande : pourquoi cet avis est-il diffamatoire, faux ou illicite ? Précisez tout élément utile (identité supposée de l'auteur, contexte, historique...)." required aria-label="Exposé des motifs juridiques"></textarea>
+      </div>
+      <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}" data-theme="light" style="margin-bottom:16px;display:flex;justify-content:center"></div>
+      <button class="btn-blue btn-wide" onclick="submitForm()" type="button" aria-label="Envoyer la demande de suppression">
+        🔒 Valider ma demande et procéder au paiement
+      </button>
+      <div class="secure-note" aria-label="Sécurité et confidentialité">
+        <div class="secure-icon" aria-hidden="true">🔒</div>
+        Données chiffrées · 100% confidentiel · Conforme RGPD · Horodatage automatique
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="g4bar" aria-hidden="true"></div>
+    <div class="sec-eyebrow" style="color:var(--g-blue)">
+      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
+      FAQ
+    </div>
+    <h2 class="sec-title" id="faq-title">Questions <em>fréquentes</em></h2>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Quelle est la différence entre un « signalement » et une « mise en demeure » ?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a">Le Package Standard consiste à soumettre une demande de retrait à Google en mobilisant des arguments techniques et légaux précis, via ses propres canaux. La mise en demeure (Package Avocats) est un acte juridique formel rédigé et signé par avocat, qui engage la responsabilité de son destinataire — auteur de l'avis ou Google — et crée une obligation légale de réponse.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Peut-on agir même si l'auteur de l'avis est anonyme ?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a">Oui. L'anonymat sur Google est une protection relative, non absolue. Dans le cadre du Package Avocats, vous pouvez prévoir une action directe contre Google en tant qu'hébergeur pour obtenir la communication des données d'identification de l'auteur, sur le fondement de l'article 6-II de la LCEN.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Toutes les catégories d'avis peuvent-elles être supprimées ?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a">Non. Une critique négative mais factuelle, sincère et proportionnée relève de la liberté d'expression. Notre analyse préliminaire, incluse dans les deux packages, a précisément pour objet de qualifier le contenu et d'évaluer ses chances réelles de retrait. Un avis manifestement faux peut quant à lui être supprimé sur le fondement des pratiques déloyales.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Quel est le délai légal dans lequel Google doit me répondre ?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a">Sous l'empire de la LCEN, Google doit agir « promptement » (5 à 10 jours ouvrés pour les contenus manifestement illicites). Le DSA, applicable depuis février 2024, est plus prescriptif pour Google en tant que très grande plateforme. Notre mise en demeure formelle impose un délai de réponse de 8 jours francs.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Si je prouve qu'un concurrent a publié un faux avis, puis-je obtenir une indemnisation ?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a">Oui. Les juridictions françaises allouent des dommages et intérêts couvrant le préjudice commercial direct (manque à gagner), le préjudice moral et parfois le préjudice d'image. Si le concurrent a utilisé des outils d'IA, l'argument tiré de l'AI Act (art. 5 du Règlement UE 2024/1689) constitue un levier supplémentaire inédit. Notre Package Avocats inclut une évaluation complète du préjudice indemnisable.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links-top">
+    <div class="footer-links-top-inner">
+      <a href="{{ path('page_cgs') }}">CGS</a>
+      <a href="{{ path('page_cgs') }}#tab-mentions">Mentions légales</a>
+      <a href="{{ path('page_cgs') }}#tab-confidentialite">Politique de confidentialité (RGPD)</a>
+      <a href="{{ path('page_contact') }}">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <div class="footer-logo-txt" aria-label="CleanAvis.fr" style="display:flex;align-items:center;gap:10px;">
+        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+          <path d="M18 3 L32 8 L32 20 Q32 29 18 34 Q4 29 4 20 L4 8 Z" fill="#1A73E8"/>
+          <polyline points="11,18 16,24 26,13" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <span style="font-family:'Sora',sans-serif;font-size:17px;font-weight:900;letter-spacing:-.4px;color:var(--text);line-height:1;">CleanAvis</span>
+          <div style="height:2px;border-radius:2px;background:linear-gradient(90deg,var(--g-blue),var(--g-red),var(--g-yellow),var(--g-green));margin-top:3px;"></div>
+          <span style="font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text4);line-height:1;margin-top:3px;display:block">Suppression d'avis Google</span>
+        </div>
+      </div>
+      <div class="footer-disclaimer">
+        Spécialisé exclusivement dans la suppression d'avis Google. Non affilié à Google LLC. Google™ est une marque de Google LLC. Toutes nos actions s'inscrivent dans le cadre légal français et européen.
+      </div>
+      <div class="footer-copy">© 2026 CleanAvis.fr</div>
+    </div>
+  </div>
+</footer>
+
+<!-- BANDEAU COOKIES -->
+<div id="cookie-banner" role="dialog" aria-label="Gestion des cookies">
+  <div class="cookie-text">
+    <strong>🍪 Ce site utilise des cookies</strong>
+    <p>Nous utilisons Google Maps et Cloudflare Turnstile pour protéger les formulaires. <a href="{{ path('page_cgs') }}#tab-confidentialite">En savoir plus</a></p>
+  </div>
+  <div class="cookie-btns">
+    <button class="cookie-btn-refuse" onclick="cookieRefuse()">Refuser</button>
+    <button class="cookie-btn-accept" onclick="cookieAccept()">Accepter</button>
+  </div>
+</div>

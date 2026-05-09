@@ -1,0 +1,391 @@
+{% extends 'layout/base_site.html.twig' %}
+
+{% block title %}CGS · Politique de confidentialité · Mentions légales — CleanAvis.fr{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ asset('assets/css/cgs.css') }}">
+{% endblock %}
+
+{% block body %}
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="{{ path('app_home') }}" class="cgs-header-home" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit">
+    <svg class="nav-logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 3 L32 8 L32 20 Q32 29 18 34 Q4 29 4 20 L4 8 Z" fill="#1A73E8"/>
+      <path d="M18 3 L32 8 L32 20 Q32 29 18 34 Q4 29 4 20 L4 8 Z" fill="url(#sg)"/>
+      <defs>
+        <linearGradient id="sg" x1="4" y1="3" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#1A73E8"/><stop offset="100%" stop-color="#1557B0"/>
+        </linearGradient>
+      </defs>
+      <polyline points="11,18 16,24 26,13" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="10" cy="6.5" r="2" fill="#4285F4"/>
+      <circle cx="16" cy="5"   r="2" fill="#EA4335"/>
+      <circle cx="22" cy="5"   r="2" fill="#FBBC04"/>
+      <circle cx="28" cy="6.5" r="2" fill="#34A853"/>
+    </svg>
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">CleanAvis</span>
+      <div class="nav-logo-bar"></div>
+      <span class="nav-logo-sub">Suppression d'avis Google</span>
+    </div>
+    </a>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('cgs',this)">Conditions Générales de Service</button>
+  <button class="tab-btn" onclick="showTab('confidentialite',this)">Politique de Confidentialité</button>
+  <button class="tab-btn" onclick="showTab('mentions',this)">Mentions Légales</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CGS
+══════════════════════════════════════════ -->
+<div class="doc-section active" id="tab-cgs">
+<div class="doc-wrap">
+<div class="doc-card">
+
+  <p class="doc-subtitle">CleanAvis.fr – Service de suppression d'avis Google</p>
+  <h1 class="doc-title">Conditions Générales de Service</h1>
+  <p class="doc-version">Version 1.0 – En vigueur au 1er juillet 2026</p>
+  <div class="doc-divider"></div>
+
+  <h2>Préambule</h2>
+  <p>La société Under Pressure Agency LLC, immatriculée sous le numéro EIN 37-2216428 (entité de droit américain), dont le siège social est situé 1309 Coffeen Ave, Suite 1200, Sheridan, WY 82801, États-Unis (ci-après « la Société »), exploite la plateforme en ligne accessible à l'adresse <strong>https://cleanavis.fr</strong> (ci-après « le Site »), proposant des prestations d'assistance juridique et technique dans le cadre de la suppression d'avis Google négatifs.</p>
+  <p>Les présentes Conditions Générales de Service (ci-après « CGS ») régissent l'ensemble des relations contractuelles entre la Société et toute personne physique ou morale (ci-après « le Client ») souhaitant avoir recours à l'un des services proposés sur le Site.</p>
+  <p>Le Client reconnaît avoir pris connaissance des présentes CGS avant toute commande et les accepter sans réserve. Toute commande passée sur le Site vaut acceptation pleine et entière des présentes CGS.</p>
+
+  <h2>Article 1 – Définitions</h2>
+  <p>« <strong>Service</strong> » : désigne l'une des prestations proposées par la Société sur le Site, à savoir :</p>
+  <ul class="legal-list">
+    {% for pack in packOffers %}
+    <li><strong>{{ pack.cardTitle }} ({{ (pack.priceAmountCents / 100)|number_format(2, ',', ' ') }} €)</strong> : {{ pack.cgsDefinitionBody }}</li>
+    {% endfor %}
+  </ul>
+  <p>« <strong>Avis litigieux</strong> » : désigne tout avis ou commentaire publié sur Google My Business que le Client souhaite voir supprimé ou retiré.</p>
+  <p>« <strong>Avocat partenaire</strong> » : désigne tout avocat inscrit au Barreau, intervenant en qualité de prestataire indépendant dans le cadre du Pack Avocats, sans lien de subordination avec la Société.</p>
+  <p>« <strong>Résultat</strong> » : désigne la suppression effective de l'avis litigieux ou de la fiche Google par Google LLC, qui est une entité distincte et indépendante de la Société.</p>
+
+  <h2>Article 2 – Champ d'application et opposabilité</h2>
+  <p>Les présentes CGS s'appliquent à toutes les commandes passées sur le Site, à l'exclusion de toute autre condition. Elles prévalent sur tout document émanant du Client.</p>
+  <p>La Société se réserve le droit de modifier les présentes CGS à tout moment. Les CGS applicables sont celles en vigueur à la date de la commande.</p>
+  <p>Les CGS sont rédigées en langue française. En cas de traduction, seule la version française fait foi.</p>
+
+  <h2>Article 3 – Conditions d'accès aux Services</h2>
+  <p>L'accès aux Services est réservé aux personnes physiques majeures capables juridiquement ou aux personnes morales dûment représentées. Le Client garantit la véracité et l'exactitude des informations communiquées lors de la commande.</p>
+  <p>Le Client doit être titulaire d'un droit ou d'un intérêt légitime relativement à l'avis litigieux (propriétaire de l'établissement concerné, dirigeant, mandataire, etc.).</p>
+  <p>Les Services sont exclusivement destinés à des fins licites. Le Client s'interdit notamment de solliciter la suppression d'un avis sincère, fondé et proportionné, ou de tenter de manipuler abusivement les systèmes de notation.</p>
+
+  <h2>Article 4 – Processus de commande</h2>
+  <p>La commande s'effectue selon les étapes suivantes :</p>
+  <ul class="legal-list">
+    <li>Soumission par le Client de l'URL de l'avis litigieux via le formulaire en ligne du Site ;</li>
+    <li>Sélection du Pack choisi par le Client ;</li>
+    <li>Transmission des éléments de preuve disponibles (captures d'écran, identité de l'auteur si connue, etc.) ;</li>
+    <li>Paiement en ligne sécurisé via la solution Stripe (PCI-DSS) ;</li>
+    <li>Confirmation de commande adressée par e-mail.</li>
+  </ul>
+  <p>La commande n'est définitivement enregistrée qu'après réception du paiement. Le Client reçoit un récapitulatif de commande par e-mail à l'adresse communiquée lors de la commande.</p>
+
+  <h2>Article 5 – Prix et modalités de paiement</h2>
+  <p>Les tarifs applicables sont ceux affichés sur le Site au jour de la commande, exprimés en euros toutes taxes comprises (TTC). La Société se réserve le droit de modifier ses tarifs à tout moment, sans que cela n'affecte les commandes déjà validées.</p>
+
+  <table class="legal-table price-table">
+    <thead><tr><th>Prestation</th><th>Prix TTC</th></tr></thead>
+    <tbody>
+      {% for pack in packOffers %}
+      <tr><td>{{ pack.cardTitle }}</td><td><strong>{{ (pack.priceAmountCents / 100)|number_format(2, ',', ' ') }} €</strong></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p>Le paiement est effectué en ligne, au comptant et intégralement, au moyen de la solution de paiement sécurisé <strong>Stripe</strong> (certifiée PCI-DSS niveau 1). La Société n'a accès à aucune donnée bancaire du Client. Un reçu de paiement est automatiquement adressé par Stripe à l'adresse e-mail du Client.</p>
+  <div class="alert-box"><strong>Pack Avocats :</strong> les honoraires versés rémunèrent uniquement les avocats et sont facturés par le cabinet d'avocat partenaire et non par la Société.</div>
+
+  <h2>Article 6 – Droit de rétractation</h2>
+  <p>Conformément à l'article L.221-28 12° du Code de la consommation, le droit de rétractation ne peut s'appliquer aux contrats de fourniture de services pleinement exécutés avant la fin du délai de rétractation et dont l'exécution a commencé avec l'accord préalable exprès du consommateur.</p>
+  <p>En validant sa commande, le Client consommateur reconnaît expressément que la Société peut commencer l'exécution du Service avant l'expiration du délai légal de 14 jours, et renonce en conséquence à son droit de rétractation dès lors que le Service a été intégralement exécuté.</p>
+  <p>Pour les Clients professionnels (B2B), le droit de rétractation ne s'applique pas.</p>
+
+  <h2>Article 7 – Obligations de la Société – Obligation de moyens</h2>
+  <p><strong>Obligation de moyens et non de résultat :</strong> La Société s'engage à mettre en œuvre tous les moyens juridiques et techniques raisonnables pour obtenir la suppression de l'avis litigieux ou de la fiche Google. Toutefois, la décision finale de suppression appartient exclusivement à Google LLC, entité indépendante sur laquelle la Société n'exerce aucun contrôle.</p>
+  <p>La Société n'est donc tenue qu'à une obligation de moyens et ne saurait garantir un résultat de suppression. Les statistiques de performance (82 % de taux de suppression) reflètent des résultats historiques et ne constituent pas une garantie contractuelle pour chaque dossier individuel.</p>
+  <p>La Société s'engage à :</p>
+  <ul class="legal-list">
+    <li>Réaliser une analyse préliminaire de l'avis litigieux dans les <span style="font-weight:700;display:inline;">48 heures</span> suivant la réception de la commande et des éléments transmis par le Client ;</li>
+    <li>Mobiliser des juristes et experts qualifiés pour la rédaction des courriers et mises en demeure ;</li>
+    <li>Informer le Client de l'avancement de son dossier selon les modalités propres au Pack souscrit ;</li>
+    <li>Respecter la confidentialité des informations transmises par le Client.</li>
+  </ul>
+
+  <h2>Article 8 – Obligations du Client</h2>
+  <p>Le Client s'engage à :</p>
+  <ul class="legal-list">
+    <li>Fournir des informations exactes, complètes et à jour lors de la commande ;</li>
+    <li>Transmettre l'intégralité des éléments de preuve disponibles permettant d'étayer la demande (captures d'écran, correspondances, éléments d'identification de l'auteur, etc.) ;</li>
+    <li>Ne pas solliciter la suppression d'un avis sincère et fondé ;</li>
+    <li>Répondre promptement aux demandes de la Société ou de l'avocat partenaire ;</li>
+    <li>Ne pas agir en parallèle par ses propres moyens de manière susceptible de compromettre la stratégie juridique mise en œuvre.</li>
+  </ul>
+
+  <h2>Article 9 – Responsabilité de la Société</h2>
+  <p>La Société ne saurait être tenue responsable :</p>
+  <ul class="legal-list">
+    <li>De la décision de Google LLC de maintenir ou de supprimer un avis, une telle décision relevant de la seule discrétion de Google ;</li>
+    <li>Des délais de traitement par Google LLC, qui restent soumis aux propres règles de la plateforme ;</li>
+    <li>Des préjudices indirects, commerciaux ou immatériels subis par le Client en lien avec la persistance de l'avis ;</li>
+    <li>De tout dommage résultant d'informations inexactes ou incomplètes transmises par le Client ;</li>
+    <li>Des actes ou omissions de l'avocat partenaire, celui-ci intervenant en toute indépendance dans le respect des règles déontologiques de sa profession.</li>
+  </ul>
+  <p>En tout état de cause, la responsabilité de la Société est limitée au montant TTC du Service effectivement payé par le Client.</p>
+
+  <h2>Article 10 – Protection juridique – Information assurance</h2>
+  <p>La Société informe le Client que les honoraires d'avocat engagés dans le cadre du Pack Avocats peuvent être pris en charge, en tout ou en partie, par une garantie de protection juridique souscrite auprès d'un assureur (assurance habitation, auto, professionnelle, carte bancaire haut de gamme). Le Client est invité à vérifier son contrat d'assurance avant toute commande.</p>
+  <p>Cette information est fournie à titre indicatif et ne constitue pas un engagement de la Société quant à la prise en charge effective par un assureur.</p>
+
+  <h2>Article 11 – Propriété intellectuelle</h2>
+  <p>L'ensemble des éléments du Site (textes, graphismes, logos, images, vidéos, structure) est la propriété exclusive de la Société ou de ses partenaires et est protégé par le droit de la propriété intellectuelle. Toute reproduction, représentation, modification ou exploitation non autorisée est strictement interdite.</p>
+  <p>Les courriers et documents juridiques rédigés par la Société dans le cadre du Service sont communiqués au Client pour son usage exclusif. Ils ne peuvent être divulgués à des tiers, publiés ou utilisés à d'autres fins sans l'accord préalable écrit de la Société.</p>
+
+  <h2>Article 12 – Données personnelles</h2>
+  <p>Le traitement des données personnelles du Client dans le cadre des Services est régi par la Politique de confidentialité de la Société, accessible à l'adresse : <a href="https://cleanavis.fr/politique-confidentialite" style="color:var(--g-blue)">https://cleanavis.fr/politique-confidentialite</a>. Le Client est invité à en prendre connaissance.</p>
+
+  <h2>Article 13 – Confidentialité</h2>
+  <p>Chaque partie s'engage à maintenir strictement confidentielles les informations communiquées par l'autre partie dans le cadre de l'exécution des Services et à ne pas les divulguer à des tiers sans autorisation préalable écrite.</p>
+  <p>Cette obligation de confidentialité s'applique pendant toute la durée de la relation contractuelle et pour une période de cinq (5) ans à compter de sa cessation.</p>
+
+  <h2>Article 14 – Résiliation et suspension</h2>
+  <p>La Société se réserve le droit de suspendre ou résilier, sans délai ni indemnité, l'accès aux Services dans les cas suivants :</p>
+  <ul class="legal-list">
+    <li>Fourniture d'informations fausses, incomplètes ou de nature à induire en erreur la Société ou l'avocat partenaire ;</li>
+    <li>Utilisation des Services à des fins illicites ou contraires aux présentes CGS ;</li>
+    <li>Comportement abusif ou constitutif de harcèlement à l'égard de la Société ou de l'avocat partenaire.</li>
+  </ul>
+  <p>En cas de résiliation pour juste motif imputable au Client, aucun remboursement ne sera effectué pour les prestations d'ores et déjà réalisées.</p>
+
+  <h2>Article 15 – Médiation des litiges consommateurs</h2>
+  <p>Conformément aux articles L.611-1 et suivants du Code de la consommation et à l'ordonnance n° 2015-1033 du 20 août 2015, le Client consommateur a la faculté de recourir gratuitement à un médiateur de la consommation.</p>
+  <p>Le Client peut également recourir à la plateforme européenne de règlement en ligne des litiges (RLL) : <a href="https://ec.europa.eu/consumers/odr" style="color:var(--g-blue)" target="_blank">https://ec.europa.eu/consumers/odr</a></p>
+
+  <h2>Article 16 – Droit applicable et juridiction compétente</h2>
+  <p>Les présentes CGS sont soumises au droit français.</p>
+  <p>En cas de litige, le Client consommateur peut saisir les tribunaux compétents du lieu de son domicile. Pour les litiges entre professionnels, seul le <strong>Tribunal de commerce de Paris</strong> sera compétent.</p>
+
+</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     POLITIQUE DE CONFIDENTIALITÉ
+══════════════════════════════════════════ -->
+<div class="doc-section" id="tab-confidentialite">
+<div class="doc-wrap">
+<div class="doc-card">
+
+  <p class="doc-subtitle">CleanAvis.fr – Traitement des données personnelles (RGPD)</p>
+  <h1 class="doc-title">Politique de Confidentialité</h1>
+  <p class="doc-version">Version 1.0 – En vigueur au 1er juillet 2026</p>
+  <div class="doc-divider"></div>
+
+  <h2>Préambule</h2>
+  <p>La société Under Pressure Agency LLC (ci-après « la Société »), en sa qualité de Responsable de traitement au sens du Règlement (UE) 2016/679 du 27 avril 2016 (ci-après « RGPD »), accorde une importance primordiale à la protection des données personnelles de ses Clients et utilisateurs.</p>
+  <p>La présente Politique de confidentialité a pour objet d'informer les personnes concernées sur les traitements de données personnelles mis en œuvre dans le cadre de l'exploitation du Site et de la fourniture des Services, conformément aux articles 13 et 14 du RGPD.</p>
+
+  <h2>Article 1 – Identité du Responsable de traitement</h2>
+  <table class="info-table">
+    <tr><td>Raison sociale</td><td>Under Pressure Agency LLC</td></tr>
+    <tr><td>RCS</td><td>EIN 37-2216428 (entité de droit américain)</td></tr>
+    <tr><td>Adresse du siège</td><td>1309 Coffeen Ave, Suite 1200, Sheridan, WY 82801, États-Unis</td></tr>
+    <tr><td>Adresse e-mail</td><td><strong>contact@cleanavis.fr</strong></td></tr>
+  </table>
+
+  <h2>Article 2 – Catégories de données collectées, finalités et bases légales</h2>
+  <p>La Société traite les données personnelles suivantes :</p>
+  <div class="legal-table-wrap">
+  <table class="legal-table">
+    <thead>
+      <tr>
+        <th>Catégorie de données</th>
+        <th>Finalité</th>
+        <th>Base légale (RGPD)</th>
+        <th>Durée de conservation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Données d'identification<br><em>(nom, prénom, email, téléphone)</em></td>
+        <td>Gestion de la commande et du dossier client, communication relative au Service</td>
+        <td>Art. 6(1)(b) – exécution du contrat</td>
+        <td>5 ans à compter de la fin de la relation contractuelle (art. 2224 C. civ.)</td>
+      </tr>
+      <tr>
+        <td>Données professionnelles<br><em>(raison sociale, SIRET, adresse pro)</em></td>
+        <td>Facturation, identification du Client professionnel</td>
+        <td>Art. 6(1)(c) – obligation légale (droit comptable)</td>
+        <td>10 ans à compter de l'exercice comptable (art. L.123-22 C. com.)</td>
+      </tr>
+      <tr>
+        <td>URL de l'avis litigieux, captures d'écran, éléments transmis par le Client</td>
+        <td>Analyse juridique, rédaction du courrier ou de la mise en demeure, constitution du dossier</td>
+        <td>Art. 6(1)(b) – exécution du contrat</td>
+        <td>3 ans à compter de la clôture du dossier</td>
+      </tr>
+      <tr>
+        <td>Données de l'auteur de l'avis<br><em>(pseudo, identité supposée)</em></td>
+        <td>Qualification juridique de l'avis, action contre l'auteur (Pack Avocats)</td>
+        <td>Art. 6(1)(f) – intérêt légitime du Client (défense de ses droits)</td>
+        <td>3 ans à compter de la clôture du dossier</td>
+      </tr>
+      <tr>
+        <td>Données de paiement<br><em>(référence transaction Stripe, montant, date)</em></td>
+        <td>Suivi comptable et preuves de paiement</td>
+        <td>Art. 6(1)(c) – obligation légale</td>
+        <td>10 ans (art. L.123-22 C. com.)</td>
+      </tr>
+      <tr>
+        <td>Données de navigation<br><em>(adresse IP, cookies techniques, logs)</em></td>
+        <td>Sécurité du Site, statistiques d'audience anonymisées</td>
+        <td>Art. 6(1)(f) – intérêt légitime / consentement pour cookies analytics</td>
+        <td>13 mois maximum (CNIL)</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Article 3 – Destinataires des données</h2>
+  <p>Les données personnelles collectées peuvent être communiquées aux destinataires suivants, dans le strict respect du principe de minimisation :</p>
+  <ul class="legal-list">
+    <li><strong>Membres de l'équipe de la Société</strong> : juristes et experts marketing, dans la limite de leurs attributions ;</li>
+    <li><strong>Avocat partenaire (Pack Avocats uniquement)</strong> : les données nécessaires à la constitution du dossier juridique lui sont transmises. L'avocat agit en qualité de responsable de traitement distinct pour ses propres opérations ;</li>
+    <li><strong>Stripe Inc.</strong> : prestataire de paiement, responsable de traitement pour les données bancaires (Clauses contractuelles types – transfert vers les États-Unis) ;</li>
+    <li><strong>Google LLC</strong> : dans la mesure strictement nécessaire à la soumission des demandes de suppression via ses propres canaux ;</li>
+    <li><strong>Prestataires d'hébergement</strong> : Hostinger International Ltd, Kaunas, Lituanie (UE) ;</li>
+    <li><strong>Autorités judiciaires ou administratives</strong> : sur réquisition légale.</li>
+  </ul>
+  <p>La Société ne vend pas les données personnelles de ses Clients à des tiers.</p>
+
+  <h2>Article 4 – Transferts de données hors Union européenne</h2>
+  <p>Certains sous-traitants ou destinataires (notamment Stripe et Google LLC) peuvent être établis hors de l'Union européenne. Ces transferts sont encadrés par des garanties appropriées conformément au Chapitre V du RGPD :</p>
+  <ul class="legal-list">
+    <li>Clauses contractuelles types (CCT) adoptées par la Commission européenne (décision d'exécution UE 2021/914) ;</li>
+    <li>Ou décision d'adéquation de la Commission, le cas échéant.</li>
+  </ul>
+
+  <h2>Article 5 – Droits des personnes concernées</h2>
+  <p>Conformément aux articles 15 à 22 du RGPD, toute personne concernée dispose des droits suivants :</p>
+  <table class="rights-table">
+    <tr><td>Droit d'accès (art. 15)</td><td>Obtenir confirmation que des données vous concernant sont traitées et en recevoir une copie.</td></tr>
+    <tr><td>Droit de rectification (art. 16)</td><td>Corriger des données inexactes ou compléter des données incomplètes.</td></tr>
+    <tr><td>Droit à l'effacement (art. 17)</td><td>Obtenir la suppression de vos données, sous réserve des obligations légales de conservation.</td></tr>
+    <tr><td>Droit à la limitation (art. 18)</td><td>Demander la suspension du traitement dans certains cas.</td></tr>
+    <tr><td>Droit à la portabilité (art. 20)</td><td>Recevoir vos données dans un format structuré, couramment utilisé et lisible par machine.</td></tr>
+    <tr><td>Droit d'opposition (art. 21)</td><td>S'opposer à un traitement fondé sur l'intérêt légitime ou à des fins de prospection commerciale.</td></tr>
+    <tr><td>Droit de retrait du consentement</td><td>Retirer à tout moment un consentement préalablement donné, sans que cela n'affecte la licéité du traitement antérieur.</td></tr>
+    <tr><td>Droit d'introduire une réclamation</td><td>Saisir la CNIL (<a href="https://www.cnil.fr" style="color:var(--g-blue)" target="_blank">www.cnil.fr</a>) si vous estimez que vos droits ne sont pas respectés.</td></tr>
+  </table>
+  <p>Pour exercer vos droits : <strong>contact@cleanavis.fr</strong></p>
+
+  <h2>Article 6 – Cookies et traceurs</h2>
+  <p>Le Site utilise des cookies et autres traceurs. Conformément aux lignes directrices de la CNIL du 17 septembre 2020 :</p>
+  <ul class="legal-list">
+    <li><strong>Cookies strictement nécessaires</strong> (pas de consentement requis) : cookies de session, sécurité CSRF, préférences de langue ;</li>
+    <li><strong>Cookies de paiement Stripe</strong> : nécessaires à la sécurisation des transactions (base légale : exécution du contrat) ;</li>
+    <li><strong>Cookies analytics</strong> (consentement requis) : mesure d'audience anonymisée. Le consentement est recueilli via un bandeau cookie conforme à la recommandation CNIL.</li>
+  </ul>
+
+  <h2>Article 7 – Sécurité des données</h2>
+  <p>La Société met en œuvre des mesures techniques et organisationnelles appropriées pour assurer la sécurité des données personnelles, notamment :</p>
+  <ul class="legal-list">
+    <li>Chiffrement des données en transit (TLS/HTTPS) ;</li>
+    <li>Contrôle des accès et gestion des habilitations ;</li>
+    <li>Hébergement sur infrastructure sécurisée (Hostinger, serveurs UE) ;</li>
+    <li>Procédure de gestion des violations de données personnelles conforme à l'article 33 du RGPD (notification à la CNIL dans les 72 heures et, si nécessaire, aux personnes concernées).</li>
+  </ul>
+
+</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MENTIONS LÉGALES
+══════════════════════════════════════════ -->
+<div class="doc-section" id="tab-mentions">
+<div class="doc-wrap">
+<div class="doc-card">
+
+  <p class="doc-subtitle">CleanAvis.fr – Conformément à la Loi n° 2004-575 du 21 juin 2004 (LCEN)</p>
+  <h1 class="doc-title">Mentions Légales</h1>
+  <p class="doc-version">En vigueur au 1er juillet 2026</p>
+  <div class="doc-divider"></div>
+
+  <h2>Article 1 – Éditeur du Site</h2>
+  <table class="info-table">
+    <tr><td>Dénomination sociale</td><td>Under Pressure Agency LLC</td></tr>
+    <tr><td>Siège social</td><td>1309 Coffeen Ave, Suite 1200, Sheridan, WY 82801, États-Unis</td></tr>
+    <tr><td>Immatriculation RCS</td><td>EIN 37-2216428 — Sheridan, Wyoming, États-Unis</td></tr>
+    <tr><td>SIRET</td><td>EIN 37-2216428 (équivalent SIRET — entité de droit américain)</td></tr>
+    <tr><td>Adresse e-mail</td><td><strong>contact@cleanavis.fr</strong></td></tr>
+    <tr><td>Directeur de la publication</td><td>Under Pressure Agency LLC</td></tr>
+  </table>
+
+  <h2>Article 2 – Hébergeur du Site</h2>
+  <table class="info-table">
+    <tr><td>Raison sociale</td><td><strong>Hostinger International Ltd</strong></td></tr>
+    <tr><td>Adresse</td><td>61 Lordou Vironos Street, 6023 Larnaca, Chypre</td></tr>
+    <tr><td>Site web</td><td><a href="https://www.hostinger.fr" style="color:var(--g-blue)" target="_blank">www.hostinger.fr</a></td></tr>
+    <tr><td>Localisation des serveurs</td><td>Union Européenne (UE)</td></tr>
+  </table>
+
+  <h2>Article 3 – Propriété intellectuelle</h2>
+  <p>L'ensemble des contenus présents sur le Site cleanavis.fr (textes, images, graphismes, logo, icônes, sons, logiciels) est la propriété exclusive de la Société ou de ses partenaires, protégé par les lois françaises et internationales relatives à la propriété intellectuelle.</p>
+  <p>Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du Site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation écrite préalable de la Société.</p>
+
+  <h2>Article 4 – Limitation de responsabilité</h2>
+  <p>La Société ne pourra être tenue responsable des dommages directs et indirects causés au matériel de l'utilisateur lors de l'accès au Site. La Société décline toute responsabilité quant à l'utilisation qui pourrait être faite des informations et contenus présents sur le Site.</p>
+
+  <h2>Article 5 – Liens hypertextes</h2>
+  <p>Le Site peut contenir des liens hypertextes vers d'autres sites. La Société n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.</p>
+
+  <h2>Article 6 – Droit applicable</h2>
+  <p>Les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux français seront seuls compétents.</p>
+
+</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <p>© 2026 CleanAvis.fr — <a href="https://cleanavis.fr">cleanavis.fr</a> — contact@cleanavis.fr</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.location.hash = 'tab-' + id;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Ouvre l'onglet correspondant au hash de l'URL au chargement
+(function() {
+  const hash = window.location.hash.replace('#', '');
+  const valid = ['tab-cgs', 'tab-confidentialite', 'tab-mentions'];
+  if (valid.includes(hash)) {
+    const id = hash.replace('tab-', '');
+    document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(hash).classList.add('active');
+    const btns = document.querySelectorAll('.tab-btn');
+    const idx = valid.indexOf(hash);
+    if (btns[idx]) btns[idx].classList.add('active');
+  }
+})();
+</script>
+{% endblock %}

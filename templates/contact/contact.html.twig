@@ -1,0 +1,175 @@
+{% extends 'layout/base_site.html.twig' %}
+
+{% block title %}Contact — CleanAvis.fr{% endblock %}
+
+{% block head_extra %}
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/contact.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="{{ path('app_home') }}" class="logo-wrap">
+      <svg class="nav-logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 3 L32 8 L32 20 Q32 29 18 34 Q4 29 4 20 L4 8 Z" fill="#1A73E8"/>
+        <polyline points="11,18 16,24 26,13" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">CleanAvis</span>
+        <div class="nav-logo-bar"></div>
+        <span class="nav-logo-sub">Suppression d'avis Google</span>
+      </div>
+    </a>
+    <a href="{{ path('app_home') }}" class="back-link">← Retour au site</a>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <div class="sec-eyebrow" style="justify-content:center;"><span class="edot"></span> Nous contacter</div>
+  <h1 class="page-title" style="text-align:center;">Une question ?<br><em>Écrivez-nous.</em></h1>
+  <p class="page-desc" style="text-align:center;">Notre équipe vous répond sous <strong>2h</strong> en jours ouvrés.</p>
+
+  <div class="info-cards">
+    <div class="info-card">
+      <div class="info-card-icon blue">✉️</div>
+      <div>
+        <div class="info-card-label">Email</div>
+        <div class="info-card-value"><a href="mailto:contact@cleanavis.fr">contact@cleanavis.fr</a></div>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon green">⏱️</div>
+      <div>
+        <div class="info-card-label">Délai de réponse</div>
+        <div class="info-card-value">Sous 2h (jours ouvrés)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div id="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="c-nom">Nom <span class="req">*</span></label>
+          <input type="text" id="c-nom" placeholder="Dupont" required autocomplete="family-name">
+        </div>
+        <div class="form-group">
+          <label for="c-prenom">Prénom <span class="req">*</span></label>
+          <input type="text" id="c-prenom" placeholder="Jean" required autocomplete="given-name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="c-email">Email <span class="req">*</span></label>
+        <input type="email" id="c-email" placeholder="jean@exemple.fr" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="c-sujet">Sujet <span class="req">*</span></label>
+        <select id="c-sujet" required>
+          <option value="" disabled selected>Choisissez un sujet…</option>
+          <option value="question-generale">Question générale</option>
+          <option value="devis">Demande de devis</option>
+          <option value="suivi-dossier">Suivi de dossier</option>
+          <option value="partenariat">Partenariat</option>
+          <option value="presse">Presse / Média</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="c-message">Message <span class="req">*</span></label>
+        <textarea id="c-message" placeholder="Décrivez votre demande…" required></textarea>
+      </div>
+      <div id="form-error" class="ca-inline-alert ca-inline-alert--warning ca-inline-alert--hidden" role="alert" aria-live="polite">
+        <svg class="ca-inline-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        <span id="form-error-text" class="ca-inline-alert__text"></span>
+      </div>
+      <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}" data-theme="light" style="margin:20px 0 4px;display:flex;justify-content:center"></div>
+      <button type="button" class="btn-submit" id="submit-btn">✉️ Envoyer mon message</button>
+      <div class="secure-note">🔒 Données confidentielles · Conforme RGPD</div>
+    </div>
+    <div class="form-success" id="form-success">
+      <div class="success-icon">✓</div>
+      <h3>Message envoyé !</h3>
+      <p>Merci pour votre message. Notre équipe vous répondra sous 2h en jours ouvrés.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <p>© 2026 CleanAvis.fr · <a href="{{ path('page_cgs') }}">CGS</a> · <a href="{{ path('page_cgs') }}#tab-mentions">Mentions légales</a></p>
+</footer>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset('assets/js/ca-ui-modal.js') }}"></script>
+<script>
+  window.CLEANAVIS_API_CONTACT = "{{ path('api_contact_submit')|e('js') }}";
+  document.getElementById('submit-btn').addEventListener('click', async function sendContact() {
+    const nom = document.getElementById('c-nom').value.trim();
+    const prenom = document.getElementById('c-prenom').value.trim();
+    const email = document.getElementById('c-email').value.trim();
+    const sujet = document.getElementById('c-sujet').value;
+    const message = document.getElementById('c-message').value.trim();
+    const errEl = document.getElementById('form-error');
+    const errText = document.getElementById('form-error-text');
+    const btn = document.getElementById('submit-btn');
+    errEl.classList.add('ca-inline-alert--hidden');
+    errEl.classList.remove('ca-inline-alert--error', 'ca-inline-alert--warning');
+    if (!nom || !prenom || !email || !sujet || !message) {
+      errEl.classList.remove('ca-inline-alert--hidden');
+      errEl.classList.add('ca-inline-alert--warning');
+      errText.textContent = 'Merci de remplir tous les champs obligatoires avant d\'envoyer.';
+      return;
+    }
+    const tsToken = document.querySelector('[name="cf-turnstile-response"]')?.value;
+    if (!tsToken) {
+      errEl.classList.remove('ca-inline-alert--hidden');
+      errEl.classList.add('ca-inline-alert--warning');
+      errText.textContent = 'Validez la vérification Turnstile avant d\'envoyer votre message.';
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+    try {
+      const res = await fetch(window.CLEANAVIS_API_CONTACT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          firstName: prenom,
+          lastName: nom,
+          email: email,
+          subject: sujet,
+          message: message,
+          turnstileToken: tsToken
+        })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Erreur serveur');
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } catch (e) {
+      if (typeof window.showCaModal === 'function') {
+        errEl.classList.add('ca-inline-alert--hidden');
+        window.showCaModal({
+          variant: 'error',
+          title: 'Envoi impossible',
+          message: e.message || 'Une erreur est survenue.',
+          hint: 'Réessayez ou écrivez directement à contact@cleanavis.fr.',
+        });
+      } else {
+        errEl.classList.remove('ca-inline-alert--hidden', 'ca-inline-alert--warning');
+        errEl.classList.add('ca-inline-alert--error');
+        errText.textContent = e.message || 'Une erreur est survenue.';
+      }
+      btn.disabled = false;
+      btn.innerHTML = '✉️ Envoyer mon message';
+    }
+  });
+</script>
+{% endblock %}

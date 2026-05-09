@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion — Back-office CleanAvis</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; background: #f4f6f8; min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .card { background: #fff; border-radius: 16px; padding: 36px 40px; max-width: 400px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+    h1 { font-size: 1.25rem; margin: 0 0 20px; color: #202124; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #3c4043; }
+    input[type="email"], input[type="password"] { width: 100%; padding: 12px 14px; border: 1px solid #dadce0; border-radius: 10px; font-size: 15px; margin-bottom: 16px; }
+    button { width: 100%; padding: 12px; background: #1a73e8; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 15px; }
+    button:hover { background: #1557b0; }
+    .err { background: #fce8e6; color: #c5221f; padding: 10px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; }
+    input[type="hidden"] { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Back-office CleanAvis</h1>
+    {% if error %}
+      <div class="err">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <form method="post" action="{{ path('admin_login') }}">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+      <label for="username">Email</label>
+      <input type="email" id="username" name="_username" value="{{ last_username }}" required autofocus autocomplete="username">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" name="_password" required autocomplete="current-password">
+      <button type="submit">Se connecter</button>
+    </form>
+  </div>
+</body>
+</html>

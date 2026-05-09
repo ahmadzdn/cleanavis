@@ -1,0 +1,5 @@
+# Configuration du serveur local Symfony CLI
+# https://symfony.com/doc/current/setup/symfony_server.html
+http:
+    document_root: public/
+    passthru: index.php

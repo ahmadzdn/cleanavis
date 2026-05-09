@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CleanAvis.fr — Supprimer vos avis Google négatifs</title>
+<meta name="description" content="Supprimez vos avis Google négatifs avec nos experts en e-réputation et juristes en droit du numérique. Analyse gratuite, résultat en 48h. À partir de 49€.">
+<link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+<meta name="theme-color" content="#1A73E8">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}">
+<script>
+  window.CLEANAVIS_API_ORDER_INIT = "{{ path('api_order_init')|e('js') }}";
+  window._isLocalFile = (location.protocol === 'file:');
+  function initGooglePlaces() {
+    window._gPlacesReady = true;
+    if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
+      console.warn('[CleanAvis] Google Maps non chargé — mode démo actif');
+      return;
+    }
+    try {
+      const input = document.getElementById('biz-search');
+      if (input) {
+        const ac = new google.maps.places.Autocomplete(input, {
+          types:['establishment'],componentRestrictions:{country:'fr'},
+          fields:['name','formatted_address','rating','user_ratings_total','icon','place_id']
+        });
+        ac.addListener('place_changed', function(){
+          const place = ac.getPlace();
+          if (place && place.name) displayPlaceResult(place);
+        });
+        const mm = document.getElementById('manual-mode');
+        if (mm) mm.style.display = 'none';
+      }
+      const formInput = document.getElementById('f-entreprise');
+      if (formInput) {
+        const acForm = new google.maps.places.Autocomplete(formInput, {
+          types:['establishment'],componentRestrictions:{country:'fr'},
+          fields:['name','formatted_address','rating','user_ratings_total','icon','place_id']
+        });
+        acForm.addListener('place_changed', function(){
+          const place = acForm.getPlace();
+          if (place && place.name) displayFormInsight(place);
+        });
+      }
+      apiKeyActive = true;
+    } catch(e){ console.error('[CleanAvis] Erreur Google Places :', e); }
+  }
+  function loadGoogleScripts() {
+    if (window._googleScriptsLoaded) return;
+    window._googleScriptsLoaded = true;
+    const mapsScript = document.createElement('script');
+    {% if google_maps_api_key %}
+    mapsScript.src = 'https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key|e('js') }}&libraries=places&callback=initGooglePlaces&language=fr';
+    {% else %}
+    mapsScript.src = '';
+    console.warn('[CleanAvis] Définissez GOOGLE_MAPS_API_KEY — mode démo');
+    return;
+    {% endif %}
+    mapsScript.async = true; mapsScript.defer = true;
+    document.head.appendChild(mapsScript);
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window._isLocalFile) {
+      const banner = document.createElement('div');
+      banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#EA4335;color:white;padding:12px 20px;font-family:sans-serif;font-size:13px;display:flex;align-items:center;gap:12px;';
+      banner.innerHTML = '<strong>⚠️ Fichier ouvert localement (file://)</strong> — Google Places API nécessite un serveur HTTP. <a href="#" onclick="this.parentElement.remove()" style="color:white;margin-left:auto;font-size:18px;text-decoration:none">×</a>';
+      document.body.appendChild(banner);
+    }
+    const consent = localStorage.getItem('ca_cookie_consent');
+    if (consent === 'accepted') loadGoogleScripts();
+    else if (!consent) document.getElementById('cookie-banner').style.display = 'flex';
+  });
+  window.cookieAccept = function() {
+    localStorage.setItem('ca_cookie_consent', 'accepted');
+    document.getElementById('cookie-banner').style.display = 'none';
+    loadGoogleScripts();
+  };
+  window.cookieRefuse = function() {
+    localStorage.setItem('ca_cookie_consent', 'refused');
+    document.getElementById('cookie-banner').style.display = 'none';
+  };
+</script>
+</head>
+<body>
+{% include 'home/_main_content.html.twig' %}
+<script>window.CLEANAVIS_PACKS = {{ packsJson|raw }};</script>
+{# ca-ui-modal sans defer : doit être défini avant home-page.js (defer) pour window.showCaModal #}
+<script src="{{ asset('assets/js/ca-ui-modal.js') }}"></script>
+<script src="{{ asset('assets/js/home-page.js') }}" defer></script>
+</body>
+</html>

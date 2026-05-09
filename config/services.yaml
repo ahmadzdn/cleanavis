@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+
+parameters:
+    env(TURNSTILE_SECRET): ''
+    env(GOOGLE_MAPS_API_KEY): ''
+    env(TURNSTILE_SITE_KEY): ''
+    env(ADMIN_NOTIFICATION_EMAIL): ''
+    env(MAILER_FROM): ''
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+
+    App\Controller\Api\OrderInitController:
+        arguments:
+            $skipCaptcha: '%env(bool:APP_SKIP_CAPTCHA)%'
+
+    App\Service\TurnstileVerifier:
+        arguments:
+            $secretKey: '%env(TURNSTILE_SECRET)%'
+
+    App\Service\NotificationService:
+        arguments:
+            $adminNotificationEmail: '%env(ADMIN_NOTIFICATION_EMAIL)%'
+            $mailerFrom: '%env(MAILER_FROM)%'
+
+    App\Controller\HomeController:
+        arguments:
+            $googleMapsApiKey: '%env(GOOGLE_MAPS_API_KEY)%'
+            $turnstileSiteKey: '%env(TURNSTILE_SITE_KEY)%'
+
+    App\Controller\ContactPageController:
+        arguments:
+            $turnstileSiteKey: '%env(TURNSTILE_SITE_KEY)%'
+
+    App\Controller\Api\ContactSubmitController:
+        arguments:
+            $skipCaptcha: '%env(bool:APP_SKIP_CAPTCHA)%'
