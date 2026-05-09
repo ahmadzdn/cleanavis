@@ -1,0 +1,50 @@
+{# JSON-LD de base + FAQ optionnelle (faq_items = liste d'entités FaqItem ou tableaux avec question/réponse) #}
+{% set _base = (site_base_url|default(''))|trim %}
+{% if _base == '' %}
+  {% set _base = app.request.schemeAndHttpHost %}
+{% endif %}
+{% if _base|length > 1 and _base|slice(-1) == '/' %}
+  {% set _base = _base|slice(0, -1) %}
+{% endif %}
+{% set logo_abs = absolute_url(asset('assets/images/og-cleanavis.png')) %}
+<script type="application/ld+json">
+{{ {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': _base ~ '/#organization',
+      'name': 'CleanAvis',
+      'url': _base ~ '/',
+      'logo': {'@type': 'ImageObject', 'url': logo_abs},
+      'sameAs': []
+    },
+    {
+      '@type': 'WebSite',
+      '@id': _base ~ '/#website',
+      'url': _base ~ '/',
+      'name': 'CleanAvis',
+      'description': 'Expertise en suppression d\'avis Google et e-réputation.',
+      'publisher': {'@id': _base ~ '/#organization'},
+      'inLanguage': 'fr-FR'
+    }
+  ]
+}|json_encode(256)|raw }}
+</script>
+{% if show_faq|default(false) and faq_items is defined and faq_items|length > 0 %}
+<script type="application/ld+json">
+{% set faq_entities = [] %}
+{% for item in faq_items %}
+  {% set faq_entities = faq_entities|merge([{
+    '@type': 'Question',
+    'name': item.question,
+    'acceptedAnswer': {'@type': 'Answer', 'text': item.answer|striptags}
+  }]) %}
+{% endfor %}
+{{ {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': faq_entities
+}|json_encode(256)|raw }}
+</script>
+{% endif %}

@@ -1,0 +1,11 @@
+{# Pages tunnel paiement : pas d’indexation, canonical vers l’URL courante #}
+{% set _base = (site_base_url|default(''))|trim %}
+{% if _base == '' %}
+  {% set _base = app.request.schemeAndHttpHost %}
+{% endif %}
+{% if _base|length > 1 and _base|slice(-1) == '/' %}
+  {% set _base = _base|slice(0, -1) %}
+{% endif %}
+{% set _path = app.request.pathinfo %}
+<link rel="canonical" href="{{ _base ~ _path }}">
+<meta name="robots" content="noindex,nofollow">

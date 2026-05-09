@@ -5,8 +5,11 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\ContactMessageCrudController;
 use App\Controller\Admin\CustomerOrderCrudController;
 use App\Controller\Admin\EmailLogCrudController;
+use App\Controller\Admin\FaqItemCrudController;
 use App\Controller\Admin\PackOfferCrudController;
 use App\Controller\Admin\UserCrudController;
+use App\Repository\ContactMessageRepository;
+use App\Service\AdminDashboardMetrics;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -20,18 +23,30 @@ class DashboardController extends AbstractDashboardController
 {
     public function __construct(
         private readonly AdminUrlGenerator $adminUrlGenerator,
+        private readonly AdminDashboardMetrics $dashboardMetrics,
+        private readonly ContactMessageRepository $contactMessageRepository,
     ) {
     }
 
     public function index(): Response
     {
-        // Évite la page « Welcome to EasyAdmin » : ouverture directe sur les commandes.
-        $url = $this->adminUrlGenerator
-            ->setController(CustomerOrderCrudController::class)
-            ->setAction(Action::INDEX)
-            ->generateUrl();
+        $metrics = $this->dashboardMetrics->getMetrics();
 
-        return $this->redirect($url);
+        return $this->render('admin/dashboard.html.twig', [
+            'metrics' => $metrics,
+            'link_orders' => $this->adminUrlGenerator
+                ->setController(CustomerOrderCrudController::class)
+                ->setAction(Action::INDEX)
+                ->generateUrl(),
+            'link_contact' => $this->adminUrlGenerator
+                ->setController(ContactMessageCrudController::class)
+                ->setAction(Action::INDEX)
+                ->generateUrl(),
+            'link_emails' => $this->adminUrlGenerator
+                ->setController(EmailLogCrudController::class)
+                ->setAction(Action::INDEX)
+                ->generateUrl(),
+        ]);
     }
 
     public function configureDashboard(): Dashboard
@@ -45,8 +60,14 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
         // EasyAdmin 5 : linkTo(ControllerFqcn, label, icon) remplace linkToCrud.
         yield MenuItem::linkTo(PackOfferCrudController::class, 'Packs & tarifs Stripe', 'fas fa-tags');
+        yield MenuItem::linkTo(FaqItemCrudController::class, 'FAQ', 'fas fa-question-circle');
         yield MenuItem::linkTo(CustomerOrderCrudController::class, 'Commandes / paiements', 'fas fa-receipt');
-        yield MenuItem::linkTo(ContactMessageCrudController::class, 'Messages contact', 'fas fa-envelope');
+        $contactMenu = MenuItem::linkTo(ContactMessageCrudController::class, 'Messages contact', 'fas fa-envelope');
+        $unreadContact = $this->contactMessageRepository->countUnread();
+        if ($unreadContact > 0) {
+            $contactMenu->setBadge($unreadContact, 'danger');
+        }
+        yield $contactMenu;
         yield MenuItem::linkTo(EmailLogCrudController::class, 'Journal des e-mails', 'fas fa-paper-plane');
         yield MenuItem::linkTo(UserCrudController::class, 'Utilisateurs BO', 'fas fa-users');
     }

@@ -1,0 +1,98 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}Tableau de bord{% endblock %}
+
+{% block main %}
+<style>
+  .ca-dash { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin-bottom: 2rem; }
+  .ca-dash-card {
+    background: var(--body-bg, #f8fafc);
+    border: 1px solid var(--responsive-table-border-color, #e2e8f0);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: box-shadow .15s ease, border-color .15s ease;
+  }
+  a.ca-dash-card:hover { border-color: #94a3b8; box-shadow: 0 4px 12px rgba(15,23,42,.08); }
+  .ca-dash-card strong { display: block; font-size: 1.75rem; font-weight: 700; line-height: 1.2; letter-spacing: -.02em; }
+  .ca-dash-card .ca-dash-label { font-size: .8rem; color: #64748b; margin-bottom: .35rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .ca-dash-card .ca-dash-hint { font-size: .75rem; color: #94a3b8; margin-top: .25rem; }
+  .ca-dash-section-title { font-size: .85rem; font-weight: 700; color: #475569; margin: 1.25rem 0 .75rem; text-transform: uppercase; letter-spacing: .06em; }
+  span.ca-dash-card { cursor: default; }
+  span.ca-dash-card:hover { border-color: var(--responsive-table-border-color, #e2e8f0); box-shadow: none; }
+</style>
+
+<p class="content-header-description text-muted mb-3">
+  Synthèse du site public (depuis le déploiement du suivi des visites), messages, commandes et e-mails transactionnels.
+</p>
+
+<div class="ca-dash-section-title">Audience</div>
+<div class="ca-dash">
+  <span class="ca-dash-card">
+    <span class="ca-dash-label">Visites enregistrées (total)</span>
+    <strong>{{ metrics.visits_total }}</strong>
+    <span class="ca-dash-hint">Pages d’accueil, contact, CGS, tunnel paiement…</span>
+  </span>
+  <span class="ca-dash-card">
+    <span class="ca-dash-label">Visites (30 derniers jours)</span>
+    <strong>{{ metrics.visits_30d }}</strong>
+  </span>
+</div>
+
+<div class="ca-dash-section-title">Contact</div>
+<div class="ca-dash">
+  <a href="{{ link_contact }}" class="ca-dash-card">
+    <span class="ca-dash-label">Messages reçus</span>
+    <strong>{{ metrics.contact_total }}</strong>
+    <span class="ca-dash-hint">Cliquer pour ouvrir la liste</span>
+  </a>
+  <a href="{{ link_contact }}" class="ca-dash-card">
+    <span class="ca-dash-label">Non lus</span>
+    <strong>{{ metrics.contact_unread }}</strong>
+  </a>
+</div>
+
+<div class="ca-dash-section-title">Commandes &amp; paiements</div>
+<div class="ca-dash">
+  <a href="{{ link_orders }}" class="ca-dash-card">
+    <span class="ca-dash-label">Paiements validés</span>
+    <strong>{{ metrics.orders_paid }}</strong>
+    <span class="ca-dash-hint">Statut « payé »</span>
+  </a>
+  <a href="{{ link_orders }}" class="ca-dash-card">
+    <span class="ca-dash-label">En attente de paiement</span>
+    <strong>{{ metrics.orders_pending }}</strong>
+  </a>
+  <a href="{{ link_orders }}" class="ca-dash-card">
+    <span class="ca-dash-label">Échoués</span>
+    <strong>{{ metrics.orders_failed }}</strong>
+  </a>
+  <a href="{{ link_orders }}" class="ca-dash-card">
+    <span class="ca-dash-label">Annulés</span>
+    <strong>{{ metrics.orders_cancelled }}</strong>
+  </a>
+  <span class="ca-dash-card">
+    <span class="ca-dash-label">Chiffre encaissé (commandes payées)</span>
+    <strong>{{ metrics.revenue_euros|number_format(2, ',', ' ') }}&nbsp;€</strong>
+    <span class="ca-dash-hint">Somme des montants TTC enregistrés</span>
+  </span>
+  <span class="ca-dash-card">
+    <span class="ca-dash-label">Commandes (tous statuts)</span>
+    <strong>{{ metrics.orders_total }}</strong>
+  </span>
+</div>
+
+<div class="ca-dash-section-title">E-mails (journal)</div>
+<div class="ca-dash">
+  <a href="{{ link_emails }}" class="ca-dash-card">
+    <span class="ca-dash-label">Envoyés avec succès</span>
+    <strong>{{ metrics.emails_ok }}</strong>
+  </a>
+  <a href="{{ link_emails }}" class="ca-dash-card">
+    <span class="ca-dash-label">Échecs d’envoi</span>
+    <strong>{{ metrics.emails_ko }}</strong>
+  </a>
+</div>
+{% endblock %}

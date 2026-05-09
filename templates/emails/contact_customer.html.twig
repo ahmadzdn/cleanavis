@@ -1,0 +1,11 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block email_title %}Message bien reçu — CleanAvis{% endblock %}
+{% block heading %}Nous avons bien reçu votre message{% endblock %}
+
+{% block body %}
+<p style="margin:0 0 14px;">Bonjour {{ message.firstName }},</p>
+<p style="margin:0 0 18px;">Merci de nous avoir écrit. Votre demande est enregistrée sous le sujet <strong style="color:#202124;">« {{ message.subject }} »</strong>.</p>
+<p style="margin:0 0 18px;">Notre équipe vous répond sous <strong>2&nbsp;h</strong> en jours ouvrés, à l’adresse <a href="mailto:{{ message.email }}" style="color:#1A73E8;">{{ message.email }}</a>.</p>
+<p style="margin:0;color:#5F6368;font-size:14px;">Si vous ne voyez pas notre réponse, vérifiez vos courriers indésirables.</p>
+{% endblock %}

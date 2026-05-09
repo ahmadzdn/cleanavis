@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\FaqItemRepository;
 use App\Repository\PackOfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ final class HomeController extends AbstractController
         private readonly string $googleMapsApiKey,
         private readonly string $turnstileSiteKey,
         private readonly PackOfferRepository $packOfferRepository,
+        private readonly FaqItemRepository $faqItemRepository,
     ) {
     }
 
@@ -20,12 +22,14 @@ final class HomeController extends AbstractController
     public function index(): Response
     {
         $packOffers = $this->packOfferRepository->findEnabledOrdered();
+        $faqItems = $this->faqItemRepository->findEnabledOrdered();
 
         return $this->render('home/index.html.twig', [
             'google_maps_api_key' => $this->googleMapsApiKey,
             'turnstile_site_key' => $this->turnstileSiteKey,
             'packOffers' => $packOffers,
             'packsJson' => $this->buildPacksJsonForJs($packOffers),
+            'faqItems' => $faqItems,
         ]);
     }
 

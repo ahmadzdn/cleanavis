@@ -2,6 +2,15 @@
 
 {% block title %}Contact — CleanAvis.fr{% endblock %}
 
+{% block seo %}
+{% include 'partials/seo_tags.html.twig' with {
+  seo_title: 'Contact — CleanAvis.fr',
+  seo_description: 'Contactez CleanAvis pour la suppression d\'avis Google, nos tarifs ou une analyse personnalisée. Réponse sous 2h les jours ouvrés.',
+  seo_canonical_path: '/contact',
+} %}
+{% include 'partials/seo_jsonld.html.twig' %}
+{% endblock %}
+
 {% block head_extra %}
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 {% endblock %}

@@ -14,11 +14,16 @@ final class ContactPageController extends AbstractController
     }
 
     #[Route('/contact', name: 'page_contact', methods: ['GET'])]
-    #[Route('/contact.html', name: 'page_contact_html', methods: ['GET'])]
-    public function __invoke(): Response
+    public function contact(): Response
     {
         return $this->render('contact/contact.html.twig', [
             'turnstile_site_key' => $this->turnstileSiteKey,
         ]);
+    }
+
+    #[Route('/contact.html', name: 'page_contact_html', methods: ['GET'])]
+    public function contactLegacy(): Response
+    {
+        return $this->redirectToRoute('page_contact', [], Response::HTTP_MOVED_PERMANENTLY);
     }
 }

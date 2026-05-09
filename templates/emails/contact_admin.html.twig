@@ -1,0 +1,36 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block email_title %}Nouveau contact — CleanAvis{% endblock %}
+{% block heading %}Nouveau message depuis le formulaire{% endblock %}
+
+{% block body %}
+<p style="margin:0 0 14px;">Bonjour,</p>
+<p style="margin:0 0 18px;">Un visiteur vient d’envoyer un message via le site.</p>
+
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color:#E8F0FE;border-radius:12px;border:1px solid #DADCE0;margin-bottom:18px;">
+  <tr>
+    <td style="padding:16px 18px;">
+      <p style="margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#1A73E8;font-weight:700;">Objet</p>
+      <p style="margin:0;font-weight:600;color:#202124;">{{ message.subject }}</p>
+    </td>
+  </tr>
+</table>
+
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:18px;">
+  <tr>
+    <td style="padding:4px 0;font-size:14px;color:#5F6368;width:110px;">Nom</td>
+    <td style="padding:4px 0;font-size:14px;color:#202124;font-weight:600;">{{ message.firstName }} {{ message.lastName }}</td>
+  </tr>
+  <tr>
+    <td style="padding:4px 0;font-size:14px;color:#5F6368;vertical-align:top;">E-mail</td>
+    <td style="padding:4px 0;font-size:14px;">
+      <a href="mailto:{{ message.email }}" style="color:#1A73E8;font-weight:600;">{{ message.email }}</a>
+    </td>
+  </tr>
+</table>
+
+<p style="margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#5F6368;font-weight:700;">Message</p>
+<div style="background-color:#FBF8F3;border-radius:12px;border:1px solid #DADCE0;padding:16px 18px;color:#202124;font-size:14px;line-height:1.6;">
+  {{ message.message|nl2br }}
+</div>
+{% endblock %}

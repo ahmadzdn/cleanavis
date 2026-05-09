@@ -1,0 +1,11 @@
+Bonjour {{ order.firstName }},
+
+Merci pour votre confiance. Votre paiement est bien enregistré.
+
+Référence dossier : {{ order.reference }}
+Montant : {% if order.amountTotal is not null %}{{ (order.amountTotal / 100)|number_format(2, ',', ' ') }} €{% else %}—{% endif %}
+
+Notre équipe prend en charge votre dossier et vous tient informé(e) des étapes suivantes.
+
+Cordialement,
+L'équipe CleanAvis

@@ -1,0 +1,28 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block email_title %}Paiement confirmé — CleanAvis{% endblock %}
+{% block heading %}Merci pour votre confiance{% endblock %}
+
+{% block body %}
+<p style="margin:0 0 14px;">Bonjour {{ order.firstName }},</p>
+<p style="margin:0 0 18px;">Votre paiement est bien enregistré. Notre équipe prend en charge votre dossier et vous tiendra informé(e) des prochaines étapes.</p>
+
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color:#E6F4EA;border-radius:12px;border:1px solid #CEEAD6;margin-bottom:18px;">
+  <tr>
+    <td style="padding:16px 18px;">
+      <p style="margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#137333;font-weight:700;">Paiement confirmé</p>
+      <p style="margin:0;font-size:15px;color:#202124;">
+        <strong>Référence dossier :</strong> {{ order.reference }}<br>
+        <strong>Montant :</strong>
+        {% if order.amountTotal is not null %}
+          {{ (order.amountTotal / 100)|number_format(2, ',', ' ') }} €
+        {% else %}
+          —
+        {% endif %}
+      </p>
+    </td>
+  </tr>
+</table>
+
+<p style="margin:0;color:#5F6368;font-size:14px;">Cordialement,<br><strong style="color:#202124;">L’équipe CleanAvis</strong></p>
+{% endblock %}

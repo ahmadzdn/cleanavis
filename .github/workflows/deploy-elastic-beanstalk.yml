@@ -1,0 +1,78 @@
+# Déploiement automatique vers AWS Elastic Beanstalk au push sur la branche principale.
+#
+# Prérequis GitHub (Settings → Secrets and variables):
+#   Secrets:
+#     AWS_ACCESS_KEY_ID
+#     AWS_SECRET_ACCESS_KEY
+#   Variables (repository):
+#     AWS_REGION                ex. eu-west-3
+#     EB_APPLICATION_NAME       nom de l’application EB
+#     EB_ENVIRONMENT_NAME       nom de l’environnement EB (ex. cleanavis-prod)
+#
+# Sur Elastic Beanstalk: plateforme PHP (ex. PHP 8.2 sur Amazon Linux 2023),
+# variables d’environnement Symfony (APP_SECRET, DATABASE_URL, etc.) dans la console EB.
+
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  # Déploiement manuel : Actions → ce workflow → Run workflow (sans nouveau commit)
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: ctype, iconv, intl, opcache, pdo_pgsql, sodium
+          coverage: none
+          tools: composer:v2
+
+      # .env n’est pas versionné ; les scripts Composer ont besoin d’un fichier minimal.
+      - name: Prepare environment file for build
+        run: |
+          cp .env.example .env
+          mkdir -p var/cache var/log
+
+      - name: Install Composer dependencies (production)
+        run: composer install --no-dev --no-interaction --optimize-autoloader
+
+      # Ne pas livrer .env : la prod doit utiliser les variables définies dans la console EB.
+      - name: Strip local env before packaging
+        run: rm -f .env
+
+      - name: Build deployment archive
+        run: |
+          zip -r deploy.zip . \
+            -x "**/.git/**" \
+            -x "**/.github/**" \
+            -x "**/tests/**" \
+            -x "**/var/cache/**" \
+            -x "**/var/log/**" \
+            -x "**/.env" \
+            -x "**/.env.*" \
+            -x "**/phpunit.xml.dist" \
+            -x "**/.phpunit.cache/**"
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v22
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: ${{ vars.EB_APPLICATION_NAME }}
+          environment_name: ${{ vars.EB_ENVIRONMENT_NAME }}
+          region: ${{ vars.AWS_REGION }}
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip

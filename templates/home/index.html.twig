@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html lang="fr" prefix="og: https://ogp.me/ns#">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CleanAvis.fr — Supprimer vos avis Google négatifs</title>
-<meta name="description" content="Supprimez vos avis Google négatifs avec nos experts en e-réputation et juristes en droit du numérique. Analyse gratuite, résultat en 48h. À partir de 49€.">
-<link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-<meta name="theme-color" content="#1A73E8">
+{% extends 'layout/base_site.html.twig' %}
+
+{% block title %}CleanAvis.fr — Supprimer vos avis Google négatifs{% endblock %}
+
+{% block seo %}
+{% include 'partials/seo_tags.html.twig' with {
+  seo_title: 'CleanAvis.fr — Supprimer vos avis Google négatifs',
+  seo_description: 'Supprimez vos avis Google négatifs avec nos experts en e-réputation et juristes en droit du numérique. Analyse gratuite, résultat en 48h. À partir de 49€.',
+  seo_canonical_path: '/',
+  seo_type: 'website',
+} %}
+{% include 'partials/seo_jsonld.html.twig' with { show_faq: true, faq_items: faqItems } %}
+{% endblock %}
+
+{% block head_extra %}
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}">
 <script>
   window.CLEANAVIS_API_ORDER_INIT = "{{ path('api_order_init')|e('js') }}";
   window._isLocalFile = (location.protocol === 'file:');
@@ -85,12 +86,17 @@
     document.getElementById('cookie-banner').style.display = 'none';
   };
 </script>
-</head>
-<body>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}">
+{% endblock %}
+
+{% block body %}
 {% include 'home/_main_content.html.twig' %}
 <script>window.CLEANAVIS_PACKS = {{ packsJson|raw }};</script>
 {# ca-ui-modal sans defer : doit être défini avant home-page.js (defer) pour window.showCaModal #}
 <script src="{{ asset('assets/js/ca-ui-modal.js') }}"></script>
 <script src="{{ asset('assets/js/home-page.js') }}" defer></script>
-</body>
-</html>
+{% endblock %}

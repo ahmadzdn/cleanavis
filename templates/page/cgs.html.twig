@@ -2,6 +2,15 @@
 
 {% block title %}CGS · Politique de confidentialité · Mentions légales — CleanAvis.fr{% endblock %}
 
+{% block seo %}
+{% include 'partials/seo_tags.html.twig' with {
+  seo_title: 'CGS · Politique de confidentialité · Mentions légales — CleanAvis.fr',
+  seo_description: 'Conditions générales de vente (CGS), politique de confidentialité RGPD et mentions légales — prestations CleanAvis de suppression d\'avis Google.',
+  seo_canonical_path: '/cgs',
+} %}
+{% include 'partials/seo_jsonld.html.twig' %}
+{% endblock %}
+
 {% block styles %}
 <link rel="stylesheet" href="{{ asset('assets/css/cgs.css') }}">
 {% endblock %}

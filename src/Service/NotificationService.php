@@ -6,6 +6,8 @@ use App\Entity\ContactMessage;
 use App\Entity\CustomerOrder;
 use App\Entity\EmailLog;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -16,15 +18,37 @@ final class NotificationService
         private readonly EntityManagerInterface $entityManager,
         private readonly string $adminNotificationEmail,
         private readonly string $mailerFrom,
+        private readonly string $mailerDsn,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
     public function notifyNewContact(ContactMessage $message): void
     {
         $from = trim($this->mailerFrom) !== '' ? trim($this->mailerFrom) : 'noreply@localhost';
+
+        // 1. Accusé de réception au visiteur (ne dépend pas de ADMIN_NOTIFICATION_EMAIL).
+        $subjectConfirm = 'CleanAvis — Nous avons bien reçu votre message';
+        $previewConfirm = sprintf(
+            'Confirmation pour %s <%s> — sujet : %s',
+            trim($message->getFirstName().' '.$message->getLastName()),
+            $message->getEmail(),
+            $message->getSubject()
+        );
+        $confirm = (new TemplatedEmail())
+            ->from($from)
+            ->to($message->getEmail())
+            ->subject($subjectConfirm)
+            ->htmlTemplate('emails/contact_customer.html.twig')
+            ->textTemplate('emails/contact_customer.txt.twig')
+            ->context(['message' => $message]);
+
+        $this->sendAndLog($confirm, 'contact_customer', $message->getEmail(), $subjectConfirm, $previewConfirm, null, $message);
+
+        // 2. Copie équipe (nécessite ADMIN_NOTIFICATION_EMAIL).
         $subject = '[CleanAvis Contact] '.$message->getSubject();
 
-        $body = sprintf(
+        $previewText = sprintf(
             "Nouveau message depuis le formulaire contact.\n\nNom : %s %s\nEmail : %s\n\n%s",
             $message->getFirstName(),
             $message->getLastName(),
@@ -32,56 +56,56 @@ final class NotificationService
             $message->getMessage()
         );
 
-        $email = (new Email())
+        $email = (new TemplatedEmail())
             ->from($from)
             ->to($this->resolveAdminRecipient())
             ->replyTo($message->getEmail())
             ->subject($subject)
-            ->text($body);
+            ->htmlTemplate('emails/contact_admin.html.twig')
+            ->textTemplate('emails/contact_admin.txt.twig')
+            ->context(['message' => $message]);
 
-        $this->sendAndLog($email, 'contact_admin', $this->resolveAdminRecipient(), $subject, $body, null, $message);
+        $this->sendAndLog($email, 'contact_admin', $this->resolveAdminRecipient(), $subject, $previewText, null, $message);
     }
 
     public function sendPurchaseConfirmation(CustomerOrder $order): void
     {
         $from = trim($this->mailerFrom) !== '' ? trim($this->mailerFrom) : 'noreply@localhost';
-        $subject = 'CleanAvis — Paiement confirmé ('.$order->getReference().')';
+        $subjectCustomer = 'CleanAvis — Paiement confirmé ('.$order->getReference().')';
 
-        $amount = $order->getAmountTotal() !== null
-            ? number_format($order->getAmountTotal() / 100, 2, ',', ' ').' €'
-            : '—';
+        $customerPreview = sprintf(
+            'Confirmation paiement %s — %s',
+            $order->getReference(),
+            $order->getEmail()
+        );
 
-        $body = <<<TXT
-Bonjour {$order->getFirstName()},
-
-Merci pour votre confiance. Votre paiement est bien enregistré.
-
-Référence dossier : {$order->getReference()}
-Montant : {$amount}
-
-Notre équipe prend en charge votre dossier et vous tient informé(e) des étapes suivantes.
-
-Cordialement,
-L'équipe CleanAvis
-TXT;
-
-        $customerEmail = (new Email())
+        $customerEmail = (new TemplatedEmail())
             ->from($from)
             ->to($order->getEmail())
-            ->subject($subject)
-            ->text($body);
+            ->subject($subjectCustomer)
+            ->htmlTemplate('emails/purchase_customer.html.twig')
+            ->textTemplate('emails/purchase_customer.txt.twig')
+            ->context(['order' => $order]);
 
-        $this->sendAndLog($customerEmail, 'purchase_customer', $order->getEmail(), $subject, $body, $order, null);
+        $this->sendAndLog($customerEmail, 'purchase_customer', $order->getEmail(), $subjectCustomer, $customerPreview, $order, null);
 
-        $adminBody = $body."\n\n---\nEmail client : ".$order->getEmail()."\nURL avis : ".$order->getReviewUrl()."\nJustification :\n".$order->getJustification();
+        $subjectAdmin = '[CleanAvis] Nouveau paiement '.$order->getReference();
+        $adminPreview = sprintf(
+            'Paiement %s — client %s <%s>',
+            $order->getReference(),
+            trim($order->getFirstName().' '.$order->getLastName()),
+            $order->getEmail()
+        );
 
-        $adminMail = (new Email())
+        $adminMail = (new TemplatedEmail())
             ->from($from)
             ->to($this->resolveAdminRecipient())
-            ->subject('[CleanAvis] Nouveau paiement '.$order->getReference())
-            ->text($adminBody);
+            ->subject($subjectAdmin)
+            ->htmlTemplate('emails/purchase_admin.html.twig')
+            ->textTemplate('emails/purchase_admin.txt.twig')
+            ->context(['order' => $order]);
 
-        $this->sendAndLog($adminMail, 'purchase_admin', $this->resolveAdminRecipient(), $adminMail->getSubject(), $adminBody, $order, null);
+        $this->sendAndLog($adminMail, 'purchase_admin', $this->resolveAdminRecipient(), $subjectAdmin, $adminPreview, $order, null);
     }
 
     private function resolveAdminRecipient(): string
@@ -108,15 +132,53 @@ TXT;
         $log->setCustomerOrder($order);
         $log->setContactMessage($contact);
 
+        $preflight = $this->preflightMailError($type);
+        if ($preflight !== null) {
+            $log->setSuccess(false);
+            $log->setErrorMessage($preflight);
+            $this->logger->warning('E-mail non envoyé (prévol)', ['type' => $type, 'reason' => $preflight]);
+            $this->entityManager->persist($log);
+            $this->entityManager->flush();
+
+            return;
+        }
+
         try {
             $this->mailer->send($email);
             $log->setSuccess(true);
         } catch (\Throwable $e) {
             $log->setSuccess(false);
             $log->setErrorMessage($e->getMessage());
+            $this->logger->error('Échec envoi e-mail', [
+                'type' => $type,
+                'to' => $toDisplay,
+                'exception' => $e->getMessage(),
+            ]);
         }
 
         $this->entityManager->persist($log);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @return non-empty-string|null erreur bloquante, ou null si on peut tenter l’envoi
+     */
+    private function preflightMailError(string $type): ?string
+    {
+        $dsn = trim($this->mailerDsn);
+        if ($dsn === '' || str_starts_with($dsn, 'null://')) {
+            return 'Mailer désactivé : MAILER_DSN est null ou vide. Définissez brevo+api://… ou brevo+smtp://… dans .env (voir .env.example).';
+        }
+
+        if (trim($this->mailerFrom) === '') {
+            return 'MAILER_FROM est vide : définissez un expéditeur déjà vérifié dans Brevo (Senders).';
+        }
+
+        $needsAdminInbox = \in_array($type, ['contact_admin', 'purchase_admin'], true);
+        if ($needsAdminInbox && trim($this->adminNotificationEmail) === '') {
+            return 'ADMIN_NOTIFICATION_EMAIL est vide : où envoyer les alertes admin ? Mettez votre adresse dans .env.';
+        }
+
+        return null;
     }
 }

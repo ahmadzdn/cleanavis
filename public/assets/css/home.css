@@ -608,6 +608,90 @@ section > .container { padding:0 clamp(16px,4vw,36px); }
 .step-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
 .step-desc { font-size:13px; color:var(--text3); line-height:1.6; }
 
+/* Suppression fiche GMB — bloc « Notre méthode de suppression » */
+.fiche-methode-title {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(15px,4.2vw,17px);
+  font-weight:800;
+  color:var(--text);
+  text-align:center;
+  margin-bottom:20px;
+  padding:0 clamp(8px,3vw,20px);
+  line-height:1.25;
+}
+.fiche-methode-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  max-width:680px;
+  margin:0 auto;
+}
+.fiche-methode-card {
+  background:var(--white);
+  border:1.5px solid rgba(26,115,232,.2);
+  border-radius:14px;
+  padding:20px 22px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  min-width:0;
+}
+.fiche-methode-card--green { border-color:rgba(52,168,83,.25); }
+.fiche-methode-card__rule {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+}
+.fiche-methode-card__rule--blue { background:var(--g-blue); }
+.fiche-methode-card__rule--green { background:var(--g-green); }
+.fiche-methode-card__icon {
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  flex-shrink:0;
+  margin-top:6px;
+}
+.fiche-methode-card__icon--blue { background:rgba(26,115,232,.1); }
+.fiche-methode-card__icon--green { background:rgba(52,168,83,.1); }
+.fiche-methode-card__body {
+  padding-top:10px;
+  min-width:0;
+  flex:1;
+}
+.fiche-methode-card__body strong {
+  display:block;
+  margin-bottom:6px;
+  color:var(--text);
+  font-size:14px;
+}
+.fiche-methode-card__body p {
+  font-size:13.5px;
+  color:var(--text3);
+  margin:0;
+  line-height:1.55;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+@media (max-width:680px) {
+  .fiche-methode-grid {
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  .fiche-methode-card {
+    padding:16px 14px;
+    gap:12px;
+  }
+}
+
 /* ═══════════════════════════════════════════
    TARIFS
 ═══════════════════════════════════════════ */
@@ -699,17 +783,27 @@ section > .container { padding:0 clamp(16px,4vw,36px); }
    TÉMOIGNAGES
 ═══════════════════════════════════════════ */
 .temoignages { background:var(--bg); }
-.temo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+.temo-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  margin-top:48px;
+}
 .temo-card {
+  min-width:0;
   background:var(--white); border:1px solid var(--border);
   border-radius:var(--radius-md); padding:clamp(20px,3vw,28px);
   transition:box-shadow .2s,transform .2s; box-shadow:var(--shadow-sm);
 }
 .temo-card:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
 .temo-stars { font-size:15px; letter-spacing:2px; margin-bottom:14px; color:#F9AB00; }
-.temo-quote { font-size:13.5px; color:var(--text3); line-height:1.65; margin-bottom:20px; font-style:italic; }
+.temo-quote {
+  font-size:13.5px; color:var(--text3); line-height:1.65; margin-bottom:20px; font-style:italic;
+  overflow-wrap:anywhere; word-break:break-word;
+}
 .temo-sep { height:1px; background:var(--border); margin-bottom:16px; }
 .temo-author { display:flex; align-items:center; gap:12px; }
+.temo-author > div:nth-child(2) { flex:1; min-width:0; text-align:left; }
 .temo-avatar {
   width:38px; height:38px; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
@@ -1254,7 +1348,15 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
   .exp-grid { grid-template-columns:1fr; }
   .steps-row { grid-template-columns:1fr 1fr; gap:20px; }
   .steps-row::before { display:none; }
-  .temo-grid { grid-template-columns:1fr 1fr; }
+  /* Une colonne : les cartes restent lisibles (textes longs) */
+  .temo-grid {
+    grid-template-columns:1fr;
+    max-width:560px;
+    margin-left:auto;
+    margin-right:auto;
+    gap:14px;
+    margin-top:clamp(28px,6vw,48px);
+  }
   .form-row { grid-template-columns:1fr; }
   .calc-row { grid-template-columns:1fr; }
   .trust-inner { gap:16px; }
@@ -1319,6 +1421,16 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
     align-items:flex-start;
   }
   .rp-date { margin-left:0; }
+  .temo-author .temo-pkg { margin-left:0; }
+  .temoignages .temo-author {
+    align-items:center;
+  }
+  .temoignages .temo-author > div:nth-child(2) {
+    text-align:center;
+  }
+  .temoignages .temo-author .temo-pkg {
+    align-self:center;
+  }
   .hero-dots { opacity:.18; }
   .hero-badge,
   .hero-note span,
@@ -1349,7 +1461,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
   .pb-card-text { font-size:14px; }
   .exp-text { font-size:14px; }
   .faq-a { font-size:14px !important; }
-  .temo-text { font-size:14px; }
+  .temo-quote { font-size:14px; }
   .hero-sub-break {
     height:12px;
   }

@@ -1,0 +1,41 @@
+{# Variables attendues : seo_title, seo_description | optionnelles : seo_canonical_path, seo_type, seo_robots, seo_og_image (chemin asset relatif à public/) #}
+{% set _type = seo_type|default('website') %}
+{% set _path = seo_canonical_path|default(app.request.pathinfo) %}
+{% if _path|length > 5 and _path|slice(-5) == '.html' %}
+  {% set _path = _path|slice(0, -5) %}
+{% endif %}
+{% if _path == '' %}
+  {% set _path = '/' %}
+{% endif %}
+{% set _base = (site_base_url|default(''))|trim %}
+{% if _base == '' %}
+  {% set _base = app.request.schemeAndHttpHost %}
+{% endif %}
+{% if _base|length > 1 and _base|slice(-1) == '/' %}
+  {% set _base = _base|slice(0, -1) %}
+{% endif %}
+{% set _canonical_path = _path %}
+{% if _canonical_path != '/' and (_canonical_path|slice(0, 1)) != '/' %}
+  {% set _canonical_path = '/' ~ _canonical_path %}
+{% endif %}
+{% set canonical_url = _base ~ _canonical_path %}
+{% set _og_rel = seo_og_image|default('assets/images/og-cleanavis.png') %}
+{% set og_image_abs = absolute_url(asset(_og_rel)) %}
+<meta name="description" content="{{ seo_description }}">
+<link rel="canonical" href="{{ canonical_url }}">
+<meta property="og:type" content="{{ _type }}">
+<meta property="og:title" content="{{ seo_title }}">
+<meta property="og:description" content="{{ seo_description }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:image" content="{{ og_image_abs }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="CleanAvis">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title }}">
+<meta name="twitter:description" content="{{ seo_description }}">
+<meta name="twitter:image" content="{{ og_image_abs }}">
+{% if seo_robots is defined and seo_robots %}
+<meta name="robots" content="{{ seo_robots }}">
+{% endif %}

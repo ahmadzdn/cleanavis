@@ -2,12 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\CustomerOrder;
-use App\Repository\CustomerOrderRepository;
-use App\Service\NotificationService;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\StripeOrderCompletionService;
 use Psr\Log\LoggerInterface;
-use Stripe\Event;
 use Stripe\Stripe;
 use Stripe\Webhook;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,9 +19,7 @@ final class StripeWebhookController extends AbstractController
         private readonly string $stripeSecretKey,
         #[Autowire('%env(STRIPE_WEBHOOK_SECRET)%')]
         private readonly string $webhookSecret,
-        private readonly CustomerOrderRepository $orderRepository,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly NotificationService $notificationService,
+        private readonly StripeOrderCompletionService $orderCompletionService,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -50,46 +44,11 @@ final class StripeWebhookController extends AbstractController
         }
 
         if ($event->type === 'checkout.session.completed') {
-            $this->handleCheckoutCompleted($event);
+            /** @var \Stripe\Checkout\Session $session */
+            $session = $event->data->object;
+            $this->orderCompletionService->completeOrderFromCheckoutSession($session);
         }
 
         return new Response(status: Response::HTTP_OK);
-    }
-
-    private function handleCheckoutCompleted(Event $event): void
-    {
-        /** @var \Stripe\Checkout\Session $session */
-        $session = $event->data->object;
-        $ref = $session->metadata['order_ref'] ?? null;
-        if (!$ref) {
-            $this->logger->warning('Stripe session sans order_ref');
-
-            return;
-        }
-
-        $order = $this->orderRepository->findOneByReference($ref);
-        if (!$order) {
-            $this->logger->warning('Commande introuvable pour ref '.$ref);
-
-            return;
-        }
-
-        if ($order->getStatus() === CustomerOrder::STATUS_PAID) {
-            return;
-        }
-
-        $order->setStatus(CustomerOrder::STATUS_PAID);
-        $order->setPaidAt(new \DateTimeImmutable());
-        $order->setAmountTotal($session->amount_total);
-        $pi = $session->payment_intent;
-        if (\is_string($pi)) {
-            $order->setStripePaymentIntentId($pi);
-        } elseif (\is_object($pi) && isset($pi->id)) {
-            $order->setStripePaymentIntentId((string) $pi->id);
-        }
-
-        $this->entityManager->flush();
-
-        $this->notificationService->sendPurchaseConfirmation($order);
     }
 }

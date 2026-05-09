@@ -6,6 +6,7 @@ parameters:
     env(TURNSTILE_SITE_KEY): ''
     env(ADMIN_NOTIFICATION_EMAIL): ''
     env(MAILER_FROM): ''
+    env(SITE_BASE_URL): ''
 
 services:
     _defaults:
@@ -27,6 +28,7 @@ services:
         arguments:
             $adminNotificationEmail: '%env(ADMIN_NOTIFICATION_EMAIL)%'
             $mailerFrom: '%env(MAILER_FROM)%'
+            $mailerDsn: '%env(MAILER_DSN)%'
 
     App\Controller\HomeController:
         arguments:

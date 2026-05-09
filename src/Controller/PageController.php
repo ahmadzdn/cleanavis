@@ -15,11 +15,16 @@ final class PageController extends AbstractController
     }
 
     #[Route('/cgs', name: 'page_cgs', methods: ['GET'])]
-    #[Route('/cgs.html', name: 'page_cgs_html', methods: ['GET'])]
     public function cgs(): Response
     {
         return $this->render('page/cgs.html.twig', [
             'packOffers' => $this->packOfferRepository->findEnabledOrdered(),
         ]);
+    }
+
+    #[Route('/cgs.html', name: 'page_cgs_html', methods: ['GET'])]
+    public function cgsLegacy(): Response
+    {
+        return $this->redirectToRoute('page_cgs', [], Response::HTTP_MOVED_PERMANENTLY);
     }
 }

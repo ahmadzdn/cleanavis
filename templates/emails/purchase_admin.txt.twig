@@ -1,0 +1,13 @@
+Nouveau paiement CleanAvis — {{ order.reference }}
+
+Client : {{ order.firstName }} {{ order.lastName }}
+E-mail : {{ order.email }}
+Entreprise : {{ order.company }}
+Pack : {{ order.packKey }}
+Montant : {% if order.amountTotal is not null %}{{ (order.amountTotal / 100)|number_format(2, ',', ' ') }} €{% else %}—{% endif %}
+
+URL avis :
+{{ order.reviewUrl }}
+
+Justification :
+{{ order.justification }}
