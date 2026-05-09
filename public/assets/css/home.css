@@ -767,6 +767,140 @@ section > .container { padding:0 clamp(16px,4vw,36px); }
   padding:clamp(24px,5vw,48px); max-width:640px; margin:0 auto; text-align:left;
   box-shadow:var(--shadow-lg);
 }
+
+/* ── Section contact : proposition design (étapes, fond, carte accentuée) ── */
+.contact-section--redesign {
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg, #e9f1fc 0%, var(--bg) 42%, var(--warm-tint) 100%);
+}
+.contact-section__mesh {
+  pointer-events:none;
+  position:absolute;
+  inset:0;
+  opacity:.65;
+  background:
+    radial-gradient(ellipse 85% 55% at 50% -15%, rgba(26,115,232,.2), transparent 58%),
+    radial-gradient(ellipse 50% 35% at 100% 70%, rgba(66,133,244,.1), transparent 55%);
+}
+.contact-section__container {
+  position:relative;
+  z-index:1;
+}
+.contact-hero {
+  text-align:center;
+  margin-bottom:clamp(28px,5vw,44px);
+}
+.contact-hero__bar {
+  margin:0 auto 22px;
+}
+.contact-hero__eyebrow {
+  justify-content:center;
+  color:var(--g-blue);
+}
+.contact-hero__eyebrow .edot {
+  background:var(--g-blue);
+}
+.contact-hero__title {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.12em;
+  max-width:680px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom:14px;
+}
+.contact-hero__line {
+  display:block;
+}
+.contact-hero__line--accent em {
+  font-style:normal;
+  background:linear-gradient(135deg,var(--g-blue),#1557B0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.contact-hero__desc {
+  max-width:520px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.contact-card--stacked {
+  padding:0;
+  max-width:680px;
+  overflow:hidden;
+  border:1px solid rgba(26,115,232,.14);
+  border-radius:22px;
+  box-shadow:
+    0 14px 52px rgba(26,115,232,.15),
+    0 4px 18px rgba(0,0,0,.06);
+}
+.contact-card__accent {
+  height:5px;
+  background:linear-gradient(90deg,var(--g-blue),var(--g-red),var(--g-yellow),var(--g-green));
+}
+.contact-card__inner {
+  padding:clamp(18px,4vw,38px);
+  text-align:left;
+}
+.contact-step {
+  padding:clamp(18px,3vw,26px) 0;
+  border-bottom:1px solid var(--border);
+}
+.contact-step:last-child {
+  border-bottom:none;
+  padding-bottom:0;
+}
+.contact-step:first-child {
+  padding-top:6px;
+}
+.contact-step__header {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
+  text-align:left;
+}
+.contact-step__num {
+  flex-shrink:0;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Sora',sans-serif;
+  font-size:15px;
+  font-weight:800;
+  color:#fff;
+  background:linear-gradient(145deg,var(--g-blue),#1557B0);
+  box-shadow:0 4px 14px rgba(26,115,232,.35);
+}
+.contact-step__titles {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+}
+.contact-step__kicker {
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--text4);
+}
+.contact-step__name {
+  font-family:'Sora',sans-serif;
+  font-weight:700;
+  font-size:clamp(15px,2.5vw,17px);
+  color:var(--text);
+  line-height:1.25;
+}
+.contact-step__body .form-group:last-child {
+  margin-bottom:0;
+}
+
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 .form-group { margin-bottom:16px; }
 .form-group label { display:block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text4); margin-bottom:7px; }
@@ -1171,7 +1305,8 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
   .faq-q { padding:13px 14px; font-size:14px; }
   .faq-a { padding:0 14px 0; font-size:13px; }
   .faq-item.open .faq-a { padding-top:11px; padding-bottom:13px; }
-  .contact-card { padding:16px 14px; }
+  .contact-card:not(.contact-card--stacked) { padding:16px 14px; }
+  .contact-card--stacked .contact-card__inner { padding:16px 14px; }
   .form-group { margin-bottom:10px; }
   .trust-strip { padding:16px 0; }
   .trust-inner {
@@ -1234,7 +1369,8 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
   .stat-num .u { font-size:10px !important; }
   .stat-label { font-size:8px !important; }
   .tarif-card { padding:18px 14px; }
-  .contact-card { padding:14px 12px; }
+  .contact-card:not(.contact-card--stacked) { padding:14px 12px; }
+  .contact-card--stacked .contact-card__inner { padding:14px 12px; }
   .form-group input,.form-group select,.form-group textarea { padding:11px 12px; }
   .sec-title { font-size:20px; }
   .sec-desc { font-size:15px; }

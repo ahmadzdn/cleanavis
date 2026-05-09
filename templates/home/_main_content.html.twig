@@ -581,16 +581,35 @@
 </section>
 
 <!-- FORMULAIRE DE CONTACT -->
-<section class="contact-section" id="contact" aria-labelledby="contact-title">
-  <div class="container">
-    <div class="g4bar" style="margin:0 auto 22px" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="justify-content:center;color:var(--g-blue)">
-      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
-      Démarrer maintenant
-    </div>
-    <h2 class="sec-title" id="contact-title">Reprenez le contrôle<br>de <em>votre image</em></h2>
-    <p class="sec-desc">Remplissez le formulaire. Nos experts analysent votre dossier et vous contactent sous 2h.</p>
-    <div class="contact-card">
+<section class="contact-section contact-section--redesign" id="contact" aria-labelledby="contact-title">
+  <div class="contact-section__mesh" aria-hidden="true"></div>
+  <div class="container contact-section__container">
+    <header class="contact-hero">
+      <div class="g4bar contact-hero__bar" aria-hidden="true"></div>
+      <div class="sec-eyebrow contact-hero__eyebrow">
+        <span class="edot" aria-hidden="true"></span>
+        Démarrer maintenant
+      </div>
+      <h2 class="sec-title contact-hero__title" id="contact-title">
+        <span class="contact-hero__line">Reprenez le contrôle</span>
+        <span class="contact-hero__line contact-hero__line--accent">de <em>votre image</em></span>
+      </h2>
+      <p class="sec-desc contact-hero__desc">Remplissez le formulaire. Nos experts analysent votre dossier et vous contactent sous 2h.</p>
+    </header>
+
+    <div class="contact-card contact-card--stacked">
+      <div class="contact-card__accent" aria-hidden="true"></div>
+      <div class="contact-card__inner">
+
+      <div class="contact-step" role="group" aria-labelledby="contact-step-coords">
+        <div class="contact-step__header" id="contact-step-coords">
+          <span class="contact-step__num" aria-hidden="true">1</span>
+          <div class="contact-step__titles">
+            <span class="contact-step__kicker">Étape 1</span>
+            <span class="contact-step__name">Vos coordonnées</span>
+          </div>
+        </div>
+        <div class="contact-step__body">
       <div class="form-row">
         <div class="form-group">
           <label for="f-nom">Nom <span class="req" aria-hidden="true">*</span></label>
@@ -611,6 +630,18 @@
           <input type="tel" id="f-tel" name="telephone" placeholder="+33 6 00 00 00 00" required autocomplete="tel">
         </div>
       </div>
+        </div>
+      </div>
+
+      <div class="contact-step" role="group" aria-labelledby="contact-step-place">
+        <div class="contact-step__header" id="contact-step-place">
+          <span class="contact-step__num" aria-hidden="true">2</span>
+          <div class="contact-step__titles">
+            <span class="contact-step__kicker">Étape 2</span>
+            <span class="contact-step__name">Établissement &amp; avis ciblé</span>
+          </div>
+        </div>
+        <div class="contact-step__body">
       <div class="form-group">
         <label for="f-entreprise">🔍 Trouvez votre établissement Google <span class="req" aria-hidden="true">*</span></label>
         <div class="form-biz-wrap">
@@ -651,6 +682,18 @@
         <div id="url-hint" style="font-size:11px;color:var(--text4);margin-top:5px">→ Sur Google Maps : clic droit sur l'avis → "Copier le lien"</div>
         <div id="review-preview" aria-live="polite"></div>
       </div>
+        </div>
+      </div>
+
+      <div class="contact-step" role="group" aria-labelledby="contact-step-offer">
+        <div class="contact-step__header" id="contact-step-offer">
+          <span class="contact-step__num" aria-hidden="true">3</span>
+          <div class="contact-step__titles">
+            <span class="contact-step__kicker">Étape 3</span>
+            <span class="contact-step__name">Offre &amp; dossier</span>
+          </div>
+        </div>
+        <div class="contact-step__body">
       <div class="form-group">
         <label for="f-package">Package souhaité</label>
         <select id="f-package" name="package" aria-label="Sélectionnez votre package">
@@ -671,10 +714,15 @@
         <div class="secure-icon" aria-hidden="true">🔒</div>
         Données chiffrées · 100% confidentiel · Conforme RGPD · Horodatage automatique
       </div>
+        </div>
+      </div>
+
+      </div>
     </div>
   </div>
 </section>
 
+{% if faqItems is defined and faqItems|length > 0 %}
 <!-- FAQ -->
 <section class="faq" id="faq" aria-labelledby="faq-title">
   <div class="container">
@@ -685,44 +733,19 @@
     </div>
     <h2 class="sec-title" id="faq-title">Questions <em>fréquentes</em></h2>
     <div class="faq-list">
+      {% for item in faqItems %}
       <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
-          Quelle est la différence entre un « signalement » et une « mise en demeure » ?
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          {{ item.question }}
           <span class="faq-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="faq-a">Le Package Standard consiste à soumettre une demande de retrait à Google en mobilisant des arguments techniques et légaux précis, via ses propres canaux. La mise en demeure (Package Avocats) est un acte juridique formel rédigé et signé par avocat, qui engage la responsabilité de son destinataire — auteur de l'avis ou Google — et crée une obligation légale de réponse.</div>
+        <div class="faq-a">{{ item.answer }}</div>
       </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
-          Peut-on agir même si l'auteur de l'avis est anonyme ?
-          <span class="faq-arrow" aria-hidden="true">▾</span>
-        </button>
-        <div class="faq-a">Oui. L'anonymat sur Google est une protection relative, non absolue. Dans le cadre du Package Avocats, vous pouvez prévoir une action directe contre Google en tant qu'hébergeur pour obtenir la communication des données d'identification de l'auteur, sur le fondement de l'article 6-II de la LCEN.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
-          Toutes les catégories d'avis peuvent-elles être supprimées ?
-          <span class="faq-arrow" aria-hidden="true">▾</span>
-        </button>
-        <div class="faq-a">Non. Une critique négative mais factuelle, sincère et proportionnée relève de la liberté d'expression. Notre analyse préliminaire, incluse dans les deux packages, a précisément pour objet de qualifier le contenu et d'évaluer ses chances réelles de retrait. Un avis manifestement faux peut quant à lui être supprimé sur le fondement des pratiques déloyales.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
-          Quel est le délai légal dans lequel Google doit me répondre ?
-          <span class="faq-arrow" aria-hidden="true">▾</span>
-        </button>
-        <div class="faq-a">Sous l'empire de la LCEN, Google doit agir « promptement » (5 à 10 jours ouvrés pour les contenus manifestement illicites). Le DSA, applicable depuis février 2024, est plus prescriptif pour Google en tant que très grande plateforme. Notre mise en demeure formelle impose un délai de réponse de 8 jours francs.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
-          Si je prouve qu'un concurrent a publié un faux avis, puis-je obtenir une indemnisation ?
-          <span class="faq-arrow" aria-hidden="true">▾</span>
-        </button>
-        <div class="faq-a">Oui. Les juridictions françaises allouent des dommages et intérêts couvrant le préjudice commercial direct (manque à gagner), le préjudice moral et parfois le préjudice d'image. Si le concurrent a utilisé des outils d'IA, l'argument tiré de l'AI Act (art. 5 du Règlement UE 2024/1689) constitue un levier supplémentaire inédit. Notre Package Avocats inclut une évaluation complète du préjudice indemnisable.</div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </section>
+{% endif %}
 
 </main>
 
