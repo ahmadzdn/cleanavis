@@ -54,11 +54,13 @@ jobs:
           APP_DEBUG: '0'
         run: composer install --no-dev --no-interaction --optimize-autoloader
 
-      # Ne pas livrer .env : la prod doit utiliser les variables définies dans la console EB.
-      - name: Strip local env and vendor before packaging
+      # vendor : retiré du zip (install sur EB). .env : fichier présent pour Dotenv ; les secrets
+      # viennent de la console EB et surchargent les placeholders du fichier.
+      - name: Finalize .env for EB and strip vendor
         run: |
-          rm -f .env
           rm -rf vendor
+          sed -i 's/^APP_ENV=.*/APP_ENV=prod/' .env
+          if grep -q '^APP_DEBUG=' .env; then sed -i 's/^APP_DEBUG=.*/APP_DEBUG=0/' .env; else printf '\nAPP_DEBUG=0\n' >> .env; fi
 
       # Sans vendor : EB exécute composer install (options dans .ebextensions phpini).
       - name: Build deployment archive
@@ -69,8 +71,9 @@ jobs:
             -x "**/tests/**" \
             -x "**/var/cache/**" \
             -x "**/var/log/**" \
-            -x "**/.env" \
-            -x "**/.env.*" \
+            -x "**/.env.local" \
+            -x "**/.env.local.php" \
+            -x "**/.env.*.local" \
             -x "**/vendor/**" \
             -x "**/phpunit.xml.dist" \
             -x "**/.phpunit.cache/**"
