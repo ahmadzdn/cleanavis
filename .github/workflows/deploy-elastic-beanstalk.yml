@@ -60,8 +60,7 @@ jobs:
           rm -f .env
           rm -rf vendor
 
-      # Sans vendor : EB / hook .platform exécute composer install sur l’instance.
-      # Avec vendor dans le zip, EB ignore composer.json → déploiements instables (cf. eb-engine).
+      # Sans vendor : EB exécute composer install (options dans .ebextensions phpini).
       - name: Build deployment archive
         run: |
           zip -r deploy.zip . \
