@@ -27,3 +27,10 @@ DirectoryIndex index.php
         RedirectMatch 307 ^(.*)$ /index.php$1
     </IfModule>
 </IfModule>
+
+# Cache navigateur pour fichiers statiques (Apache / hébergements sans nginx dédié)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|woff2?|ico|png|jpg|jpeg|gif|svg|webp|webmanifest)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>
