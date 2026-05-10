@@ -10,10 +10,10 @@ chown -R webapp:webapp "${APP}/var" 2>/dev/null || true
 PHP_CLI=(sudo -E -u webapp env HOME=/home/webapp php)
 if [ -x "${APP}/bin/console" ]; then
   "${PHP_CLI[@]}" "${APP}/bin/console" cache:clear --env=prod --no-ansi 2>&1
-  echo "03_cache_clear: cache:clear terminé (code=$?)"
+  echo "04_cache_clear: cache:clear terminé (code=$?)"
   "${PHP_CLI[@]}" "${APP}/bin/console" cache:warmup --env=prod --no-ansi --no-interaction 2>&1
-  echo "03_cache_clear: cache:warmup terminé (code=$?)"
+  echo "04_cache_clear: cache:warmup terminé (code=$?)"
 else
-  echo "03_cache_clear: bin/console absent, ignoré"
+  echo "04_cache_clear: bin/console absent, ignoré"
 fi
 exit 0

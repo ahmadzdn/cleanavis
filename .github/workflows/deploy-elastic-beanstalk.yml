@@ -66,6 +66,7 @@ jobs:
           printf '\n# DATABASE_URL : défini dans la console Elastic Beanstalk (RDS PostgreSQL).\n' >> .env
 
       # Sans vendor : EB exécute composer install (options dans .ebextensions phpini).
+      # zip : exclure uniquement vendor/ racine Composer — pas **/vendor/** (sinon assets/vendor/ importmap absent).
       - name: Build deployment archive
         run: |
           zip -r deploy.zip . \
@@ -77,7 +78,7 @@ jobs:
             -x "**/.env.local" \
             -x "**/.env.local.php" \
             -x "**/.env.*.local" \
-            -x "**/vendor/**" \
+            -x "vendor/**" \
             -x "**/phpunit.xml.dist" \
             -x "**/.phpunit.cache/**"
 
