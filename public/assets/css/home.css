@@ -569,13 +569,6 @@ section > .container { padding:0 clamp(16px,4vw,36px); }
   padding:14px 0; font-family:var(--font-body); font-size:15px; color:var(--text);
 }
 .search-input::placeholder { color:var(--text4); }
-.manual-mode {
-  margin-top:20px; background:var(--g-blue-lt);
-  border:1px solid rgba(26,115,232,.2); border-radius:12px;
-  padding:16px 20px; display:flex; align-items:center; gap:12px;
-}
-.manual-mode-txt { font-size:13px; color:var(--text3); }
-.manual-mode-txt strong { color:var(--g-blue); }
 .result-panel {
   margin-top:28px; display:none;
   background:var(--bg); border:1px solid var(--border);

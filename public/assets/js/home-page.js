@@ -24,7 +24,6 @@ function packPricesEuro() {
 }
 
 let currentNote = null;
-let apiKeyActive = false;
 let manualNote = null;
 /** Instance Embedded Checkout (destroy au changement d’étape). */
 let stripeEmbeddedCheckoutInstance = null;
@@ -102,37 +101,6 @@ function displayPlaceResult(place) {
   calcLoss();
   const formInput = document.getElementById('f-entreprise');
   if (formInput && place.name) { formInput.value = place.name; displayFormInsight(place, true); }
-}
-
-const DEMO_DATA = [
-  {name:"Boulangerie Dupont",addr:"12 rue de Rivoli, Paris 1er",rating:3.2,total:87,icon:'🥖'},
-  {name:"Restaurant Le Provençal",addr:"45 avenue de la Gare, Marseille",rating:2.8,total:134,icon:'🍽️'},
-  {name:"Garage Renault Martin",addr:"8 boulevard Foch, Lyon",rating:3.9,total:62,icon:'🚗'},
-  {name:"Cabinet Dentaire Leblanc",addr:"27 rue du Faubourg, Bordeaux",rating:2.1,total:45,icon:'🦷'},
-  {name:"Hôtel des Arts",addr:"3 place du Général, Nice",rating:4.1,total:203,icon:'🏨'},
-  {name:"Pharmacie Centrale",addr:"56 rue Nationale, Lille",rating:3.5,total:91,icon:'💊'},
-];
-
-function manualSearch() {
-  const q = document.getElementById('biz-search').value.toLowerCase().trim();
-  if (!q) return;
-  const found = DEMO_DATA.find(d => d.name.toLowerCase().includes(q) || d.addr.toLowerCase().includes(q)) || DEMO_DATA[Math.floor(Math.random() * DEMO_DATA.length)];
-  document.getElementById('res-icon').textContent  = found.icon;
-  document.getElementById('res-name').textContent  = found.name + ' ⚠️ (données de démonstration)';
-  document.getElementById('res-addr').textContent  = found.addr;
-  const neg = estimateNegativeReviews(found.rating, found.total);
-  const pct = Math.round((neg / found.total) * 100);
-  document.getElementById('res-note').textContent  = found.rating.toFixed(1) + ' ★';
-  document.getElementById('res-total').textContent = found.total;
-  document.getElementById('res-neg').textContent   = neg;
-  document.getElementById('res-pct').textContent   = pct + '%';
-  renderAlert(found.rating, pct, found.total, neg);
-  currentNote = found.rating;
-  document.getElementById('note-manual-wrap').style.display = 'none';
-  showResultPanel();
-  calcLoss();
-  const formInput = document.getElementById('f-entreprise');
-  if (formInput && found.name) formInput.value = found.name;
 }
 
 function estimateNegativeReviews(rating, total) {

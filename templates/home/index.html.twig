@@ -21,7 +21,7 @@
   function initGooglePlaces() {
     window._gPlacesReady = true;
     if (typeof google === 'undefined' || !google.maps || !google.maps.places) {
-      console.warn('[CleanAvis] Google Maps non chargé — mode démo actif');
+      console.warn('[CleanAvis] Google Maps / Places non disponible');
       return;
     }
     try {
@@ -35,8 +35,6 @@
           const place = ac.getPlace();
           if (place && place.name) displayPlaceResult(place);
         });
-        const mm = document.getElementById('manual-mode');
-        if (mm) mm.style.display = 'none';
       }
       const formInput = document.getElementById('f-entreprise');
       if (formInput) {
@@ -49,7 +47,6 @@
           if (place && place.name) displayFormInsight(place);
         });
       }
-      apiKeyActive = true;
     } catch(e){ console.error('[CleanAvis] Erreur Google Places :', e); }
   }
   function loadGoogleScripts() {
@@ -60,7 +57,7 @@
     mapsScript.src = 'https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key|e('js') }}&libraries=places&callback=initGooglePlaces&language=fr';
     {% else %}
     mapsScript.src = '';
-    console.warn('[CleanAvis] Définissez GOOGLE_MAPS_API_KEY — mode démo');
+    console.warn('[CleanAvis] GOOGLE_MAPS_API_KEY absente — chargement Google Maps ignoré');
     return;
     {% endif %}
     mapsScript.async = true; mapsScript.defer = true;
