@@ -20,3 +20,6 @@
 
 # Secrets locaux (copier .env.example vers .env)
 /.env
+
+# Exports CSV base de données (données sensibles)
+/exports/
