@@ -780,6 +780,97 @@ section > .container { padding:0 clamp(16px,4vw,36px); }
 .legal-tag { display:inline-block; background:var(--g-blue-lt); color:var(--g-blue); font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:2px 10px; border-radius:100px; margin-top:4px; }
 
 /* ═══════════════════════════════════════════
+   ACCORDÉONS MOBILE (details.ca-mcoll)
+   Desktop : toujours ouverts, résumé masqué (JS met open=true)
+═══════════════════════════════════════════ */
+.ca-mcoll {
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:var(--white);
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  margin-top:clamp(18px,4vw,28px);
+  text-align:left;
+}
+.ca-mcoll__summary {
+  list-style:none;
+  cursor:pointer;
+  padding:16px 18px;
+  padding-right:20px;
+  font-family:'Sora',sans-serif;
+  font-size:clamp(14px,3.8vw,16px);
+  font-weight:700;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  min-height:52px;
+  background:linear-gradient(180deg,var(--bg) 0%,var(--white) 55%);
+  border-bottom:1px solid transparent;
+  line-height:1.35;
+}
+.ca-mcoll__summary::-webkit-details-marker { display:none; }
+.ca-mcoll__summary::after {
+  content:'';
+  width:9px;
+  height:9px;
+  border-right:2.5px solid var(--g-blue);
+  border-bottom:2.5px solid var(--g-blue);
+  transform:rotate(45deg);
+  transition:transform .25s ease;
+  flex-shrink:0;
+  margin-top:-4px;
+}
+.ca-mcoll[open] > .ca-mcoll__summary {
+  border-bottom-color:var(--border);
+}
+.ca-mcoll[open] > .ca-mcoll__summary::after {
+  transform:rotate(225deg);
+  margin-top:4px;
+}
+.ca-mcoll__body {
+  padding:clamp(18px,4vw,26px);
+}
+.ca-mcoll__body--flush {
+  padding:clamp(12px,3vw,18px);
+}
+.ca-mcoll__body--center .pb-intro,
+.ca-mcoll__body--center .sec-desc {
+  text-align:center;
+  margin-left:auto;
+  margin-right:auto;
+}
+.ca-mcoll__body--center .steps-row {
+  margin-top:clamp(20px,5vw,40px);
+}
+.ca-mcoll__body--pj {
+  padding-top:clamp(12px,3vw,20px);
+}
+@media (max-width:640px) {
+  .pj-two-col {
+    grid-template-columns:1fr !important;
+  }
+}
+@media (min-width:901px) {
+  .ca-mcoll {
+    border:none;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    margin-top:0;
+    overflow:visible;
+  }
+  .ca-mcoll > .ca-mcoll__summary {
+    display:none !important;
+  }
+  .ca-mcoll__body,
+  .ca-mcoll__body--flush {
+    padding:0;
+  }
+}
+
+/* ═══════════════════════════════════════════
    TÉMOIGNAGES
 ═══════════════════════════════════════════ */
 .temoignages { background:var(--bg); }
@@ -1449,13 +1540,14 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
 }
 
 @media(max-width:600px){
+  body { line-height:1.65; }
   .hero { padding:80px 16px 24px !important; }
   .hero h1 { font-size:29px; letter-spacing:-1.1px; line-height:1.06; }
   .hero-badge {
     font-size:10px; padding:6px 12px; margin-bottom:12px;
     white-space:normal; line-height:1.4;
   }
-  .hero-sub { font-size:17px; line-height:1.72; margin-bottom:16px; max-width:none; }
+  .hero-sub { font-size:17px; line-height:1.78; margin-bottom:20px; max-width:none; }
   .sec-desc { font-size:16px; }
   .pb-intro { font-size:16px; }
   .pb-card-text { font-size:14px; }
@@ -1498,8 +1590,8 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
   .stat-num { font-size:19px !important; }
   .stat-num .u { font-size:11px !important; }
   .stat-label { font-size:9px !important; }
-  section { padding:28px 0 !important; }
-  section > .container { padding:0 14px !important; }
+  section { padding:40px 0 !important; }
+  section > .container { padding:0 clamp(16px,5vw,20px) !important; }
   .audit-card { padding:16px 14px; margin-top:18px; }
   .metrics-grid { grid-template-columns:1fr 1fr; gap:8px; }
   .metric-card { padding:10px 6px; }
@@ -1507,7 +1599,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
   .result-cta { flex-direction:column; }
   .result-cta a { width:100%; justify-content:center; }
   .calc-result-display { flex-direction:column; gap:8px; }
-  .pb-grid { gap:10px; margin-top:16px; }
+  .pb-grid { gap:14px; margin-top:20px; }
   .pb-card { padding:14px 12px; }
   .steps-row { grid-template-columns:1fr; gap:12px; margin-top:20px; }
   .tarifs-grid { grid-template-columns:1fr; margin-top:20px; max-width:100%; }

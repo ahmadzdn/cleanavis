@@ -519,3 +519,21 @@ function toggleTt(btn) {
 document.addEventListener('click',e=>{ if(!e.target.closest('.tt-wrap')) document.querySelectorAll('.tt-box.open').forEach(b=>{ b.classList.remove('open'); b.setAttribute('aria-hidden','true'); b.previousElementSibling.setAttribute('aria-expanded','false'); }); });
 
 document.head.insertAdjacentHTML('beforeend',`<style>.star-btn{flex:1;padding:10px 6px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;text-align:center;-webkit-appearance:none;appearance:none;box-sizing:border-box;}.star-btn:hover{border-color:var(--g-yellow);background:var(--g-yel-lt);color:#F9AB00;}.star-btn.active{background:var(--g-yel-lt);border-color:var(--g-yellow);color:#F9AB00;}</style>`);
+
+/** Mobile : accordéons fermés par défaut ; desktop (≥901px) : toujours ouverts. */
+(function initCaMobileCollapses() {
+  const mq = window.matchMedia('(min-width:901px)');
+  const nodes = () => document.querySelectorAll('details[data-ca-mcoll]');
+  const apply = function () {
+    const open = mq.matches;
+    nodes().forEach(function (d) {
+      d.open = open;
+    });
+  };
+  if (typeof mq.addEventListener === 'function') {
+    mq.addEventListener('change', apply);
+  } else {
+    mq.addListener(apply);
+  }
+  apply();
+})();
