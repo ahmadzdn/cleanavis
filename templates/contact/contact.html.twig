@@ -16,7 +16,8 @@
 {% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}"></noscript>
 <link rel="stylesheet" href="{{ asset('assets/css/contact.css') }}">
 {% endblock %}
 
@@ -115,8 +116,9 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ asset('assets/js/ca-ui-modal.js') }}"></script>
+<script src="{{ asset('assets/js/ca-ui-modal.js') }}" defer></script>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
   window.CLEANAVIS_API_CONTACT = "{{ path('api_contact_submit')|e('js') }}";
   document.getElementById('submit-btn').addEventListener('click', async function sendContact() {
     const nom = document.getElementById('c-nom').value.trim();
@@ -179,5 +181,6 @@
       btn.innerHTML = '✉️ Envoyer mon message';
     }
   });
+});
 </script>
 {% endblock %}

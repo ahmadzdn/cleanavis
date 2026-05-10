@@ -9,9 +9,12 @@
 <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 <link rel="apple-touch-icon" href="{{ asset('assets/images/og-cleanavis.png') }}">
 <meta name="theme-color" content="#1A73E8">
+{# Polices Google : préconnexion + chargement non bloquant (LCP / chemin critique) #}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Sora:wght@600;700;800;900&display=swap" rel="stylesheet">
+{% set google_fonts_css = 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Sora:wght@600;700;800;900&display=swap' %}
+<link rel="preload" as="style" href="{{ google_fonts_css }}" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="{{ google_fonts_css }}" rel="stylesheet"></noscript>
 {% block styles %}{% endblock %}
 {% block head_extra %}{% endblock %}
 </head>

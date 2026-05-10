@@ -88,14 +88,16 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}">
+{# Modales / alertes : hors chemin critique — même astuce que les polices #}
+<link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ asset('assets/css/ui-feedback.css') }}"></noscript>
 {% endblock %}
 
 {% block body %}
 {% include 'home/_main_content.html.twig' %}
 <script>window.CLEANAVIS_PACKS = {{ packsJson|raw }};</script>
-{# ca-ui-modal sans defer : doit être défini avant home-page.js (defer) pour window.showCaModal #}
-<script src="{{ asset('assets/js/ca-ui-modal.js') }}"></script>
+{# defer : ordre garanti (modal → Stripe → page) après parsing, sans bloquer le rendu #}
+<script src="{{ asset('assets/js/ca-ui-modal.js') }}" defer></script>
 <script src="https://js.stripe.com/v3/" defer></script>
 <script src="{{ asset('assets/js/home-page.js') }}" defer></script>
 {% endblock %}
