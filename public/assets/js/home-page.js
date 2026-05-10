@@ -54,12 +54,24 @@ function resetStripeEmbeddedCheckout() {
 /**
  * Cloudflare Turnstile : après succès, création de commande + montage Embedded Checkout (sans bouton intermédiaire).
  */
+function isContactWizardPaymentStepActive() {
+  const root = document.getElementById('contact-wizard');
+  if (!root) return false;
+  const step = parseInt(root.dataset.currentStep || '1', 10);
+  if (step !== 6) return false;
+  const panel = root.querySelector('.contact-wizard-panel[data-wizard-step="6"]');
+  return !!(panel && panel.classList.contains('is-active'));
+}
+
 window.cleanavisTurnstileExpired = function cleanavisTurnstileExpired() {
+  if (!isContactWizardPaymentStepActive()) return;
   checkoutInitInFlight = false;
   setPaymentFetchLoading(false);
 };
 
 window.cleanavisTurnstilePaymentReady = async function cleanavisTurnstilePaymentReady(token) {
+  /* Turnstile vit dans l’étape 6 mais le panneau peut être masqué (visibility) : le challenge peut quand même se terminer et déclencher ce callback sans que l’utilisateur soit à l’étape paiement. */
+  if (!isContactWizardPaymentStepActive()) return;
   if (stripeEmbeddedCheckoutInstance || checkoutInitInFlight) return;
   checkoutInitInFlight = true;
   try {
@@ -356,6 +368,12 @@ function wizardSetStep(n) {
   const focusEl = activePanel && activePanel.querySelector('input:not([readonly]),select,textarea');
   if (focusEl) setTimeout(() => focusEl.focus(), 100);
   if (step === 6) {
+    /* Nouveau passage à l’étape paiement : on réinitialise Turnstile pour annuler toute validation faite pendant que le panneau était masqué (sinon callback ignoré + widget déjà « vert »). */
+    if (prev !== 6) {
+      setTimeout(() => {
+        try { window.turnstile?.reset(); } catch (e) { /* ignore */ }
+      }, 150);
+    }
     setTimeout(() => window.dispatchEvent(new Event('resize')), 250);
   }
 }
