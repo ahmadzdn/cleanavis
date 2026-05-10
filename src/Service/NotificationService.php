@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\ContactMessage;
 use App\Entity\CustomerOrder;
 use App\Entity\EmailLog;
+use App\Repository\SiteSettingsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -16,6 +17,7 @@ final class NotificationService
     public function __construct(
         private readonly MailerInterface $mailer,
         private readonly EntityManagerInterface $entityManager,
+        private readonly SiteSettingsRepository $siteSettingsRepository,
         private readonly string $adminNotificationEmail,
         private readonly string $mailerFrom,
         private readonly string $mailerDsn,
@@ -110,9 +112,14 @@ final class NotificationService
 
     private function resolveAdminRecipient(): string
     {
-        $e = trim($this->adminNotificationEmail);
+        $fromDb = trim($this->siteSettingsRepository->getSingleton()->getAdminNotificationEmail());
+        if ($fromDb !== '') {
+            return $fromDb;
+        }
 
-        return $e !== '' ? $e : 'admin@localhost';
+        $fromEnv = trim($this->adminNotificationEmail);
+
+        return $fromEnv !== '' ? $fromEnv : 'admin@localhost';
     }
 
     private function sendAndLog(
@@ -175,10 +182,17 @@ final class NotificationService
         }
 
         $needsAdminInbox = \in_array($type, ['contact_admin', 'purchase_admin'], true);
-        if ($needsAdminInbox && trim($this->adminNotificationEmail) === '') {
-            return 'ADMIN_NOTIFICATION_EMAIL est vide : où envoyer les alertes admin ? Mettez votre adresse dans .env.';
+        if ($needsAdminInbox && !$this->hasConfiguredAdminNotificationRecipient()) {
+            return 'Indiquez un e-mail de réception dans Administration → Paramètres du site, ou définissez ADMIN_NOTIFICATION_EMAIL dans .env.';
         }
 
         return null;
+    }
+
+    private function hasConfiguredAdminNotificationRecipient(): bool
+    {
+        $fromDb = trim($this->siteSettingsRepository->getSingleton()->getAdminNotificationEmail());
+
+        return $fromDb !== '' || trim($this->adminNotificationEmail) !== '';
     }
 }

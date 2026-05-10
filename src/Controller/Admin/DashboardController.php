@@ -7,6 +7,7 @@ use App\Controller\Admin\CustomerOrderCrudController;
 use App\Controller\Admin\EmailLogCrudController;
 use App\Controller\Admin\FaqItemCrudController;
 use App\Controller\Admin\PackOfferCrudController;
+use App\Controller\Admin\SiteSettingsCrudController;
 use App\Controller\Admin\UserCrudController;
 use App\Repository\ContactMessageRepository;
 use App\Service\AdminDashboardMetrics;
@@ -58,6 +59,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
+        yield MenuItem::linkTo(SiteSettingsCrudController::class, 'Paramètres du site', 'fas fa-sliders-h');
         // EasyAdmin 5 : linkTo(ControllerFqcn, label, icon) remplace linkToCrud.
         yield MenuItem::linkTo(PackOfferCrudController::class, 'Packs & tarifs Stripe', 'fas fa-tags');
         yield MenuItem::linkTo(FaqItemCrudController::class, 'FAQ', 'fas fa-question-circle');

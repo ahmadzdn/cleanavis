@@ -105,7 +105,30 @@ final class SeedReferenceDataCommand extends Command
             $io->success(sprintf('%d entrée(s) FAQ ajoutée(s).', $insertedFaq));
         }
 
+        $this->ensureSiteSettingsSingleton($conn, $io);
+
         return Command::SUCCESS;
+    }
+
+    private function ensureSiteSettingsSingleton(Connection $conn, SymfonyStyle $io): void
+    {
+        try {
+            $exists = (int) $conn->fetchOne('SELECT COUNT(*) FROM site_settings WHERE id = 1');
+        } catch (\Throwable) {
+            $io->note('site_settings : table absente (schéma pas encore à jour).');
+
+            return;
+        }
+
+        if ($exists === 0) {
+            $conn->insert('site_settings', [
+                'id' => 1,
+                'admin_notification_email' => '',
+            ]);
+            $io->writeln('<info>site_settings</info> ligne singleton créée (id=1).');
+        } else {
+            $io->note('site_settings : déjà présent.');
+        }
     }
 
     /** @return list<array<string, mixed>> */
