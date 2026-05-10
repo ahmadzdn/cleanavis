@@ -1474,6 +1474,28 @@ section > .container { padding:0 clamp(16px,4vw,36px); }
   min-width:128px;
 }
 
+/* Mobile / tablette étroite : Suivant pleine largeur comme Retour (section « Reprenez le contrôle ») */
+@media(max-width:768px){
+  .contact-wizard__nav {
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+  }
+  .contact-wizard__nav--end {
+    justify-content:stretch;
+  }
+  .contact-wizard__nav .btn-blue,
+  .contact-wizard__nav .btn-outline {
+    width:100%;
+    justify-content:center;
+    text-align:center;
+    box-sizing:border-box;
+  }
+  .contact-wizard__nav .btn-wizard-next {
+    min-width:0;
+  }
+}
+
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 .form-group { margin-bottom:16px; }
 .form-group label { display:block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text4); margin-bottom:7px; }
