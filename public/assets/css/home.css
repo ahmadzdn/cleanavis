@@ -787,7 +787,8 @@ section > .container { padding:0 clamp(16px,4vw,36px); }
   border:1px solid var(--border);
   border-radius:18px;
   background:var(--white);
-  overflow:hidden;
+  /* overflow visible sur mobile : évite un « deuxième » scroll (voir media mobile) */
+  overflow:visible;
   box-shadow:var(--shadow-sm);
   margin-top:clamp(18px,4vw,28px);
   text-align:left;
@@ -1100,7 +1101,6 @@ section > .container { padding:0 clamp(16px,4vw,36px); }
 .contact-wizard__progress-wrap {
   margin-bottom:clamp(18px,4vw,30px);
   overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
   padding-bottom:6px;
 }
 .contact-wizard__progress {
@@ -1410,6 +1410,18 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
    RESPONSIVE — TABLET ≤ 900px
 ═══════════════════════════════════════════ */
 @media(max-width:900px){
+  /* Un seul flux de scroll : pas de « sous-scroll » (section/contact/iOS WebKit) */
+  .contact-section--redesign {
+    overflow:visible;
+  }
+  .contact-wizard__progress-wrap {
+    overscroll-behavior-x:contain;
+    touch-action:pan-x;
+  }
+  .legal-table-wrap {
+    overscroll-behavior-x:contain;
+    touch-action:pan-x;
+  }
   .nav-links,.nav-cta { display:none; }
   .hamburger { display:flex; }
   .hero-grid { grid-template-columns:1fr; }
@@ -1667,7 +1679,9 @@ footer { background:var(--bg); border-top:1px solid var(--border); }
   .footer-links-top-inner { flex-direction:column; align-items:center; gap:2px; }
   .footer-links-top-inner a { width:100%; text-align:center; }
   .footer-bottom-inner { flex-direction:column; align-items:center; text-align:center; gap:10px; }
-  section,.container,.contact-card,.audit-card,.tarif-card { max-width:100%; overflow-x:hidden; }
+  /* Ne pas mettre overflow-x sur section/.container : scroll piégé sur mobile (WebKit) */
+  section,.container { max-width:100%; }
+  .contact-card,.audit-card,.tarif-card { max-width:100%; overflow-x:hidden; }
   .btn-blue.btn-wide,.btn-outline { width:100%; justify-content:center; text-align:center; }
   .fi-stats { grid-template-columns:1fr 1fr; }
   .calc-result-display,
