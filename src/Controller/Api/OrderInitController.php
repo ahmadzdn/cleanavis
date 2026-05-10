@@ -114,9 +114,17 @@ final class OrderInitController extends AbstractController
         $order->setStripeCheckoutSessionId($session->id);
         $this->entityManager->flush();
 
+        $clientSecret = $session->client_secret ?? null;
+        if (!\is_string($clientSecret) || $clientSecret === '') {
+            return $this->json(
+                ['error' => 'Session Stripe incomplète (client_secret manquant). Vérifiez la configuration Embedded Checkout.'],
+                Response::HTTP_BAD_GATEWAY
+            );
+        }
+
         return $this->json([
             'reference' => $order->getReference(),
-            'checkoutUrl' => $session->url,
+            'clientSecret' => $clientSecret,
         ]);
     }
 

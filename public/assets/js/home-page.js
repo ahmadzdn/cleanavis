@@ -26,6 +26,49 @@ function packPricesEuro() {
 let currentNote = null;
 let apiKeyActive = false;
 let manualNote = null;
+/** Instance Embedded Checkout (destroy au changement d’étape). */
+let stripeEmbeddedCheckoutInstance = null;
+/** Évite les doubles appels API si Turnstile renvoie plusieurs fois le jeton. */
+let checkoutInitInFlight = false;
+
+function setPaymentFetchLoading(on) {
+  const el = document.getElementById('contact-payment-loading');
+  if (el) el.hidden = !on;
+}
+
+function resetStripeEmbeddedCheckout() {
+  checkoutInitInFlight = false;
+  setPaymentFetchLoading(false);
+  if (stripeEmbeddedCheckoutInstance) {
+    try { stripeEmbeddedCheckoutInstance.destroy(); } catch (e) { /* ignore */ }
+    stripeEmbeddedCheckoutInstance = null;
+  }
+  const pre = document.getElementById('contact-payment-preembed');
+  const wrap = document.getElementById('stripe-checkout-embed-wrap');
+  const mount = document.getElementById('stripe-checkout-embed');
+  if (pre) pre.hidden = false;
+  if (wrap) wrap.hidden = true;
+  if (mount) mount.innerHTML = '';
+}
+
+/**
+ * Cloudflare Turnstile : après succès, création de commande + montage Embedded Checkout (sans bouton intermédiaire).
+ */
+window.cleanavisTurnstileExpired = function cleanavisTurnstileExpired() {
+  checkoutInitInFlight = false;
+  setPaymentFetchLoading(false);
+};
+
+window.cleanavisTurnstilePaymentReady = async function cleanavisTurnstilePaymentReady(token) {
+  if (stripeEmbeddedCheckoutInstance || checkoutInitInFlight) return;
+  checkoutInitInFlight = true;
+  try {
+    const ts = typeof token === 'string' && token ? token : document.querySelector('[name="cf-turnstile-response"]')?.value || '';
+    await cleanavisStartEmbeddedCheckout(ts);
+  } finally {
+    checkoutInitInFlight = false;
+  }
+};
 
 function displayPlaceResult(place) {
   const rating = place.rating || null;
@@ -292,7 +335,11 @@ function wizardRoot() {
 function wizardSetStep(n) {
   const root = wizardRoot();
   if (!root) return;
+  const prev = parseInt(root.dataset.currentStep || '1', 10);
   const step = Math.max(1, Math.min(WIZARD_TOTAL_STEPS, n));
+  if (prev === 6 && step !== 6) {
+    resetStripeEmbeddedCheckout();
+  }
   root.dataset.currentStep = String(step);
   root.querySelectorAll('.contact-wizard-panel').forEach((panel) => {
     const ps = parseInt(panel.getAttribute('data-wizard-step'), 10);
@@ -398,7 +445,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-async function submitForm() {
+async function cleanavisStartEmbeddedCheckout(turnstileToken) {
   const required = [{id:'f-nom',label:'Nom'},{id:'f-prenom',label:'Prénom'},{id:'f-email',label:'Email'},{id:'f-tel',label:'Téléphone'},{id:'f-entreprise',label:"Nom de l'entreprise"},{id:'f-url',label:"Lien de l'avis Google"},{id:'f-justif',label:'Justification'}];
   const missing = [];
   required.forEach(({id,label})=>{ const el=document.getElementById(id); if(!el.value.trim()){el.classList.add('err');missing.push(label);}else el.classList.remove('err'); });
@@ -414,7 +461,8 @@ async function submitForm() {
     if (miss && WIZARD_FIELD_STEP[miss.id]) {
       wizardSetStep(WIZARD_FIELD_STEP[miss.id]);
     }
-    document.getElementById(miss.id).focus();
+    if (miss) document.getElementById(miss.id).focus();
+    try { window.turnstile?.reset(); } catch (e) { /* ignore */ }
     return;
   }
   const urlInput = document.getElementById('f-url');
@@ -427,21 +475,38 @@ async function submitForm() {
       message: 'Collez une adresse complète commençant par https:// (lien vers votre fiche ou avis Google).',
     });
     wizardSetStep(4);
+    try { window.turnstile?.reset(); } catch (e) { /* ignore */ }
     return;
   }
-  const turnstileInput = document.querySelector('[name="cf-turnstile-response"]');
-  if (!turnstileInput || !turnstileInput.value) {
+  if (!turnstileToken) {
     caShowModal({
       variant: 'info',
       title: 'Vérification anti-robot',
-      message: 'Complétez la case Cloudflare Turnstile ci-dessous avant de lancer le paiement sécurisé.',
+      message: 'Jeton Cloudflare manquant. Rechargez la page ou complétez à nouveau la vérification.',
     });
-    wizardSetStep(6);
+    return;
+  }
+  const pk = window.CLEANAVIS_STRIPE_PK || '';
+  if (!pk || pk.indexOf('pk_') !== 0) {
+    caShowModal({
+      variant: 'error',
+      title: 'Paiement indisponible',
+      message: 'Clé publique Stripe absente. Ajoutez STRIPE_PUBLISHABLE_KEY (pk_…) dans le fichier .env côté serveur, puis videz le cache Symfony.',
+    });
+    try { window.turnstile?.reset(); } catch (e) { /* ignore */ }
+    return;
+  }
+  if (typeof window.Stripe !== 'function') {
+    caShowModal({
+      variant: 'error',
+      title: 'Stripe non chargé',
+      message: 'Le script Stripe (js.stripe.com) est introuvable. Vérifiez votre connexion ou désactivez un bloqueur de publicités.',
+    });
+    try { window.turnstile?.reset(); } catch (e) { /* ignore */ }
     return;
   }
   const apiUrl = window.CLEANAVIS_API_ORDER_INIT || '/api/order/init';
-  const btn = document.getElementById('contact-submit-btn') || document.querySelector('[onclick="submitForm()"]');
-  btn.disabled = true; btn.innerHTML = '⏳ Envoi en cours…';
+  setPaymentFetchLoading(true);
   const packVal = document.getElementById('f-package').value || 'standard';
   const payload = {
     firstName: document.getElementById('f-prenom').value.trim(),
@@ -453,7 +518,7 @@ async function submitForm() {
     reviewUrl: document.getElementById('f-url').value.trim(),
     package: packVal,
     justification: document.getElementById('f-justif').value.trim(),
-    turnstileToken: turnstileInput.value
+    turnstileToken,
   };
   try {
     const res = await fetch(apiUrl, {
@@ -463,10 +528,19 @@ async function submitForm() {
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || data.message || `Erreur ${res.status}`);
-    if (!data.checkoutUrl) throw new Error('Réponse serveur invalide.');
-    window.location.href = data.checkoutUrl;
+    const clientSecret = data.clientSecret;
+    if (!clientSecret || typeof clientSecret !== 'string') {
+      throw new Error('Réponse serveur invalide (clientSecret manquant).');
+    }
+    const stripe = window.Stripe(pk);
+    const checkout = await stripe.initEmbeddedCheckout({ clientSecret });
+    stripeEmbeddedCheckoutInstance = checkout;
+    const pre = document.getElementById('contact-payment-preembed');
+    const wrap = document.getElementById('stripe-checkout-embed-wrap');
+    if (pre) pre.hidden = true;
+    if (wrap) wrap.hidden = false;
+    checkout.mount('#stripe-checkout-embed');
   } catch(err) {
-    btn.disabled=false; btn.innerHTML='Valider ma demande et procéder au paiement';
     const msg = err && err.message ? String(err.message) : 'Une erreur est survenue.';
     caShowModal({
       variant: 'error',
@@ -474,6 +548,9 @@ async function submitForm() {
       message: msg,
       hint: 'Réessayez dans un instant ou écrivez-nous à contact@cleanavis.fr.',
     });
+    try { window.turnstile?.reset(); } catch (e) { /* ignore */ }
+  } finally {
+    setPaymentFetchLoading(false);
   }
 }
 
@@ -485,15 +562,19 @@ function toggleFaq(btn) {
 
 function toggleMenu() {
   const hb=document.getElementById('hamburger'), mm=document.getElementById('mobile-menu');
+  const scrim=document.getElementById('mobile-menu-scrim');
   const open=mm.classList.toggle('open');
   hb.classList.toggle('open',open); hb.setAttribute('aria-expanded',open);
   document.body.classList.toggle('menu-open', open);
+  if (scrim) scrim.setAttribute('aria-hidden', open ? 'false' : 'true');
 }
 function closeMenu() {
   document.getElementById('hamburger').classList.remove('open');
   document.getElementById('mobile-menu').classList.remove('open');
   document.getElementById('hamburger').setAttribute('aria-expanded','false');
   document.body.classList.remove('menu-open');
+  const scrim=document.getElementById('mobile-menu-scrim');
+  if (scrim) scrim.setAttribute('aria-hidden','true');
 }
 document.addEventListener('click',e=>{ if(!e.target.closest('nav')&&!e.target.closest('.mobile-menu')) closeMenu(); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });

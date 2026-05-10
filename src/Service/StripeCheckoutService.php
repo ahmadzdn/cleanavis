@@ -28,23 +28,20 @@ final class StripeCheckoutService
             throw new \InvalidArgumentException('Pack inconnu ou désactivé.');
         }
 
-        $successUrl = $this->urlGenerator->generate(
+        /* Embedded Checkout (ui_mode embedded_page) : iframe sur notre site ; après paiement → return_url */
+        $returnUrl = $this->urlGenerator->generate(
             'payment_success',
             [],
             UrlGeneratorInterface::ABSOLUTE_URL
         ).'?session_id={CHECKOUT_SESSION_ID}';
 
-        $cancelUrl = $this->urlGenerator->generate(
-            'payment_cancel',
-            [],
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
-
         return Session::create([
+            'ui_mode' => 'embedded_page',
             'mode' => 'payment',
             'locale' => 'fr',
             'customer_email' => $order->getEmail(),
             'client_reference_id' => $order->getReference(),
+            'return_url' => $returnUrl,
             'line_items' => [[
                 'quantity' => 1,
                 'price_data' => [
@@ -56,8 +53,6 @@ final class StripeCheckoutService
                     ],
                 ],
             ]],
-            'success_url' => $successUrl,
-            'cancel_url' => $cancelUrl,
             'metadata' => [
                 'order_ref' => $order->getReference(),
                 'pack_key' => $order->getPackKey(),

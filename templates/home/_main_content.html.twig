@@ -34,7 +34,7 @@
       <li><a href="{{ path('page_contact') }}">Contact</a></li>
       <li><a href="{{ path('page_cgs') }}">CGS & légal</a></li>
     </ul>
-    <a href="#contact" class="nav-cta" aria-label="Supprimer un avis Google">⚡ Supprimer un avis</a>
+    <a href="#contact" class="nav-cta" aria-label="Supprimer un avis Google">Supprimer un avis</a>
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </button>
@@ -50,8 +50,9 @@
   <a href="#faq" onclick="closeMenu()">FAQ</a>
   <a href="{{ path('page_contact') }}" onclick="closeMenu()">Contact</a>
   <a href="{{ path('page_cgs') }}" onclick="closeMenu()">CGS & légal</a>
-  <a href="#contact" class="mob-cta" onclick="closeMenu()">⚡ Supprimer un avis maintenant</a>
+  <a href="#contact" class="mob-cta" onclick="closeMenu()">Supprimer un avis maintenant</a>
 </div>
+<div class="mobile-menu-scrim" id="mobile-menu-scrim" aria-hidden="true" tabindex="-1"></div>
 
 <main>
 
@@ -120,7 +121,7 @@
       <h1 class="hero-heading">Un mauvais avis,<br>c'est <em>votre clientèle</em><br>qui disparaît.</h1>
       <p class="hero-sub"><strong style="color:var(--text);font-weight:700">74% des consommateurs lisent vos avis Google avant de vous contacter.</strong> Un commentaire diffamatoire ou mensonger peut diviser votre chiffre d'affaires du jour au lendemain.<span class="hero-sub-break" aria-hidden="true"></span>Nos avocats experts en e-réputation et nos juristes mobilisent l'arsenal juridique et technologique pour faire disparaître vos avis Google diffamatoires, frauduleux ou illicites.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-blue">⚡ Supprimer un avis maintenant</a>
+        <a href="#contact" class="btn-blue">Supprimer un avis maintenant</a>
         <a href="#methode" class="btn-outline">Voir notre méthode →</a>
       </div>
     </div>
@@ -176,10 +177,6 @@
 <section class="audit-section" id="audit" aria-labelledby="audit-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:var(--g-blue)">
-      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
-      Audit Gratuit et Calculateur de Pertes
-    </div>
     <h2 class="sec-title" id="audit-title">Analysez votre réputation Google<br>et calculez votre <em>manque à gagner</em></h2>
     <p class="sec-desc">Recherchez votre établissement pour récupérer automatiquement votre note Google, puis entrez votre chiffre d'affaires pour calculer vos pertes réelles.</p>
 
@@ -248,7 +245,7 @@
           <div id="calc-result-display" class="calc-result-display" style="display:none" aria-live="polite"></div>
         </div>
         <div class="result-cta">
-          <a href="#contact" class="btn-blue">⚡ Supprimer mes avis négatifs</a>
+          <a href="#contact" class="btn-blue">Supprimer mes avis négatifs</a>
           <a href="#tarifs" class="btn-outline">Voir les offres</a>
         </div>
       </div>
@@ -260,10 +257,6 @@
 <section class="probleme" id="probleme" aria-labelledby="pb-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:var(--g-red)">
-      <span class="edot" style="background:var(--g-red)" aria-hidden="true"></span>
-      L'Enjeu
-    </div>
     <h2 class="sec-title" id="pb-title">Vous n'êtes pas démuni face à un avis mensonger.<br><em>Vous êtes mal équipé.</em></h2>
     <details class="ca-mcoll" data-ca-mcoll>
       <summary class="ca-mcoll__summary">Comprendre l'enjeu en détail</summary>
@@ -316,10 +309,6 @@
 <section class="methode" id="methode" aria-labelledby="meth-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:var(--g-blue)">
-      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
-      Notre Méthode
-    </div>
     <h2 class="sec-title" id="meth-title">Identifiez. Choisissez. <em>Respirez.</em></h2>
     <details class="ca-mcoll" data-ca-mcoll>
       <summary class="ca-mcoll__summary">Voir les 4 étapes du parcours</summary>
@@ -356,11 +345,10 @@
 <section class="tarifs" id="tarifs" aria-labelledby="tarifs-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:var(--g-green)">
-      <span class="edot" style="background:var(--g-green)" aria-hidden="true"></span>
-      Nos Offres
-    </div>
-    <h2 class="sec-title" id="tarifs-title">Supprimer un avis ou une fiche Google —<br><em>choisissez votre niveau d'action</em></h2>
+    <h2 class="sec-title sec-title--tarifs-head" id="tarifs-title">
+      <span class="sec-title__tarifs-line">Supprimer un avis ou une fiche Google</span>
+      <span class="sec-title__tarifs-line"><span class="sec-title__lead-in">— </span><em>choisissez votre niveau d'action</em></span>
+    </h2>
     <div class="tarifs-grid">
       {% for pack in packOffers %}
       <article class="tarif-card {% if pack.featuredLayout %}featured{% endif %} reveal">
@@ -444,10 +432,6 @@
 <section class="expertise" id="expertise" aria-labelledby="exp-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:var(--g-blue)">
-      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
-      Notre Expertise
-    </div>
     <h2 class="sec-title" id="exp-title">Un arsenal juridique complet<br><em>à votre service</em></h2>
     <p class="sec-desc">Notre équipe associe maîtrise du droit du numérique, expertise RGPD et connaissance approfondie des mécanismes algorithmiques de Google.</p>
     <details class="ca-mcoll" data-ca-mcoll>
@@ -470,10 +454,6 @@
 <section class="expertise" id="fiche-gmb" aria-labelledby="fiche-title" style="background:var(--white);border-top:1px solid var(--border);">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:var(--g-blue)">
-      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
-      Service complémentaire
-    </div>
     <h2 class="sec-title" id="fiche-title">Supprimer votre fiche<br><em>Google My Business</em></h2>
     <p class="sec-desc">Quand supprimer les avis un par un ne suffit plus, supprimer la fiche elle-même élimine le problème à la racine.</p>
 
@@ -534,10 +514,6 @@
 <section class="legal" id="legal" aria-labelledby="legal-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:var(--g-blue)">
-      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
-      Cadre Légal
-    </div>
     <h2 class="sec-title" id="legal-title">Des fondements juridiques solides<br><em>pour chaque intervention</em></h2>
     <p class="sec-desc">La suppression d'un avis Google ne relève pas de la bonne volonté de Google. Elle repose sur des obligations légales précises que nous savons actionner.</p>
     <details class="ca-mcoll" data-ca-mcoll>
@@ -576,10 +552,6 @@
 <section class="temoignages" id="temoignages" aria-labelledby="temo-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:#F9AB00">
-      <span class="edot" style="background:#F9AB00" aria-hidden="true"></span>
-      Témoignages
-    </div>
     <h2 class="sec-title" id="temo-title">Ils ont <em>récupéré leur réputation</em></h2>
     <div class="temo-grid">
       <article class="temo-card reveal">
@@ -622,10 +594,6 @@
   <div class="container contact-section__container">
     <header class="contact-hero">
       <div class="g4bar contact-hero__bar" aria-hidden="true"></div>
-      <div class="sec-eyebrow contact-hero__eyebrow">
-        <span class="edot" aria-hidden="true"></span>
-        Démarrer maintenant
-      </div>
       <h2 class="sec-title contact-hero__title" id="contact-title">
         <span class="contact-hero__line">Reprenez le contrôle</span>
         <span class="contact-hero__line contact-hero__line--accent">de <em>votre image</em></span>
@@ -784,15 +752,23 @@
         <div class="contact-wizard-panel" data-wizard-step="6" role="tabpanel" aria-labelledby="wiz-h6" aria-hidden="true">
           <div class="contact-wizard-panel__intro">
             <h3 class="contact-wizard-panel__title" id="wiz-h6">Dernière étape</h3>
-            <p class="contact-wizard-panel__hint">Confirmez que vous n’êtes pas un robot, puis lancez le paiement sécurisé Stripe.</p>
+            <p class="contact-wizard-panel__hint" id="contact-step6-hint">Vérifiez que vous n’êtes pas un robot ci-dessous : le formulaire de paiement sécurisé Stripe s’affiche alors automatiquement sur cette page.</p>
           </div>
-          <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}" data-theme="light" style="margin-bottom:16px;display:flex;justify-content:center"></div>
-          <button class="btn-blue btn-wide" id="contact-submit-btn" onclick="submitForm()" type="button" aria-label="Envoyer la demande de suppression">
-            Valider ma demande et procéder au paiement
-          </button>
+          <div id="contact-payment-preembed">
+          <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}" data-theme="light" data-callback="cleanavisTurnstilePaymentReady" data-expired-callback="cleanavisTurnstileExpired" style="margin-bottom:16px;display:flex;justify-content:center"></div>
+          <p class="contact-payment-auto-hint" id="contact-payment-auto-hint">Dès que la vérification Cloudflare est réussie, nous préparons votre session de paiement.</p>
           <div class="secure-note" aria-label="Sécurité et confidentialité">
             <div class="secure-icon" aria-hidden="true">🔒</div>
             Données chiffrées · 100% confidentiel · Conforme RGPD · Horodatage automatique
+          </div>
+          </div>
+          <div id="contact-payment-loading" class="contact-payment-loading" hidden role="status" aria-live="polite">
+            <span class="contact-payment-loading__spinner" aria-hidden="true"></span>
+            <span>Connexion au paiement sécurisé…</span>
+          </div>
+          <div id="stripe-checkout-embed-wrap" class="stripe-checkout-embed-wrap" hidden>
+            <p class="contact-wizard-panel__hint stripe-checkout-embed-wrap__intro">Paiement sécurisé par Stripe — vous restez sur CleanAvis.fr.</p>
+            <div id="stripe-checkout-embed" class="stripe-checkout-embed"></div>
           </div>
           <div class="contact-wizard__nav contact-wizard__nav--single-prev">
             <button type="button" class="btn-outline js-wizard-prev">← Modifier les informations</button>
@@ -810,10 +786,6 @@
 <section class="faq" id="faq" aria-labelledby="faq-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <div class="sec-eyebrow" style="color:var(--g-blue)">
-      <span class="edot" style="background:var(--g-blue)" aria-hidden="true"></span>
-      FAQ
-    </div>
     <h2 class="sec-title" id="faq-title">Questions <em>fréquentes</em></h2>
     <div class="faq-list">
       {% for item in faqItems %}

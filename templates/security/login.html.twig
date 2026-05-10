@@ -4,15 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connexion — Back-office CleanAvis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
-    body { font-family: system-ui, sans-serif; background: #f4f6f8; min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; padding: 24px; }
-    .card { background: #fff; border-radius: 16px; padding: 36px 40px; max-width: 400px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
-    h1 { font-size: 1.25rem; margin: 0 0 20px; color: #202124; }
-    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #3c4043; }
-    input[type="email"], input[type="password"] { width: 100%; padding: 12px 14px; border: 1px solid #dadce0; border-radius: 10px; font-size: 15px; margin-bottom: 16px; }
-    button { width: 100%; padding: 12px; background: #1a73e8; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 15px; }
-    button:hover { background: #1557b0; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: #F2EFE9; min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .card { position: relative; overflow: hidden; background: #FEFDFB; border: 1px solid #DAD7D1; border-radius: 16px; padding: 36px 40px; max-width: 400px; width: 100%; box-shadow: 0 14px 40px rgba(22,24,29,.09), 0 4px 12px rgba(22,24,29,.04); }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #4285F4 0%, #EA4335 34%, #FBBC04 67%, #34A853 100%); }
+    h1 { font-size: 1.25rem; margin: 0 0 20px; color: #16181D; font-weight: 800; letter-spacing: -0.02em; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #5A616E; }
+    input[type="email"], input[type="password"] { width: 100%; padding: 12px 14px; border: 1px solid #DAD7D1; border-radius: 12px; font-size: 15px; margin-bottom: 16px; background: #fff; }
+    button { width: 100%; padding: 12px; background: #1A73E8; color: #fff; border: none; border-radius: 14px; font-weight: 700; cursor: pointer; font-size: 15px; box-shadow: 0 6px 18px rgba(26,115,232,.2); }
+    button:hover { background: #1557B0; }
     .err { background: #fce8e6; color: #c5221f; padding: 10px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 16px; }
     input[type="hidden"] { display: none; }
   </style>

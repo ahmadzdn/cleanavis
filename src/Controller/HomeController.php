@@ -13,6 +13,7 @@ final class HomeController extends AbstractController
     public function __construct(
         private readonly string $googleMapsApiKey,
         private readonly string $turnstileSiteKey,
+        private readonly string $stripePublishableKey,
         private readonly PackOfferRepository $packOfferRepository,
         private readonly FaqItemRepository $faqItemRepository,
     ) {
@@ -27,6 +28,7 @@ final class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'google_maps_api_key' => $this->googleMapsApiKey,
             'turnstile_site_key' => $this->turnstileSiteKey,
+            'stripe_publishable_key' => $this->stripePublishableKey,
             'packOffers' => $packOffers,
             'packsJson' => $this->buildPacksJsonForJs($packOffers),
             'faqItems' => $faqItems,

@@ -16,6 +16,7 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
   window.CLEANAVIS_API_ORDER_INIT = "{{ path('api_order_init')|e('js') }}";
+  window.CLEANAVIS_STRIPE_PK = "{{ stripe_publishable_key|default('')|e('js') }}";
   window._isLocalFile = (location.protocol === 'file:');
   function initGooglePlaces() {
     window._gPlacesReady = true;
@@ -98,5 +99,6 @@
 <script>window.CLEANAVIS_PACKS = {{ packsJson|raw }};</script>
 {# ca-ui-modal sans defer : doit être défini avant home-page.js (defer) pour window.showCaModal #}
 <script src="{{ asset('assets/js/ca-ui-modal.js') }}"></script>
+<script src="https://js.stripe.com/v3/" defer></script>
 <script src="{{ asset('assets/js/home-page.js') }}" defer></script>
 {% endblock %}
