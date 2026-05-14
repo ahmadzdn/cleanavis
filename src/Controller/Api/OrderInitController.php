@@ -62,7 +62,7 @@ final class OrderInitController extends AbstractController
                 'address' => new Assert\Optional([new Assert\Length(max: 255)]),
                 'reviewUrl' => [new Assert\NotBlank(), new Assert\Url(requireTld: false), new Assert\Length(max: 2048)],
                 'package' => [new Assert\NotBlank()],
-                'justification' => [new Assert\NotBlank(), new Assert\Length(min: 20, max: 8000)],
+                'justification' => [new Assert\NotBlank()],
                 'turnstileToken' => new Assert\Optional([new Assert\Length(min: 1)]),
             ],
             'allowMissingFields' => false,
