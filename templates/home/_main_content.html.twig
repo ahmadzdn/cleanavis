@@ -58,12 +58,33 @@
 
 <!-- HERO -->
 <section class="hero" id="hero" aria-label="Accueil">
-  <div class="hero-dots" aria-hidden="true"></div>
   <div class="hero-grid">
 
-    <!-- Droite : illustration mockup avis Google -->
+    <div class="hero-left">
+      <p class="hero-kicker">
+        <svg class="hero-kicker__mark" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+          <path d="M18 3 L32 8 L32 20 Q32 29 18 34 Q4 29 4 20 L4 8 Z" fill="#1A73E8"/>
+          <polyline points="11,18 16,24 26,13" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="hero-kicker__word">
+          <span class="hero-kicker__name">CleanAvis</span>
+          <span class="hero-kicker__bar" aria-hidden="true"></span>
+        </span>
+      </p>
+      <h1 class="hero-heading">Un mauvais avis,<br>c’est <em>votre clientèle</em>.</h1>
+      <p class="hero-sub">Nous faisons retirer les avis Google illicites. Analyse gratuite, résultat sous 48&nbsp;h.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-blue">Supprimer un avis</a>
+        <a href="#methode" class="btn-outline">Voir la méthode</a>
+      </div>
+    </div>
+
     <div class="hero-visual" aria-hidden="true">
       <div class="review-mockup">
+        <div class="rm-maps-top">
+          <span class="rm-g">G</span>
+          <span class="rm-maps-q">Pharmacie du Centre</span>
+        </div>
         <div class="rm-map-bar"></div>
         <div class="rm-header">
           <div class="rm-header-row">
@@ -110,25 +131,11 @@
         </div>
       </div>
     </div>
-
-    <!-- Gauche : texte -->
-    <div class="hero-left">
-      <div class="hero-badge" role="note">
-        <span class="badge-dot" aria-hidden="true"></span>
-        <span class="hero-badge__full">Avocats en Droit du Numérique — Experts en Gestion et Suppression d'Avis Google</span>
-        <span class="hero-badge__short">Avocats · droit du numérique · avis Google</span>
-      </div>
-      <h1 class="hero-heading">Un mauvais avis,<br>c'est <em>votre clientèle</em><br>qui disparaît.</h1>
-      <p class="hero-sub"><strong style="color:var(--text);font-weight:700">74% des consommateurs lisent vos avis Google avant de vous contacter.</strong> Un commentaire diffamatoire ou mensonger peut diviser votre chiffre d'affaires du jour au lendemain.<span class="hero-sub-break" aria-hidden="true"></span>Nos avocats experts en e-réputation et nos juristes mobilisent l'arsenal juridique et technologique pour faire disparaître vos avis Google diffamatoires, frauduleux ou illicites.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-blue">Supprimer un avis maintenant</a>
-        <a href="#methode" class="btn-outline">Voir notre méthode →</a>
-      </div>
-    </div>
   </div>
+</section>
 
-  <!-- Stats pleine largeur -->
-  <div class="hero-stats" aria-label="Statistiques clés">
+<section class="proof-band" aria-label="Statistiques clés">
+  <div class="proof-grid">
     <div class="stat-item">
       <div class="stat-num">82<span class="u">%</span></div>
       <div class="stat-label">Taux de suppression</div>
@@ -142,7 +149,7 @@
       <div class="stat-label">Avis Google supprimés</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">+5<span class="u"></span></div>
+      <div class="stat-num">+5</div>
       <div class="stat-label">Avocats partenaires</div>
     </div>
   </div>
@@ -181,7 +188,7 @@
     <p class="sec-desc">Recherchez votre établissement pour récupérer automatiquement votre note Google, puis entrez votre chiffre d'affaires pour calculer vos pertes réelles.</p>
 
     <div class="audit-card">
-      <h3>🔍 Recherchez votre établissement</h3>
+      <h3>Recherchez votre établissement</h3>
       <p>Entrez le nom de votre établissement et obtenez votre diagnostic de réputation instantané.</p>
       <div class="search-wrap" id="search-wrap">
         <div class="search-box">
@@ -220,7 +227,7 @@
         <p style="font-size:11px;color:var(--text4);margin-bottom:18px">*Estimation basée sur la distribution statistique de la note moyenne.</p>
         <div id="res-alert"></div>
         <div class="calc-zone">
-          <h4>🧮 Calculateur de manque à gagner</h4>
+          <h4>Calculateur de manque à gagner</h4>
           <div class="calc-row">
             <div class="calc-field">
               <label for="ca-input">Chiffre d'affaires annuel (€)</label>
@@ -445,7 +452,7 @@
 </section>
 
 <!-- SUPPRESSION FICHE GMB -->
-<section class="expertise" id="fiche-gmb" aria-labelledby="fiche-title" style="background:var(--white);border-top:1px solid var(--border);">
+<section class="expertise" id="fiche-gmb" aria-labelledby="fiche-title" style="background:var(--bg);">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
     <h2 class="sec-title" id="fiche-title">Supprimer votre fiche<br><em>Google My Business</em></h2>

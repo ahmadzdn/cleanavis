@@ -7,11 +7,22 @@
 {% endblock %}
 
 {% block styles %}
+<link rel="stylesheet" href="{{ asset('assets/css/tokens.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/payment_pages.css') }}">
 {% endblock %}
 
 {% block body %}
 <div class="card">
+  <a href="{{ path('app_home') }}" class="pay-brand" aria-label="CleanAvis.fr">
+    <svg viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <path d="M18 3 L32 8 L32 20 Q32 29 18 34 Q4 29 4 20 L4 8 Z" fill="#1A73E8"/>
+      <polyline points="11,18 16,24 26,13" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="pay-brand__word">
+      <span class="pay-brand__name">CleanAvis</span>
+      <span class="pay-brand__bar" aria-hidden="true"></span>
+    </span>
+  </a>
   <div class="icon icon--success">
     <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="20 6 9 17 4 12"/>
