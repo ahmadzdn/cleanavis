@@ -177,12 +177,10 @@
 <section class="audit-section" id="audit" aria-labelledby="audit-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <h2 class="sec-title" id="audit-title">Analysez votre réputation Google<br>et calculez votre <em>manque à gagner</em></h2>
-    <p class="sec-desc">Recherchez votre établissement pour récupérer automatiquement votre note Google, puis entrez votre chiffre d'affaires pour calculer vos pertes réelles.</p>
+    <h2 class="sec-title" id="audit-title">Votre note Google,<br><em>en un clic</em></h2>
+    <p class="sec-desc">Cherchez votre établissement. On estime ce que les avis négatifs vous coûtent.</p>
 
     <div class="audit-card">
-      <h3>Recherchez votre établissement</h3>
-      <p>Entrez le nom de votre établissement et obtenez votre diagnostic de réputation instantané.</p>
       <div class="search-wrap" id="search-wrap">
         <div class="search-box">
           <span class="search-google-icon" aria-hidden="true">📍</span>
@@ -249,7 +247,7 @@
 
 <!-- LE PROBLÈME -->
 <section class="probleme" id="probleme" aria-labelledby="pb-title">
-  <div class="container">
+  <div class="container container--wide">
     <div class="g4bar" aria-hidden="true"></div>
     <div class="pb-split">
       <figure class="pb-visual">
@@ -265,10 +263,10 @@
       <div class="pb-copy">
         <h2 class="sec-title pb-title" id="pb-title">Vous n'êtes pas démuni.<br><em>Vous êtes mal équipé.</em></h2>
         <ul class="pb-points">
-          <li>Sans argumentation juridique et technique, Google rejette l'immense majorité des signalements — environ <strong>5&nbsp;%</strong> aboutissent.</li>
-          <li>En droit français, l'action en diffamation se prescrit en <strong>3&nbsp;mois</strong> : chaque jour compte.</li>
-          <li>Une étoile en moins peut coûter <strong>5 à 9&nbsp;%</strong> de chiffre d'affaires, surtout face aux avis frauduleux.</li>
-          <li>Le droit existe ; encore faut-il actionner les bons leviers, au bon moment.</li>
+          <li>Sans dossier solide, Google laisse passer environ <strong>5&nbsp;%</strong> des signalements.</li>
+          <li>Diffamation : <strong>3&nbsp;mois</strong> pour agir.</li>
+          <li>Une étoile en moins, c’est souvent <strong>5 à 9&nbsp;%</strong> de chiffre d’affaires.</li>
+          <li>Le droit est là. Encore faut-il l’actionner.</li>
         </ul>
       </div>
     </div>
@@ -283,27 +281,26 @@
     <details class="ca-mcoll" data-ca-mcoll>
       <summary class="ca-mcoll__summary">Voir les 4 étapes du parcours</summary>
       <div class="ca-mcoll__body ca-mcoll__body--center">
-    <p class="sec-desc">Un processus structuré en quatre étapes conçues pour maximiser vos chances de suppression de vos avis Google négatifs.</p>
     <div class="steps-row">
       <article class="step reveal">
-        <div class="step-c" aria-label="Étape 1">🔗</div>
-        <h3 class="step-title">Soumission de l'URL</h3>
-        <p class="step-desc">Collez le lien direct de l'avis litigieux. Notre équipe procède à une analyse juridique complète sous 24h.</p>
+        <div class="step-c" aria-label="Étape 1">1</div>
+        <h3 class="step-title">Le lien de l’avis</h3>
+        <p class="step-desc">Vous le collez. On l’analyse sous 24&nbsp;h.</p>
       </article>
       <article class="step reveal">
-        <div class="step-c" aria-label="Étape 2">📦</div>
-        <h3 class="step-title">Choix du Package</h3>
-        <p class="step-desc">Standard ou Avocats selon la gravité. Notre analyse préliminaire vous guide si vous hésitez.</p>
+        <div class="step-c" aria-label="Étape 2">2</div>
+        <h3 class="step-title">L’offre</h3>
+        <p class="step-desc">Standard ou avocats, selon la gravité.</p>
       </article>
       <article class="step reveal">
-        <div class="step-c" aria-label="Étape 3">📋</div>
-        <h3 class="step-title">Transmission des preuves</h3>
-        <p class="step-desc">Captures d'écran, identité de l'auteur si connue — chaque élément renforce le dossier juridique.</p>
+        <div class="step-c" aria-label="Étape 3">3</div>
+        <h3 class="step-title">Les preuves</h3>
+        <p class="step-desc">Captures, contexte, identité si vous l’avez.</p>
       </article>
       <article class="step reveal">
-        <div class="step-c" aria-label="Étape 4">✅</div>
-        <h3 class="step-title">Paiement et Activation</h3>
-        <p class="step-desc">Paiement sécurisé Stripe. Votre courrier est rédigé dans les 24h, votre avocat assigné dans l'heure pour le pack avocat.</p>
+        <div class="step-c" aria-label="Étape 4">4</div>
+        <h3 class="step-title">On s’en occupe</h3>
+        <p class="step-desc">Paiement Stripe. Le dossier part sous 24&nbsp;h.</p>
       </article>
     </div>
       </div>
@@ -313,12 +310,9 @@
 
 <!-- TARIFS -->
 <section class="tarifs" id="tarifs" aria-labelledby="tarifs-title">
-  <div class="container">
+  <div class="container container--wide">
     <div class="g4bar" aria-hidden="true"></div>
-    <h2 class="sec-title sec-title--tarifs-head" id="tarifs-title">
-      <span class="sec-title__tarifs-line sec-title__tarifs-line--main">Supprimer un avis ou une fiche&nbsp;Google</span>
-      <span class="sec-title__tarifs-line sec-title__tarifs-line--sub"><span class="sec-title__lead-in">— </span><em>choisissez votre niveau d’action</em></span>
-    </h2>
+    <h2 class="sec-title" id="tarifs-title">Choisissez <em>votre offre</em></h2>
     <div class="tarifs-grid">
       {% for pack in packOffers %}
       <article class="tarif-card {% if pack.featuredLayout %}featured{% endif %} reveal">
@@ -342,13 +336,13 @@
     </div>
 
     <!-- PROTECTION JURIDIQUE -->
-    <div class="pj-wrap reveal" style="margin-top:56px">
+    <div class="pj-wrap reveal" style="margin-top:28px">
     <details class="ca-mcoll" data-ca-mcoll>
       <summary class="ca-mcoll__summary">Assurance Protection juridique &amp; prise en charge</summary>
       <div class="ca-mcoll__body ca-mcoll__body--pj">
       <div style="text-align:center;margin-bottom:28px;">
         <div class="g4bar" style="margin:0 auto 16px" aria-hidden="true"></div>
-        <p style="font-size:12px;font-weight:700;color:var(--text4);letter-spacing:2px;text-transform:uppercase;">Vos honoraires d'avocat peuvent être pris en charge par votre assurance</p>
+        <p style="font-size:14px;color:var(--text3);">Votre assurance peut prendre en charge les honoraires d’avocat.</p>
       </div>
 
       <div style="background:linear-gradient(135deg,rgba(26,115,232,.06) 0%,rgba(26,115,232,.02) 100%);border:1.5px solid rgba(26,115,232,.2);border-radius:16px;padding:clamp(20px,3vw,32px);max-width:700px;margin:0 auto 32px;position:relative;overflow:hidden;">
@@ -357,40 +351,11 @@
           <span style="font-size:22px">🛡️</span>
           <strong style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g-blue);">Le saviez-vous ?</strong>
         </div>
-        <p style="font-family:'Sora',sans-serif;font-weight:800;color:var(--text);font-size:16px;margin-bottom:12px;line-height:1.3;">Votre assurance Protection Juridique prend peut-être en charge les honoraires d'avocat de votre procédure</p>
-        <p style="font-size:14px;color:var(--text3);margin-bottom:10px;">Si vous souscrivez un Package Avocats, les honoraires de l'avocat partenaire dans le cadre de la procédure de suppression d'avis ou d'identification de l'auteur peuvent être couverts, en tout ou en partie, par votre contrat d'assurance Protection Juridique (PJ), souvent inclus dans votre assurance habitation, auto, ou professionnelle.</p>
-        <p style="font-size:13px;color:var(--text4);font-style:italic;">Avant d'engager les frais, vérifiez votre contrat : la garantie PJ couvre fréquemment les litiges liés à la diffamation, au dénigrement et aux atteintes à la réputation en ligne.</p>
+        <p style="font-family:'Sora',sans-serif;font-weight:800;color:var(--text);font-size:16px;margin-bottom:12px;line-height:1.3;">La protection juridique de votre contrat peut couvrir le pack avocats.</p>
+        <p style="font-size:14px;color:var(--text3);margin-bottom:0;">Souvent incluse dans l’habitation, l’auto ou la multirisque pro. Vérifiez le plafond avant de vous engager.</p>
       </div>
 
-      <div style="max-width:700px;margin:0 auto;">
-        <h3 style="font-family:'Sora',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px;">Qu'est-ce que la garantie Protection Juridique ?</h3>
-        <p style="font-size:14px;color:var(--text3);margin-bottom:20px;">La Protection Juridique (PJ) est une garantie d'assurance, souvent incluse sans surcoût dans votre assurance multirisque habitation, auto, ou professionnelle qui prend en charge les frais de défense juridique en cas de litige.</p>
-        <div class="pj-two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
-          <div style="background:var(--white);border:1px solid rgba(26,115,232,.2);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow-sm);">
-            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g-blue);margin-bottom:12px;">Ce qu'elle couvre généralement</div>
-            <ul style="list-style:none;font-size:13px;color:var(--text3);">
-              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-blue);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Honoraires d'avocat (dans la limite du plafond contractuel)</li>
-              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-blue);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Frais de procédure (huissier, expertises, etc.)</li>
-              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-blue);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Frais de justice en première instance et en appel</li>
-              <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-blue);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Assistance juridique téléphonique préalable</li>
-            </ul>
-          </div>
-          <div style="background:var(--white);border:1px solid rgba(52,168,83,.25);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow-sm);">
-            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--g-green);margin-bottom:12px;">Litiges typiquement couverts</div>
-            <ul style="list-style:none;font-size:13px;color:var(--text3);">
-              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Diffamation et atteinte à la réputation</li>
-              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Dénigrement commercial</li>
-              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Contentieux liés à l'activité professionnelle</li>
-              <li style="margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Litiges avec des plateformes numériques</li>
-              <li style="display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--g-green);font-size:10px;margin-top:3px;flex-shrink:0;">●</span>Actions contre des tiers pour préjudice en ligne</li>
-            </ul>
-          </div>
-        </div>
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:13px;color:var(--text3);display:flex;gap:10px;align-items:flex-start;">
-          <span style="font-size:16px;flex-shrink:0;">📋</span>
-          <div><strong style="color:var(--text);">Contrats incluant généralement une PJ : </strong>Assurance habitation MRH (AXA, Maif, Macif, Allianz, GMF, Matmut…) · Assurance auto · Assurance professionnelle multirisque · RC professionnelle · Carte bancaire Visa Premier / MasterCard Gold. <span style="color:#92600A;font-weight:600;"> ⚠️ Plafonds : 3 000 € à 30 000 € selon les contrats.</span> Vérifiez avant toute démarche. Vous conservez le libre choix de votre avocat (art. L127-3 C. assur.).</div>
-        </div>
-      </div>
+      <p style="max-width:36rem;margin:0 auto;font-size:14px;color:var(--text3);text-align:center;">Plafonds souvent entre 3&nbsp;000&nbsp;€ et 30&nbsp;000&nbsp;€. Vous gardez le choix de votre avocat.</p>
       </div>
     </details>
     </div>
@@ -402,18 +367,17 @@
 <section class="expertise" id="expertise" aria-labelledby="exp-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <h2 class="sec-title" id="exp-title">Un arsenal juridique complet<br><em>à votre service</em></h2>
-    <p class="sec-desc">Notre équipe associe maîtrise du droit du numérique, expertise RGPD et connaissance approfondie des mécanismes algorithmiques de Google.</p>
+    <h2 class="sec-title" id="exp-title">Le droit, <em>au bon endroit</em></h2>
     <details class="ca-mcoll" data-ca-mcoll>
       <summary class="ca-mcoll__summary">Découvrir nos 6 domaines d'expertise</summary>
       <div class="ca-mcoll__body">
     <div class="exp-grid">
-      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">⚖️</span><div><h3 class="exp-title">Diffamation et Dénigrement</h3><p class="exp-text">Application rigoureuse de la Loi du 29 juillet 1881 et du Code civil. Distinction précise entre critique légitime, opinion protégée et affirmation diffamatoire constitutive d'infraction.</p></div></article>
-      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🏛️</span><div><h3 class="exp-title">Concurrence déloyale et Parasitisme</h3><p class="exp-text">Identification et qualification des campagnes d'avis négatifs orchestrées par des concurrents. Dossier d'assignation en référé ou au fond selon l'urgence et le préjudice documenté.</p></div></article>
-      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🔏</span><div><h3 class="exp-title">RGPD et Protection des données</h3><p class="exp-text">Qualification RGPD des données personnelles présentes dans l'avis. Exercice des droits d'accès, rectification et à l'oubli. Saisine de la CNIL si nécessaire.</p></div></article>
-      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">💻</span><div><h3 class="exp-title">Droit du numérique (LCEN et DSA)</h3><p class="exp-text">Notification formelle aux hébergeurs sur le fondement de la LCEN et du Digital Services Act européen. Engagement de la responsabilité de Google en cas de maintien d'un contenu illicite notifié.</p></div></article>
-      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🤖</span><div><h3 class="exp-title">Analyse algorithmique des signalements Google</h3><p class="exp-text">Maîtrise des API de signalement et des heuristiques de modération de Google My Business. Nos requêtes sont rédigées pour déclencher une révision humaine, pas un rejet automatique.</p></div></article>
-      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🧠</span><div><h3 class="exp-title">Intelligence artificielle et AI Act</h3><p class="exp-text">Anticipation des enjeux liés aux avis générés ou amplifiés par IA. Qualification des pratiques commerciales trompeuses. Conseil en prévention et gestion de crise réputationnelle.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">⚖️</span><div><h3 class="exp-title">Diffamation</h3><p class="exp-text">Loi de 1881 : on sépare la critique de l’attaque.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🏛️</span><div><h3 class="exp-title">Concurrence déloyale</h3><p class="exp-text">Avis orchestrés par un concurrent.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🔏</span><div><h3 class="exp-title">RGPD</h3><p class="exp-text">Droit d’accès, rectification, oubli.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">💻</span><div><h3 class="exp-title">LCEN et DSA</h3><p class="exp-text">Notification formelle à Google.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🤖</span><div><h3 class="exp-title">Signalements Google</h3><p class="exp-text">Des requêtes qui déclenchent une revue humaine.</p></div></article>
+      <article class="exp-card reveal"><span class="exp-icon" aria-hidden="true">🧠</span><div><h3 class="exp-title">Avis générés par IA</h3><p class="exp-text">Pratiques trompeuses et crise de réputation.</p></div></article>
     </div>
       </div>
     </details>
@@ -424,54 +388,38 @@
 <section class="expertise" id="fiche-gmb" aria-labelledby="fiche-title" style="background:var(--bg);">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <h2 class="sec-title" id="fiche-title">Supprimer votre fiche<br><em>Google My Business</em></h2>
-    <p class="sec-desc">Quand supprimer les avis un par un ne suffit plus, supprimer la fiche elle-même élimine le problème à la racine.</p>
-
-    <div style="height:24px"></div>
-
-    <aside class="gmb-insight-card reveal" aria-labelledby="gmb-insight-title">
-      <div class="gmb-insight-card__accent" aria-hidden="true"></div>
-      <div class="gmb-insight-card__inner">
-        <h3 class="gmb-insight-card__title" id="gmb-insight-title">Pourquoi opter pour ce service&nbsp;?</h3>
-        <p class="gmb-insight-card__lead">La suppression d’avis est parfois insuffisante&nbsp;: de nouveaux avis peuvent réapparaître demain. <strong>Supprimer la fiche Google&nbsp;My&nbsp;Business elle-même</strong> (fondée sur le RGPD art.&nbsp;17) élimine le problème à la racine.</p>
-      </div>
-    </aside>
+    <h2 class="sec-title" id="fiche-title">La fiche, <em>pas seulement l’avis</em></h2>
+    <p class="sec-desc">Quand les avis reviennent, on retire la fiche Google (RGPD, art.&nbsp;17).</p>
 
     <details class="ca-mcoll" data-ca-mcoll>
-      <summary class="ca-mcoll__summary">Pourquoi une fiche Google peut poser problème</summary>
+      <summary class="ca-mcoll__summary">Pourquoi une fiche peut poser problème</summary>
       <div class="ca-mcoll__body">
-    <h3 style="font-family:'Sora',sans-serif;font-size:17px;font-weight:800;color:var(--text);text-align:center;margin-bottom:20px;">Pourquoi une fiche Google peut devenir un problème</h3>
-    <div style="max-width:680px;margin:0 auto 36px;">
-      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
-        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>Google crée automatiquement des fiches à partir de données publiques, sans votre consentement. L'arrêt de la Cour d'appel de Chambéry de mai 2025 reconnaît cette création automatique comme une faute.</li>
-        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>Le système de notation à 5 étoiles n'est pas adapté aux professions réglementées : un médecin, un avocat, un dentiste ne peuvent pas répondre publiquement sans risquer de violer le secret professionnel.</li>
-        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>N'importe qui peut déposer un avis sans vérification : patients jamais reçus, concurrents, tiers mal intentionnés.</li>
-        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>Répondre aux avis négatifs peut leur donner plus de visibilité algorithmique et aggraver la situation.</li>
-        <li style="display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 16px;"><span style="color:var(--g-red);font-weight:700;flex-shrink:0;">→</span>Une fiche créée sans consentement, exposant des données personnelles sans base légale, constitue un traitement illicite au sens du RGPD.</li>
-      </ul>
-    </div>
+    <ul class="pb-points" style="max-width:36rem;margin:0 auto;">
+      <li>Google crée parfois la fiche sans votre accord.</li>
+      <li>N’importe qui peut noter, sans preuve d’être client.</li>
+      <li>Répondre peut rendre l’avis encore plus visible.</li>
+    </ul>
       </div>
     </details>
 
     <details class="ca-mcoll" data-ca-mcoll>
       <summary class="ca-mcoll__summary">Notre méthode de suppression de fiche</summary>
       <div class="ca-mcoll__body">
-    <h3 class="fiche-methode-title">Notre méthode de suppression</h3>
     <div class="fiche-methode-grid">
       <div class="fiche-methode-card">
         <div class="fiche-methode-card__rule fiche-methode-card__rule--blue" aria-hidden="true"></div>
         <div class="fiche-methode-card__icon fiche-methode-card__icon--blue" aria-hidden="true">⚖️</div>
         <div class="fiche-methode-card__body">
           <strong>Mise en demeure RGPD</strong>
-          <p>Mise en demeure formelle adressée aux services juridiques de Google, fondée sur l'article 17 du RGPD. Depuis l'arrêt de Chambéry de mai 2025, il est établi qu'une fiche Google constitue un traitement de données personnelles.</p>
+          <p>Courrier à Google, article 17. Une fiche est un traitement de données.</p>
         </div>
       </div>
       <div class="fiche-methode-card fiche-methode-card--green">
         <div class="fiche-methode-card__rule fiche-methode-card__rule--green" aria-hidden="true"></div>
         <div class="fiche-methode-card__icon fiche-methode-card__icon--green" aria-hidden="true">🛠️</div>
         <div class="fiche-methode-card__body">
-          <strong>Action technique éprouvée</strong>
-          <p>En parallèle de la démarche juridique, déploiement de procédures techniques éprouvées sur des milliers de fiches. La combinaison juridique + technique garantit un taux de réussite supérieur à 95 %.</p>
+          <strong>Action technique</strong>
+          <p>En parallèle du droit. Les deux ensemble dépassent 95&nbsp;% de réussite.</p>
         </div>
       </div>
     </div>
@@ -484,8 +432,7 @@
 <section class="legal" id="legal" aria-labelledby="legal-title">
   <div class="container">
     <div class="g4bar" aria-hidden="true"></div>
-    <h2 class="sec-title" id="legal-title">Des fondements juridiques solides<br><em>pour chaque intervention</em></h2>
-    <p class="sec-desc">La suppression d'un avis Google ne relève pas de la bonne volonté de Google. Elle repose sur des obligations légales précises que nous savons actionner.</p>
+    <h2 class="sec-title" id="legal-title">Sur quels <em>textes</em></h2>
     <details class="ca-mcoll" data-ca-mcoll>
       <summary class="ca-mcoll__summary">Voir le tableau des fondements juridiques</summary>
       <div class="ca-mcoll__body ca-mcoll__body--flush">
@@ -500,15 +447,15 @@
         <tbody>
           <tr>
             <td><div class="legal-law">Loi 29 juillet 1881<br>Art. 29 et 32</div><span class="legal-tag">Diffamation</span></td>
-            <td>Toute allégation d'un fait portant atteinte à l'honneur ou à la considération. Prescription de 3 mois. Engage la responsabilité civile et pénale de l'auteur.</td>
+            <td>Atteinte à l’honneur. 3 mois pour agir.</td>
           </tr>
           <tr>
             <td><div class="legal-law">Code civil<br>Art. 1240 et 1241</div><span class="legal-tag">Resp. délictuelle</span></td>
-            <td>Fondement de l'action en dénigrement commercial. Tout fait quelconque causant un dommage oblige son auteur à réparation. S'applique aux avis portant préjudice à l'activité économique.</td>
+            <td>Un avis qui nuit à l’activité doit être réparé.</td>
           </tr>
           <tr>
             <td><div class="legal-law">Code de commerce<br>Art. L420-1 et L442-1</div><span class="legal-tag">Concurrence déloyale</span></td>
-            <td>Qualification des campagnes d'avis coordonnées comme pratique restrictive de concurrence. Applicable dans les cas de dénigrement systématique organisé par un opérateur concurrent.</td>
+            <td>Campagne d’avis montée par un concurrent.</td>
           </tr>
         </tbody>
       </table>
@@ -520,13 +467,13 @@
 
 <!-- TÉMOIGNAGES -->
 <section class="temoignages" id="temoignages" aria-labelledby="temo-title">
-  <div class="container">
+  <div class="container container--wide">
     <div class="g4bar" aria-hidden="true"></div>
     <h2 class="sec-title" id="temo-title">Ils ont <em>récupéré leur réputation</em></h2>
     <div class="temo-grid">
       <article class="temo-card reveal">
         <div class="temo-stars" aria-label="5 étoiles">★★★★★</div>
-        <blockquote class="temo-quote">« Grâce au package Standard, un avis malveillant déposé par un concurrent a été supprimé en seulement 4 jours. Mon restaurant est remonté en première position Google. »</blockquote>
+        <blockquote class="temo-quote">« Avis d’un concurrent retiré en 4 jours. »</blockquote>
         <div class="temo-sep" aria-hidden="true"></div>
         <div class="temo-author">
           <div class="temo-avatar" style="background:var(--g-grn-lt);color:var(--g-green)" aria-hidden="true">M</div>
@@ -536,7 +483,7 @@
       </article>
       <article class="temo-card reveal">
         <div class="temo-stars" aria-label="5 étoiles">★★★★★</div>
-        <blockquote class="temo-quote">« J'ai pris le package Avocat pour une diffamation grave. Résultat net et sans appel. L'avis a été retiré et l'auteur formellement identifié et mis en demeure. »</blockquote>
+        <blockquote class="temo-quote">« Avis retiré, auteur identifié. »</blockquote>
         <div class="temo-sep" aria-hidden="true"></div>
         <div class="temo-author">
           <div class="temo-avatar" style="background:var(--g-blue-lt);color:var(--g-blue)" aria-hidden="true">T</div>
@@ -546,7 +493,7 @@
       </article>
       <article class="temo-card reveal">
         <div class="temo-stars" aria-label="5 étoiles">★★★★★</div>
-        <blockquote class="temo-quote">« Un accompagnement sérieux qui protège enfin notre e-réputation médicale. Service irréprochable, délai respecté, résultat totalement professionnel. »</blockquote>
+        <blockquote class="temo-quote">« Délai tenu, dossier clair. »</blockquote>
         <div class="temo-sep" aria-hidden="true"></div>
         <div class="temo-author">
           <div class="temo-avatar" style="background:var(--g-yel-lt);color:#F9AB00" aria-hidden="true">S</div>
@@ -568,7 +515,7 @@
         <span class="contact-hero__line">Reprenez le contrôle</span>
         <span class="contact-hero__line contact-hero__line--accent">de <em>votre image</em></span>
       </h2>
-      <p class="sec-desc contact-hero__desc">Remplissez le formulaire. Nos experts analysent votre dossier et vous contactent sous 2h.</p>
+      <p class="sec-desc contact-hero__desc">Cinq minutes. On vous répond sous 2&nbsp;h.</p>
     </header>
 
     <div class="contact-card contact-card--stacked contact-card--wizard">
@@ -799,7 +746,7 @@
         </div>
       </div>
       <div class="footer-disclaimer">
-        Spécialisé exclusivement dans la suppression d'avis Google. Non affilié à Google LLC. Google™ est une marque de Google LLC. Toutes nos actions s'inscrivent dans le cadre légal français et européen.
+        Suppression d’avis Google. Non affilié à Google LLC.
       </div>
       <div class="footer-copy">© 2026 CleanAvis.fr</div>
     </div>
